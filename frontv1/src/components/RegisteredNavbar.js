@@ -9,7 +9,7 @@ export default function RegisteredNavbar({ userId, userEmail }) {
                         <h1 className="text-xl lg:text-2xl font-bold cursor-pointer">UniMusic</h1>
                         <div className="hidden md:flex justify-around space-x-4">
                             <Link href={`/registered/${userId}`} className="hover:text-indigo-600 text-gray-700">Inicio</Link>
-                            <Link href={`/registered/${userId}`} className="hover:text-indigo-600 text-gray-700">Descubrir</Link>
+                            <Link href={`/registered/${userId}/pageList`} className="hover:text-indigo-600 text-gray-700">Descubrir</Link>
                         </div>
                     </div>
                     <div className="flex space-x-4 items-center">

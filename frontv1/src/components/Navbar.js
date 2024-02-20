@@ -9,7 +9,7 @@ export default function Navbar() {
                         <h1 className="text-xl lg:text-2xl font-bold cursor-pointer">UniMusic</h1>
                         <div className="hidden md:flex justify-around space-x-4">
                             <Link href="/" className="hover:text-indigo-600 text-gray-700">Inicio</Link>
-                            <Link href="/" className="hover:text-indigo-600 text-gray-700">Descubrir</Link>
+                            <Link href="/pageList" className="hover:text-indigo-600 text-gray-700">Descubrir</Link>
                         </div>
                     </div>
                     <div className="flex space-x-4 items-center">
