@@ -24,6 +24,7 @@ export default function PageListRegistered() {
                         'Content-Type': 'application/json',
                     },
                 });
+                
 
                 const userResponseData = await userResponse.json();
                 setUserData(userResponseData.data);
