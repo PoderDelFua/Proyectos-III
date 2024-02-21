@@ -14,7 +14,7 @@ export default function Navbar() {
                     </div>
                     <div className="flex space-x-4 items-center">
                         <a href="/registered/login" className="text-gray-800 text-sm">LOGIN</a>
-                        <a href="/registered/signup" className="bg-indigo-600 px-4 py-2 rounded text-white hover:bg-indigo-500 text-sm">SIGNUP</a>
+                        <a href="/registered/signup" className="px-4 py-2 rounded text-white hover:bg-indigo-500 text-sm custom-enter-button ">SIGNUP</a>
                     </div>
                 </div>
             </nav>
