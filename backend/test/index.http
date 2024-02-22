@@ -20,12 +20,13 @@ POST http://localhost:3000/api/usuario HTTP/1.1
 Content-Type: application/json
 
 {
-    "nombre": "Beatriz",
-    "correo": "beatriz@live.u-tad.com",
-    "password": "contraseña_segura",
-    "nickname": "ProFisica",
-    "instrumento": "violin",
-    "bio": "Estudiante de U-tad",
+    "nombre": "Beatriz2",
+    "correo": "beatriz2@live.u-tad.com",
+    "password": "contraseña_segura1",
+    "nickname": "ProFisica2",
+    "instrumento": "violin2",
+    "bio": "Estudiante de U-tad2",
+    "gusto_musical": "rock2",
     "grupos": []
 }
 
@@ -35,7 +36,7 @@ POST http://localhost:3000/api/disponibilidad HTTP/1.1
 Content-Type: application/json
 
 {
-    "usuario": "65d6387c724634b5b0c64bfa",
+    "usuario": "65d722cdbcf9c4b59294e163",
     "lunes": [
         {"inicio": "10:00", "fin": "12:00"}
     ],
@@ -61,11 +62,11 @@ Content-Type: application/json
 ###
 # Finalmente, actualizamos el usuario con el ID de disponibilidad
 # Esto asume que tienes un endpoint para actualizar usuarios
-PUT http://localhost:3000/api/usuario/65d6387c724634b5b0c64bfa HTTP/1.1
+PUT http://localhost:3000/api/usuario/65d722cdbcf9c4b59294e163 HTTP/1.1
 Content-Type: application/json
 
 {
-    "disponibilidad": "65d63af2724634b5b0c64bfe" 
+    "disponibilidad": "65d722cdbcf9c4b59294e163" 
 }
 ###
 GET http://localhost:3000/api/usuario HTTP/1.1

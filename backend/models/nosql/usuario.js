@@ -15,7 +15,10 @@ const usuarioSchema = new mongoose.Schema({
         type: String,
         unique: true
     },
-    instrumento: {
+    instrumento:{
+        type: String
+    },
+    gusto_musical: {
         type: String
     },
     bio: {
