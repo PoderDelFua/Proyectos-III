@@ -14,6 +14,32 @@ const getItems = async (req, res) => {
         console.log(data)
         res.send({data})
     }
+    const checkUserExists = async (req, res) => {
+        const { correo } = req.body;
+        try {
+            const user = await usuarioModel.findOne({ correo: correo });
+            if (user) {
+                res.json({ exists: true });
+            } else {
+                res.json({ exists: false });
+            }
+        } catch (error) {
+            res.status(500).send({ message: error.message });
+        }
+    };
+    const loginCheck = async (req, res) => {
+        const { correo, password } = req.body;
+        try {
+            const user = await usuarioModel.findOne({ correo: correo, password: password });
+            if (user) {
+                res.json({ exists: true });
+            } else {
+                res.json({ exists: false });
+            }
+        } catch (error) {
+            res.status(500).send({ message: error.message });
+        }
+    };
     const updateItem = async (req, res) => {
         const { id } = req.params; // Asumiendo que usas el ID del usuario en la ruta como /:id
         const { disponibilidad } = req.body; // Asumiendo que pasas el ID de disponibilidad en el cuerpo de la solicitud
@@ -39,6 +65,7 @@ const getItems = async (req, res) => {
    }
 
    module.exports = { getItems, getItem,
-   createItem, updateItem,
-   deleteItem };
+   createItem, checkUserExists,
+    loginCheck,
+   updateItem, deleteItem };
    

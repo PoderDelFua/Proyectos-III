@@ -1,44 +1,46 @@
 "use client"
 
 import Navbar from '@/components/Navbar';
+import { waitUntilSymbol } from 'next/dist/server/web/spec-extension/fetch-event';
 
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
+const BACKEND_URL = "http://localhost:9000/api";
 
 export default function LoginUser() {
 
     const router = useRouter()
 
-    const [email, setEmail] = useState("")
+    const [correo, setcorreo] = useState("")
     const [password, setPassword] = useState("")
 
     const handleSubmit = async (e) => {
         e.preventDefault()
         const user = {
-            email: email,
+            correo: correo,
             password: password,
         }
 
-        const userExistsResponse = await fetch('/api/checkExists', {
+        const userExistsResponse = await fetch(`${BACKEND_URL}/usuario/loginCheck`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(user),
+            body: JSON.stringify({ correo, password }),
         });
-
+        
         const data = await userExistsResponse.json()
-
+        console.log(data)
         if (data.status == 500) {
             alert(data.message)
             return
-        } else if (!data.exists || !data.passwordCorrect) {
+        } else if (data.exists == false) {
             alert(data.message)
             return
         }
-
+        console.log(data.userId)
         router.push(`/registered/${data.userId}`)
     }
 
@@ -60,8 +62,8 @@ export default function LoginUser() {
                             <img src="/u-tad_logo.png" alt="u-tad image" className="w-full lg:w-auto mb-8" />
                         </div>   
                         <div className="mb-6">
-                            <label htmlFor="email" className="block custom-letras-correo">Nickname o correo U-tad</label>
-                            <input onChange={(e) => setEmail(e.target.value)} type="email" name="email" id="email" className="w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600 :ring-indigo-600 custom-rectangulo" />
+                            <label htmlFor="correo" className="block custom-letras-correo">Nickname o correo U-tad</label>
+                            <input onChange={(e) => setcorreo(e.target.value)} type="correo" name="correo" id="correo" className="w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600 :ring-indigo-600 custom-rectangulo" />
                         </div>
                         <div className="">
                             <label htmlFor="password" className="block custom-letras-correo">Contraseña</label>
