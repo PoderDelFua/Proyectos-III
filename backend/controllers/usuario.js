@@ -6,7 +6,16 @@ const getItems = async (req, res) => {
 }
 
 const getItem = async (req, res) => {
-    // TODO
+    const { id } = req.params // Asumiendo que usas el ID del usuario en la ruta como /:id
+    try {
+        const data = await usuarioModel.findById(id)
+        if (!data) {
+            return res.status(404).send({ message: `No se encontró el usuario con el ID ${id}.` })
+        }
+        res.send({data})
+    } catch (error) {
+        res.status(500).send({ message: error.message })
+    }
 }
 
 const createItem = async (req, res) => {
@@ -56,17 +65,27 @@ const updateItem = async (req, res) => {
         );
 
         if (!data) {
-            return res.status(404).send({ message: "No se encontró el usuario con el ID proporcionado." })
+            return res.status(404).send({ message: `No se encontró el usuario con el ID ${id}.` })
         }
 
-        res.send({ data })
+        res.send({data})
     } catch (error) {
         res.status(500).send({ message: error.message })
     }
 }
 
-const deleteItem = (req, res) => {
-    // TODO
+const deleteItem = async (req, res) => {
+    const { id } = req.params // Asumiendo que usas el ID del usuario en la ruta como /:id
+    try {
+        const deletedItem = await usuarioModel.findByIdAndDelete(id)
+        if (deletedItem) {
+            res.send({ message: `Usuario con el ID ${id} ha sido eliminado.` })
+        } else {
+            res.send({ message: `No se encontró el usuario con el ID ${id}.` })
+        }
+    } catch (error) {
+        res.status(500).send({ message: error.message })
+    }
 }
 
 module.exports = { getItems, 
