@@ -1,4 +1,5 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
+
 //añadir mas campos si lo consideramos necesario, no hace falta _id ya que mongo lo crea por defecto
 const usuarioSchema = new mongoose.Schema({
     nombre: {
@@ -35,9 +36,9 @@ const usuarioSchema = new mongoose.Schema({
 }, {
     timestamps: true,
     versionKey: false
-});
+})
 
+const Usuario = mongoose.model('Usuario', usuarioSchema, 'usuario')
 
-const Usuario = mongoose.model('Usuario', usuarioSchema, 'usuario');
+module.exports = Usuario
 
-module.exports = Usuario;
