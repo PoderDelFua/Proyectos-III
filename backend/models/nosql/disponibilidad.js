@@ -25,5 +25,5 @@ const disponibilidadSchema = new mongoose.Schema({
     sabado: [rangoSchema],
     domingo: [rangoSchema]
 });
-module.exports = mongoose.model('Disponibilidad', disponibilidadSchema);
+module.exports = mongoose.model('Disponibilidad', disponibilidadSchema, 'disponibilidad');
 //Lo exportamos como Disponibilidad para que sea más fácil de entender y usar en otros archivos

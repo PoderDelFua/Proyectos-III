@@ -12,4 +12,4 @@ const grupoSchema = new mongoose.Schema({
     // Puedes añadir más campos aquí según tus necesidades
 });
 
-module.exports = mongoose.model('Grupo', grupoSchema);
+module.exports = mongoose.model('Grupo', grupoSchema, 'grupo');
