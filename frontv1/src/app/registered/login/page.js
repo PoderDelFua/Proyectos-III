@@ -23,7 +23,7 @@ export default function LoginUser() {
             password: password,
         }
 
-        const userExistsResponse = await fetch(`${BACKEND_URL}/usuarios/loginCheck`, {
+        const userExistsResponse = await fetch(`${BACKEND_URL}/usuario/checkLogin`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -47,10 +47,6 @@ export default function LoginUser() {
     const handleCancelClick = () => {
         router.push('/');
     }
-
-
-
-
 
     return (
         <section>

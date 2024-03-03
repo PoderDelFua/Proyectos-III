@@ -9,6 +9,7 @@ const getItem = async (req, res) => {
     const { id } = req.params // Asumiendo que usas el ID del usuario en la ruta como /:id
     try {
         const data = await usuarioModel.findById(id)
+        console.log(`Data: ${data}`)
         if (!data) {
             return res.status(404).send({ message: `No se encontró el usuario con el ID ${id}.` })
         }
@@ -35,30 +36,6 @@ const checkUserExists = async (req, res) => {
             res.json({ exists: false })
         }
     } catch (error) {
-        res.status(500).send({ message: error.message })
-    }
-}
-
-const loginCheck = async (req, res) => {
-    const { correo, password } = req.body
-    try {
-        console.log('Buscando usuario en la base de datos...')
-        const user = await usuarioModel.findOne({ correo: correo })
-        
-        if (!user) {
-            console.log('Usuario no encontrado con el correo:', correo)
-            return res.json({ exists: false })
-        }
-        
-        if (user.password !== password) {
-            console.log('Contraseña incorrecta para el correo:', correo)
-            return res.json({ exists: false })
-        }
-
-        console.log('Usuario encontrado:', user)
-        res.json({ exists: true, userId: user._id })
-    } catch (error) {
-        console.error('Error en loginCheck:', error)
         res.status(500).send({ message: error.message })
     }
 }
@@ -101,8 +78,7 @@ const deleteItem = async (req, res) => {
 module.exports = { getItems, 
                    getItem, 
                    createItem, 
-                   checkUserExists, 
-                   loginCheck, 
+                   checkUserExists,
                    updateItem, 
                    deleteItem }
    
