@@ -1,4 +1,4 @@
-const { usuarioModel } = require("../models/nosql/usuarios")
+const { usuarioModel } = require("../models")
 
 const getItems = async (req, res) => {
     const data = await usuarioModel.find({})
@@ -40,28 +40,28 @@ const checkUserExists = async (req, res) => {
 }
 
 const loginCheck = async (req, res) => {
-    const { correo, password } = req.body;
+    const { correo, password } = req.body
     try {
-        console.log('Buscando usuario en la base de datos...');
-        const user = await usuarioModel.findOne({ correo: correo });
+        console.log('Buscando usuario en la base de datos...')
+        const user = await usuarioModel.findOne({ correo: correo })
         
         if (!user) {
-            console.log('Usuario no encontrado con el correo:', correo);
-            return res.json({ exists: false });
+            console.log('Usuario no encontrado con el correo:', correo)
+            return res.json({ exists: false })
         }
         
         if (user.password !== password) {
-            console.log('Contraseña incorrecta para el correo:', correo);
-            return res.json({ exists: false });
+            console.log('Contraseña incorrecta para el correo:', correo)
+            return res.json({ exists: false })
         }
 
-        console.log('Usuario encontrado:', user);
-        res.json({ exists: true, userId: user._id });
+        console.log('Usuario encontrado:', user)
+        res.json({ exists: true, userId: user._id })
     } catch (error) {
-        console.error('Error en loginCheck:', error);
-        res.status(500).send({ message: error.message });
+        console.error('Error en loginCheck:', error)
+        res.status(500).send({ message: error.message })
     }
-};
+}
 
 const updateItem = async (req, res) => {
     const { id } = req.params 
@@ -72,7 +72,7 @@ const updateItem = async (req, res) => {
             id,
             { disponibilidad: disponibilidad },
             { new: true } 
-        );
+        )
 
         if (!data) {
             return res.status(404).send({ message: `No se encontró el usuario con el ID ${id}.` })

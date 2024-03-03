@@ -52,7 +52,7 @@ export default function RegisterUser() {
             alert(data.message)
             return
         } else if (data.exists) {
-            alert("The user already exists")
+            alert("The user with this email already exists")
             return
         }
 
