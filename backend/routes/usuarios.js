@@ -1,8 +1,8 @@
 const express = require("express")
 const router = express.Router()
 const checkUserExists = require("../middlewares/checkUserExists");
-const {validatorGetItem, validatorCreateItem, validatorGetItemWithID} = require("../validators/usuario")
-const { getItems, getItem, createItem, loginCheck, updateItem, deleteItem } = require("../controllers/usuario");
+const {validatorGetItem, validatorCreateItem, validatorGetItemWithID} = require("../validators/usuarios")
+const { getItems, getItem, createItem, loginCheck, updateItem, deleteItem } = require("../controllers/usuarios");
 
 
 router.get("/",validatorGetItem, getItems)

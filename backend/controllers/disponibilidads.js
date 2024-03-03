@@ -1,4 +1,4 @@
-const Disponibilidad = require('../models/nosql/disponibilidad')
+const Disponibilidad = require('../models/nosql/disponibilidads')
 
 // Función para crear disponibilidad
 exports.createDisponibilidad = async (req, res) => {

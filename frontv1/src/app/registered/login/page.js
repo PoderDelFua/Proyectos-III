@@ -23,7 +23,7 @@ export default function LoginUser() {
             password: password,
         }
 
-        const userExistsResponse = await fetch(`${BACKEND_URL}/usuario/loginCheck`, {
+        const userExistsResponse = await fetch(`${BACKEND_URL}/usuarios/loginCheck`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

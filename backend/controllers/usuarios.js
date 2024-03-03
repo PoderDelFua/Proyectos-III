@@ -1,4 +1,4 @@
-const { usuarioModel } = require("../models")
+const { usuarioModel } = require("../models/nosql/usuarios")
 
 const getItems = async (req, res) => {
     const data = await usuarioModel.find({})
@@ -40,7 +40,7 @@ const checkUserExists = async (req, res) => {
 }
 
 const loginCheck = async (req, res) => {
-    const { correo, password } = req.body
+    const { correo, password } = req.body;
     try {
         console.log('Buscando usuario en la base de datos...');
         const user = await usuarioModel.findOne({ correo: correo });
