@@ -31,22 +31,24 @@ export default function LoginUser() {
             body: JSON.stringify({ correo, password }),
         });
         
-        const data = await userExistsResponse.json()
-        console.log(data)
-        if (data.status == 500) {
-            alert(data.message)
-            return
-        } else if (data.exists == false) {
-            alert(data.message)
-            return
+        if (!userExistsResponse.ok) {
+            alert('Error al iniciar sesión, por favor intenta de nuevo.');
+            return;
         }
-        console.log(data.userId)
-        router.push(`/registered/${data.userId}`)
-    }
+        const data = await userExistsResponse.json();
 
+        if (data.exists) {
+            console.log(data.userId);
+            router.push(`/registered/${data.userId}`);
+        } else {
+            alert('Usuario o contraseña incorrecta');
+        }
+    }
     const handleCancelClick = () => {
         router.push('/');
-    };
+    }
+
+
 
 
 
@@ -62,7 +64,7 @@ export default function LoginUser() {
                             <img src="/u-tad_logo.png" alt="u-tad image" className="w-full lg:w-auto mb-8" />
                         </div>   
                         <div className="mb-6">
-                            <label htmlFor="correo" className="block custom-letras-correo">Nickname o correo U-tad</label>
+                            <label htmlFor="correo" className="block custom-letras-correo">Introduce tu correo U-tad</label>
                             <input onChange={(e) => setcorreo(e.target.value)} type="correo" name="correo" id="correo" className="w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600 :ring-indigo-600 custom-rectangulo" />
                         </div>
                         <div className="">

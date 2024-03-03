@@ -1,22 +1,20 @@
 const express = require("express")
 const router = express.Router()
-const { getItems,
-        getItem, 
-        createItem, 
-        checkUserExists, 
-        loginCheck, 
-        updateItem, 
-        deleteItem } = require("../controllers/usuario")
+const checkUserExists = require("../middlewares/checkUserExists");
+const {validatorGetItem, validatorCreateItem, validatorGetItemWithID} = require("../validators/usuario")
+const { getItems, getItem, createItem, loginCheck, updateItem, deleteItem } = require("../controllers/usuario");
 
-router.get("/", getItems)
-router.get("/:id", getItem)
 
-router.post("/", createItem)
+router.get("/",validatorGetItem, getItems)
+router.get("/:id", validatorGetItemWithID, getItem)
+
+//router.post("/", validatorCreateItem, createItem)
 router.post("/checkUserExists", checkUserExists)
-router.post("/loginCheck", loginCheck)
+router.post("/loginCheck", validatorGetItem, loginCheck)
+router.post("/", [validatorCreateItem, checkUserExists], createItem);
 
-router.put("/:id", updateItem)
+router.put("/:id",validatorGetItemWithID, updateItem)
 
-router.delete("/:id", deleteItem)
+router.delete("/:id",validatorGetItemWithID, deleteItem)
 
 module.exports = router

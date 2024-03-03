@@ -1,14 +1,13 @@
 const { check } = require("express-validator")
 const validateResults = require("../utils/handleValidator")
-const { usuarioModel } = require("../models")
 
 const validatorCreateItem = [
     check("correo").isEmail().withMessage("El correo debe ser un email."),
     check("correo").custom((value) => {
-        if (value.endsWith("@live.u-tad.com")) {
+        if (value.endsWith("@live.u-tad.com") || value.endsWith("@u-tad.com")){
             return true
         } else {
-            throw new Error("El correo debe ser de live.u-tad.com")
+            throw new Error("El correo debe ser de la utad")
         }
     }),
     check("nombre").isString().exists().notEmpty().withMessage("El nombre es obligatorio."),
@@ -17,9 +16,15 @@ const validatorCreateItem = [
     (req, res, next) => validateResults(req, res, next)
 ]
 const validatorGetItem = [
-    check("id").exists().notEmpty().isMongoId().withMessage("El id no es válido."),
+    check("correo").exists().notEmpty().isString().withMessage("El correo no es válido."),
     (req, res, next) => {
         return validateResults(req, res, next)
     } 
 ]
-module.exports = { validatorCreateItem, validatorGetItem }
+const validatorGetItemWithID = [
+    check("id").exists().notEmpty().isString().withMessage("El id no es válido."),
+    (req, res, next) => {
+        return validateResults(req, res, next)
+    } 
+]
+module.exports = { validatorCreateItem, validatorGetItem, validatorGetItemWithID }

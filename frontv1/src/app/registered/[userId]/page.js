@@ -1,47 +1,57 @@
 "use client"
 
-import RegisteredNavbar from '@/components/RegisteredNavbar'
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import RegisteredNavbar from '@/components/RegisteredNavbar';
 import RegisteredWelcomePage from '@/components/RegisteredWelcomePage';
 
-import React, { useState, useEffect } from 'react'
-import { useParams } from 'next/navigation'
+const BACKEND_URL = "http://localhost:9000/api";
 
 export default function UserPage() {
-    const params = useParams()
+    const router = useRouter();
+    const [userId, setUserId] = useState(null);
     const [userData, setUserData] = useState(null);
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch(`/api/users/${params.userId}`, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                });
-
-                const data = await response.json();
-                setUserData(data.data)
-            } catch (error) {
-                console.error("Error: ", error)
-            }
+        if (router.isReady) {
+            setUserId(router.query.userId);
         }
+    }, [router, router.isReady, router.query]);
 
-        fetchData()
-    }, [params.userId])
+    useEffect(() => {
+        if (userId) {
+            const fetchData = async () => {
+                try {
+                    const response = await fetch(`${BACKEND_URL}/users/${userId}`, {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('No se pudo cargar la información del usuario');
+                    }
+
+                    const data = await response.json();
+                    setUserData(data);
+                } catch (error) {
+                    console.error("Error al cargar la información del usuario: ", error);
+                }
+            };
+
+            fetchData();
+        }
+    }, [userId]); 
 
     if (!userData) {
-        return <div>Loading...</div>
+        return <div>Cargando...</div>; 
     }
 
     return (
         <section>
-            <div>
-                <RegisteredNavbar userId={params.userId} userEmail={userData.email} />
-            </div>
-            <div>
-                <RegisteredWelcomePage userId={params.userId} />
-            </div>
+            <RegisteredNavbar userId={userId} userEmail={userData.correo} />
+            <RegisteredWelcomePage userId={userId} />
         </section>
-    )
+    );
 }

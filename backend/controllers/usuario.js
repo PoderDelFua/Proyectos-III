@@ -42,26 +42,36 @@ const checkUserExists = async (req, res) => {
 const loginCheck = async (req, res) => {
     const { correo, password } = req.body
     try {
-        const user = await usuarioModel.findOne({ correo: correo, password: password })
-        if (user) {
-            res.json({ exists: true })
-        } else {
-            res.json({ exists: false })
+        console.log('Buscando usuario en la base de datos...');
+        const user = await usuarioModel.findOne({ correo: correo });
+        
+        if (!user) {
+            console.log('Usuario no encontrado con el correo:', correo);
+            return res.json({ exists: false });
         }
+        
+        if (user.password !== password) {
+            console.log('Contraseña incorrecta para el correo:', correo);
+            return res.json({ exists: false });
+        }
+
+        console.log('Usuario encontrado:', user);
+        res.json({ exists: true, userId: user._id });
     } catch (error) {
-        res.status(500).send({ message: error.message })
+        console.error('Error en loginCheck:', error);
+        res.status(500).send({ message: error.message });
     }
-}
+};
 
 const updateItem = async (req, res) => {
-    const { id } = req.params // Asumiendo que usas el ID del usuario en la ruta como /:id
-    const { disponibilidad } = req.body // Asumiendo que pasas el ID de disponibilidad en el cuerpo de la solicitud
+    const { id } = req.params 
+    const { disponibilidad } = req.body 
 
     try {
         const data = await usuarioModel.findByIdAndUpdate(
             id,
             { disponibilidad: disponibilidad },
-            { new: true } // Esto devuelve el documento actualizado
+            { new: true } 
         );
 
         if (!data) {

@@ -1,5 +1,5 @@
 const models = {
-    usuarioModel: require('./nosql/usuario'),
+    usuarioModel: require('./nosql/usuarios'),
     disponibilidadModel: require('./nosql/disponibilidad'),
 }
 
