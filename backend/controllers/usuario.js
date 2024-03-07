@@ -1,8 +1,13 @@
 const { usuarioModel } = require("../models")
+const { handleHttpError } = require("../utils/handleError")
 
 const getItems = async (req, res) => {
-    const data = await usuarioModel.find({})
+    try{
+        const data = await usuarioModel.find({})
     res.send({data})
+    }catch(err){
+        handleHttpError(res, "ERROR_GET_USERS")
+    }
 }
 
 const getItem = async (req, res) => {
@@ -11,19 +16,22 @@ const getItem = async (req, res) => {
         const data = await usuarioModel.findById(id)
         console.log(`Data: ${data}`)
         if (!data) {
-            return res.status(404).send({ message: `No se encontró el usuario con el ID ${id}.` })
+            handleHttpError(res, "USER_NOT_EXISTS", 404)
         }
         res.send({data})
-    } catch (error) {
-        res.status(500).send({ message: error.message })
+    } catch (err) {
+        handleHttpError(res, "ERROR_GET_USER")
     }
 }
 
 const createItem = async (req, res) => {
-    const { body } = req
-    const data = await usuarioModel.create(body)
-    console.log(data)
-    res.send({data})
+    try{
+        const { body } = req
+        const data = await usuarioModel.create(body)
+        res.send({data})
+    }catch(err){
+        handleHttpError(res, "ERROR_CREATE_USER")
+    }
 }
 
 const checkUserExists = async (req, res) => {
@@ -35,8 +43,8 @@ const checkUserExists = async (req, res) => {
         } else {
             res.json({ exists: false })
         }
-    } catch (error) {
-        res.status(500).send({ message: error.message })
+    } catch (err) {
+        handleHttpError(res, "ERROR_CHECK_USER_EXISTS")
     }
 }
 
@@ -52,12 +60,12 @@ const updateItem = async (req, res) => {
         )
 
         if (!data) {
-            return res.status(404).send({ message: `No se encontró el usuario con el ID ${id}.` })
+            handleHttpError(res, "USER_NOT_EXISTS", 404)
         }
 
         res.send({data})
     } catch (error) {
-        res.status(500).send({ message: error.message })
+        handleHttpError(res, "ERROR_UPDATE_USER")
     }
 }
 
@@ -66,12 +74,12 @@ const deleteItem = async (req, res) => {
     try {
         const deletedItem = await usuarioModel.findByIdAndDelete(id)
         if (deletedItem) {
-            res.send({ message: `Usuario con el ID ${id} ha sido eliminado.` })
+            handleHttpError(res, "USER_NOT_EXISTS", 404)
         } else {
-            res.send({ message: `No se encontró el usuario con el ID ${id}.` })
+            res.send({message: "Usuario eliminado correctamente."})
         }
     } catch (error) {
-        res.status(500).send({ message: error.message })
+        handleHttpError(res, "ERROR_DELETE_USER")
     }
 }
 

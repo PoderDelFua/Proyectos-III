@@ -56,7 +56,7 @@ export default function RegisterUser() {
             return
         }
 
-        fetch(`${BACKEND_URL}/usuario`, {
+        fetch(`${BACKEND_URL}/auth/register`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

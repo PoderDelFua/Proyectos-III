@@ -15,16 +15,18 @@ export default function ModifyUser() {
     const [receiveOffers, setReceiveOffers] = useState(false);
 
     useEffect(() => {
+        const token = localStorage.getItem('token');
         const fetchData = async () => {
             try {
-                const response = await fetch(`/api/users/${params.userId}`, {
+                const response = await fetch(`/api/usuario`, {
                     method: 'GET',
                     headers: {
-                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`, 
                     },
                 });
 
                 const data = await response.json();
+                console.log(data);
                 setUserData(data.data)
             } catch (error) {
                 console.error("Error: ", error)

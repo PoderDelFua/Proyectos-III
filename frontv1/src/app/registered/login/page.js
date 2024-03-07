@@ -2,7 +2,7 @@
 
 import Navbar from '@/components/Navbar';
 import { waitUntilSymbol } from 'next/dist/server/web/spec-extension/fetch-event';
-
+//import Cookies from 'js-cookie' por ahora no lo importo que ni idea como manejarlo
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
@@ -23,7 +23,7 @@ export default function LoginUser() {
             password: password,
         }
 
-        const userExistsResponse = await fetch(`${BACKEND_URL}/usuario/checkLogin`, {
+        const userExistsResponse = await fetch(`${BACKEND_URL}/auth/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -36,10 +36,10 @@ export default function LoginUser() {
             return;
         }
         const data = await userExistsResponse.json();
-
-        if (data.exists) {
-            console.log(data.userId);
-            router.push(`/registered/${data.userId}`);
+        if (data.usuario) {            
+            //Enviamos el token local storage
+            localStorage.setItem('token', data.token);
+            router.push(`/registered/${data.usuario._id}`);
         } else {
             alert('Usuario o contraseña incorrecta');
         }

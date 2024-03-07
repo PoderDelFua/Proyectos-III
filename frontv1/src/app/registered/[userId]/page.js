@@ -11,14 +11,17 @@ const BACKEND_URL = "http://localhost:9000/api"
 export default function UserPage() {
     const params = useParams()
     const [userData, setUserData] = useState(null)
+    
 
     useEffect(() => {
+        const token = localStorage.getItem('token');
+
         const fetchData = async () => {
             try {
                 const response = await fetch(`${BACKEND_URL}/usuario/${params.userId}`, {
                     method: 'GET',
                     headers: {
-                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`,
                     },
                 })
 
