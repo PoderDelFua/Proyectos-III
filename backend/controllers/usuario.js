@@ -14,23 +14,12 @@ const getItem = async (req, res) => {
     const { id } = req.params // Asumiendo que usas el ID del usuario en la ruta como /:id
     try {
         const data = await usuarioModel.findById(id)
-        console.log(`Data: ${data}`)
         if (!data) {
             handleHttpError(res, "USER_NOT_EXISTS", 404)
         }
         res.send({data})
     } catch (err) {
         handleHttpError(res, "ERROR_GET_USER")
-    }
-}
-
-const createItem = async (req, res) => {
-    try{
-        const { body } = req
-        const data = await usuarioModel.create(body)
-        res.send({data})
-    }catch(err){
-        handleHttpError(res, "ERROR_CREATE_USER")
     }
 }
 
@@ -84,8 +73,7 @@ const deleteItem = async (req, res) => {
 }
 
 module.exports = { getItems, 
-                   getItem, 
-                   createItem, 
+                   getItem,  
                    checkUserExists,
                    updateItem, 
                    deleteItem }

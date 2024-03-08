@@ -37,7 +37,6 @@ export default function LoginUser() {
         }
         const data = await userExistsResponse.json();
         if (data.usuario) {            
-            //Enviamos el token local storage
             localStorage.setItem('token', data.token);
             router.push(`/registered/${data.usuario._id}`);
         } else {

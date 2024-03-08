@@ -17,7 +17,7 @@ export default function MultiSelect({
         const isChecked = e.target.checked;
         const option = e.target.value;
 
-        const selectedOptionSet = new Set(selectedOptions);
+        var selectedOptionSet = new Set(selectedOptions);
 
         if (isChecked) {
             selectedOptionSet.add(option);
@@ -46,7 +46,6 @@ export default function MultiSelect({
     };
 
     const isClearSelectionEnabled = selectedOptions.length > 0;
-
     const handleClearSelectionClick = (e) => {
         e.preventDefault();
 

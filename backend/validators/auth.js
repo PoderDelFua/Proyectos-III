@@ -13,6 +13,9 @@ const validatorRegister = [
     check("nombre").isString().exists().notEmpty().withMessage("El nombre es obligatorio."),
     check("password").isString().exists().notEmpty().withMessage("La contraseña es obligatoria."),
     check("nickname").isString().exists().notEmpty().withMessage("El nickname es obligatorio."),
+    check("instrumento").isArray().exists().notEmpty().withMessage("El instrumento es obligatorio."),
+    check("gusto_musical").isString().exists().notEmpty().withMessage("El gusto musical es obligatorio."),
+    check("bio").isString().exists().notEmpty().withMessage("La bio es obligatoria."),
     (req, res, next) => {
         validateResults(req, res, next)
     }

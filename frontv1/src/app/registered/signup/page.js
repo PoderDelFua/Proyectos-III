@@ -24,7 +24,7 @@ export default function RegisterUser() {
     
     const handleSubmit = async (e) => {
         e.preventDefault()
-
+        console.log("instrumento", instrumento)
 
         const user = {
             nombre,
