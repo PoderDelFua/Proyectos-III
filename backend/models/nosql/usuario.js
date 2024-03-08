@@ -25,6 +25,9 @@ const usuarioSchema = new mongoose.Schema({
     bio: {
         type: String
     },
+    nivel: [{
+        type: String
+    }],
     disponibilidad: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Disponibilidad'

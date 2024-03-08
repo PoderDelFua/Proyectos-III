@@ -35,7 +35,7 @@ export default function RegisterUser() {
             password,
             nickname
         };
-
+        
         const userExistsResponse = await fetch(`${BACKEND_URL}/usuario/checkUserExists`, {
             method: 'POST',
             headers: {

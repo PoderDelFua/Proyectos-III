@@ -16,6 +16,7 @@ const validatorRegister = [
     check("instrumento").isArray().exists().notEmpty().withMessage("El instrumento es obligatorio."),
     check("gusto_musical").isString().exists().notEmpty().withMessage("El gusto musical es obligatorio."),
     check("bio").isString().exists().notEmpty().withMessage("La bio es obligatoria."),
+    check("nivel").isArray().exists().notEmpty().withMessage("El nivel es obligatorio."),
     (req, res, next) => {
         validateResults(req, res, next)
     }
