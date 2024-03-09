@@ -9,7 +9,28 @@ const grupoSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Usuario'
     }],
-    // Puedes añadir más campos aquí según tus necesidades
+    actividades: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Actividades'
+    }],
+    descripcion: {
+        type: String
+    },
+    nivel: {
+        type: String
+    },
+    instrumento: {
+        type: String
+    },
+    gusto_musical: {
+        type: String
+    },
+    imagen: {
+        type: String
+    }
+}, {
+    timestamps: true,
+    versionKey: false
 })
 
 module.exports = mongoose.model('Grupo', grupoSchema, 'grupo')
