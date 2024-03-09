@@ -52,11 +52,11 @@ export default function LoginUser() {
            <div>
                 <Navbar />
             </div>
-            <div className="h-full flex justify-start " style={{backgroundImage: "url('/fondo-login.png')", backgroundSize: "cover"}}>
-                <div className=" py-8 px-14 flex h-auto mt-8 mb-8 rounded ml-16 custom-container-login">
+            <div className="h-full flex justify-start min-h-screen bg-cover bg-[url('/fondo-login.png')]">
+                <div className=" py-8 px-14 flex h-auto mt-6 mb-20 rounded ml-16 custom-container-login">
                     <form onSubmit={handleSubmit}>
-                        <div className="lg:flex mb-8">
-                            <img src="/u-tad_logo.png" alt="u-tad image" className="w-full lg:w-auto mb-8" />
+                        <div className="lg:flex">
+                            <img src="/LOGO_UTAD.png" alt="u-tad image" style={{ width:'400px', height:'auto' }} className="mb-4" />
                         </div>   
                         <div className="mb-6">
                             <label htmlFor="correo" className="block custom-letras-correo">Introduce tu correo U-tad</label>

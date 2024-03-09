@@ -17,6 +17,7 @@ export default function RegisterUser() {
     const [instrumento, setInstrumento] = useState([]);
     const [gustoMusical, setGustoMusical] = useState('');
     const [bio, setBio] = useState('');
+    const [nivel, setNivel] = useState([]);
     const [correo, setCorreo] = useState('');
     const [password, setPassword] = useState('');
     const [nickname, setNickname] = useState('');
@@ -31,6 +32,7 @@ export default function RegisterUser() {
             instrumento,
             gusto_musical: gustoMusical,
             bio,
+            nivel,
             correo,
             password,
             nickname
@@ -68,8 +70,11 @@ export default function RegisterUser() {
 
         router.push('/')
     }
-
+    //opciones instrumentos
     const instrumentoOptions  = ['violin', 'guitarra', 'percusion', 'teclado']
+
+    //opciones niveles
+    const nivelOptions = ['Principiante', 'Medio', 'Avanzado']
 
     return (
         <section>
@@ -100,6 +105,17 @@ export default function RegisterUser() {
                             <textarea onChange={(e) => setBio(e.target.value)} name="bio" id="bio" rows="3" placeholder="Cuéntanos algo sobre ti..." className="w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600"></textarea>
                         </div>
 
+                        {instrumento.map((instrumentoSeleccionado) => (
+                            <div key={instrumentoSeleccionado} className="mb-6">
+                                <MultiSelect
+                                    formFieldName={`nivel_${instrumentoSeleccionado}`}
+                                    options={nivelOptions}
+                                    onChange={(selectedOptions) => setNivel(selectedOptions)}
+                                    prompt={`Seleccione el nivel para ${instrumentoSeleccionado}`}
+                                />
+                            </div>
+                        ))}
+                        
                         <div className="mb-6">
                             <label htmlFor="nickname" className="block text-gray-800 font-bold">Nickname:</label>
                             <input onChange={(e) => setNickname(e.target.value)} type="text" name="nickname" id="nickname" placeholder="Tu apodo" className="w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600" />
@@ -114,7 +130,6 @@ export default function RegisterUser() {
                             <label htmlFor="password" className="block text-gray-800 font-bold">Contraseña:</label>
                             <input onChange={(e) => setPassword(e.target.value)} type="password" name="password" id="password" placeholder="contraseña" className="w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600" />
                         </div>
-
 
                         <Link href="/registered/login" className="text-sm font-thin text-gray-800 hover:underline mt-2 mr-3 inline-block hover:text-indigo-600">¿Ya tienes una cuenta?</Link>
                         <button type="submit" className="cursor-pointer py-2 px-4 block mt-6 bg-indigo-500 text-white font-bold w-full text-center rounded">Registrarse</button>
