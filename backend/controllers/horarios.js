@@ -1,5 +1,5 @@
 
-const { HorarioModel } = require('../models/')
+const { HorarioModel } = require('../models')
 
 const { handleHttpError} = require('../utils/handleError')
 const { matchedData } = require('express-validator')
