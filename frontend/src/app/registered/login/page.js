@@ -6,8 +6,7 @@ import { waitUntilSymbol } from 'next/dist/server/web/spec-extension/fetch-event
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
-
-const BACKEND_URL = "http://localhost:9000/api";
+import { BACKEND_URI } from '@/env';
 
 export default function LoginUser() {
 
@@ -23,7 +22,7 @@ export default function LoginUser() {
             password: password,
         }
 
-        const userExistsResponse = await fetch(`${BACKEND_URL}/auth/login`, {
+        const userExistsResponse = await fetch(`${BACKEND_URI}/auth/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

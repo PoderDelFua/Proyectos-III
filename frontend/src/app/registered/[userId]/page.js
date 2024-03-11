@@ -5,8 +5,7 @@ import { useRouter } from 'next/navigation'
 import { useParams } from 'next/navigation'
 import RegisteredNavbar from '@/components/RegisteredNavbar'
 import RegisteredWelcomePage from '@/components/RegisteredWelcomePage'
-
-const BACKEND_URL = "http://localhost:9000/api"
+import { BACKEND_URI } from '@/env';
 
 export default function UserPage() {
     const params = useParams()
@@ -20,7 +19,7 @@ export default function UserPage() {
         }
         const fetchData = async () => {
             try {
-                const response = await fetch(`${BACKEND_URL}/usuario/${params.userId}`, {
+                const response = await fetch(`${BACKEND_URI}/usuario/${params.userId}`, {
                     method: 'GET',
                     headers: {
                         'Authorization': `Bearer ${token}`,

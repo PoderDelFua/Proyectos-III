@@ -7,8 +7,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 //import { v4 as uuidv4 } from 'uuid'; Hace falta esto????
-
-const BACKEND_URL = "http://localhost:9000/api";
+import { BACKEND_URI } from '@/env';
 
 export default function RegisterUser() {
     const router = useRouter();
@@ -38,7 +37,7 @@ export default function RegisterUser() {
             nickname
         };
         
-        const userExistsResponse = await fetch(`${BACKEND_URL}/usuario/checkUserExists`, {
+        const userExistsResponse = await fetch(`${BACKEND_URI}/usuario/checkUserExists`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -58,7 +57,7 @@ export default function RegisterUser() {
             return
         }
 
-        fetch(`${BACKEND_URL}/auth/register`, {
+        fetch(`${BACKEND_URI}/auth/register`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
