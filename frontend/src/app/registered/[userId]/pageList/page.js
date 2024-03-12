@@ -5,7 +5,10 @@ import PageCard from '@/components/PageCard'
 
 import { useState, useEffect } from 'react'
 import { useParams } from 'next/navigation'
-
+//Esta pagina esta pendiente de revisión, ya que no se ha implementado el uso de la API.
+//El usuario debería poder ver una lista de las páginas que ha registrado.
+//El usuario debería poder buscar páginas por título y resumen.
+//El usuario debería poder filtrar páginas por actividad.
 export default function PageListRegistered() {
     const params = useParams()
 

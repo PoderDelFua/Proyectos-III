@@ -6,8 +6,15 @@ import MultiSelect from '@/components/MultiSelect';
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-//import { v4 as uuidv4 } from 'uuid'; Hace falta esto????
 import { BACKEND_URI } from '@/env';
+
+//Funciona de la siguiente manera:
+//1. El usuario llena el formulario con sus datos.
+//2. Al hacer clic en el botón "Registrarse", se envía una solicitud POST al servidor con los datos del usuario.
+//3. El servidor verifica si el usuario ya existe en la base de datos.
+//4. Si el usuario no existe, se crea un nuevo usuario en la base de datos.
+//5. El servidor responde con un mensaje de éxito.
+//6. El usuario es redirigido a la página de inicio de sesión.
 
 export default function RegisterUser() {
     const router = useRouter();
@@ -24,8 +31,7 @@ export default function RegisterUser() {
     
     const handleSubmit = async (e) => {
         e.preventDefault()
-        console.log("instrumento", instrumento)
-
+        // user es un objeto que contiene los datos del usuario, que se enviará al servidor.
         const user = {
             nombre,
             instrumento,
@@ -36,7 +42,7 @@ export default function RegisterUser() {
             password,
             nickname
         };
-        
+        // userExistsResponse es la respuesta del servidor a la solicitud POST para verificar si el usuario ya existe.
         const userExistsResponse = await fetch(`${BACKEND_URI}/usuario/checkUserExists`, {
             method: 'POST',
             headers: {
@@ -47,8 +53,7 @@ export default function RegisterUser() {
         
 
         const data = await userExistsResponse.json()
-        console.log(data)
-
+        // Si el usuario ya existe, se muestra un mensaje de error.
         if (data.status == 500) {
             alert(data.message)
             return
@@ -56,7 +61,7 @@ export default function RegisterUser() {
             alert("The user with this email already exists")
             return
         }
-
+        // Si el usuario no existe, se crea un nuevo usuario en la base de datos.
         fetch(`${BACKEND_URI}/auth/register`, {
             method: 'POST',
             headers: {
@@ -75,6 +80,9 @@ export default function RegisterUser() {
     //opciones niveles
     const nivelOptions = ['Principiante', 'Medio', 'Avanzado']
 
+    //Todos los campos funcionan igual, por ejemplo, el campo "nombre" se actualiza con el valor del 
+    //campo de entrada correspondiente. Se utiliza el método "setNombre" para actualizar el estado del campo "nombre".
+    //Y al hacer clic en el botón "Registrarse", se llama a la función "handleSubmit" que envía los datos del usuario al servidor.
     return (
         <section>
             <Navbar />
