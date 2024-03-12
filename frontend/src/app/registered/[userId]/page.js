@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import { useParams } from 'next/navigation'
 import RegisteredNavbar from '@/components/RegisteredNavbar'
 import RegisteredWelcomePage from '@/components/RegisteredWelcomePage'
-import { BACKEND_URI } from '@/env';
+import { BACKEND_URI } from '@/config/env';
 
 export default function UserPage() {
     //El hook useParams se utiliza para obtener el id del usuario de la URL.

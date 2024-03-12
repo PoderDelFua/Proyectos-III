@@ -6,7 +6,7 @@ import MultiSelect from '@/components/MultiSelect';
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { BACKEND_URI } from '@/env';
+import { BACKEND_URI } from '@/config/env';
 
 //Funciona de la siguiente manera:
 //1. El usuario llena el formulario con sus datos.

@@ -4,7 +4,7 @@ import Navbar from '@/components/Navbar';
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
-import { BACKEND_URI } from '@/env';
+import { BACKEND_URI } from '@/config/env';
 
 export default function LoginUser() {
 
