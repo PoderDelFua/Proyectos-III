@@ -12,6 +12,7 @@ export default function LoginUser() {
     //Seteamos el estado de correo y password porque son los datos que vamos a necesitar para iniciar sesión.
     const [correo, setcorreo] = useState("")
     const [password, setPassword] = useState("")
+    const [error, setError] = useState("");
     // El evento handleSubmit se activa cuando el usuario hace clic en el botón "Entrar".
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -30,7 +31,7 @@ export default function LoginUser() {
         });
 // Si el usuario ya existe, se muestra un mensaje de error.        
         if (!userExistsResponse.ok) {
-            alert('Error al iniciar sesión, por favor intenta de nuevo.');
+            setError('El usuario o la contraseña no son correctos.');
             return;
         }
 // data es la respuesta del servidor a la solicitud POST para verificar si el usuario ya existe.
@@ -43,7 +44,7 @@ export default function LoginUser() {
             localStorage.setItem('token', data.token);
             router.push(`/registered/${data.usuario._id}`);
         } else {
-            alert('Usuario o contraseña incorrecta');
+            setError('El usuario o la contraseña no son correctos.');
         }
     }
     //El evento handleCancelClick se activa cuando el usuario hace clic en el botón "Cancelar".
@@ -79,6 +80,7 @@ export default function LoginUser() {
                         <div className="">
                             <label htmlFor="password" className="block custom-letras-correo">Contraseña</label>
                             <input onChange={(e) => setPassword(e.target.value)} type="password" name="password" id="password"  className="w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600 :ring-indigo-600 custom-rectangulo" /> 
+                            {error && <p className="text-red-500  mt-8 mb-8 text-center">{error}</p>}
                         </div>
                         <div className="flex justify-between mt-8 mb-8">
                             <button type="button" onClick={handleCancelClick} className="cursor-pointer py-2 px-4 text-white font-bold w-1/2 rounded mr-8 custom-cancel-button">Cancelar</button>
