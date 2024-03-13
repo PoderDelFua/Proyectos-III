@@ -4,15 +4,16 @@ const router = express.Router()
 
 const { getItems, getItem, createItem, updateItem, deleteItem } = require("../controllers/horarios")
 const { validatorCreateItem, validatorGetItem } = require("../validators/horarios")
+const {authMiddleware} = require('../middleware/session')
 
 
 router.get("/", getItems);
 
 router.get("/:id", validatorGetItem, getItem)
 
-router.post("/", validatorCreateItem ,createItem)
+router.post("/", authMiddleware, validatorCreateItem ,createItem)
 
-router.put("/:id", validatorGetItem, validatorCreateItem, updateItem)
+router.put("/:id",authMiddleware , validatorGetItem, validatorCreateItem, updateItem)
 
 router.delete("/:id", validatorGetItem, deleteItem)
 

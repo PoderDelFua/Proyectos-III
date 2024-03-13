@@ -1,8 +1,6 @@
 const { check } = require("express-validator")
 const validateResults = require("../utils/handleValidator")
 
-const mongoose = require('mongoose');
-
 const validatorCreateItem = [
     check("lunes").exists().notEmpty(),
     check("lunes.fecha").exists().notEmpty().isDate(),

@@ -26,4 +26,4 @@ const horarios = new mongoose.Schema({
     versionKey: false
 }) 
 
-module.exports = mongoose.model('horarios', horarios)
+module.exports = mongoose.model('Horarios', horarios, 'horarios')

@@ -28,9 +28,9 @@ const usuarioSchema = new mongoose.Schema({
     nivel: [{
         type: String
     }],
-    disponibilidad: {
+    horarios: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Disponibilidad'
+        ref: 'Horario'
     },
     grupos: [{
         type: mongoose.Schema.Types.ObjectId,

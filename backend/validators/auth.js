@@ -14,6 +14,7 @@ const validatorRegister = [
     check("password").isString().exists().notEmpty().withMessage("La contraseña es obligatoria."),
     check("nickname").isString().exists().notEmpty().withMessage("El nickname es obligatorio."),
     check("instrumento").isArray().exists().notEmpty().withMessage("El instrumento es obligatorio."),
+    check("nivel").isArray().exists().notEmpty().withMessage("El nivel es obligatorio."),
     check("gusto_musical").isString().exists().notEmpty().withMessage("El gusto musical es obligatorio."),
     check("bio").isString().exists().notEmpty().withMessage("La bio es obligatoria."),
     (req, res, next) => {
@@ -39,5 +40,6 @@ const validatorActivity = [
         validateResults(req, res, next)
     }
 ]
+
 
 module.exports = { validatorRegister, validatorLogin, validatorActivity}

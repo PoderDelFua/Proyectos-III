@@ -48,7 +48,7 @@ export default function RegisterUser() {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ correo }),
+            body: JSON.stringify({ correo, nickname}),
         });
         
 
@@ -58,7 +58,7 @@ export default function RegisterUser() {
             alert(data.message)
             return
         } else if (data.exists) {
-            alert("The user with this email already exists")
+            alert("The user with this email/nickname already exists")
             return
         }
         // Si el usuario no existe, se crea un nuevo usuario en la base de datos.
@@ -75,10 +75,10 @@ export default function RegisterUser() {
         router.push('/')
     }
     //opciones instrumentos
-    const instrumentoOptions  = ['violin', 'guitarra', 'percusion', 'teclado']
+    var instrumentoOptions  = ['violin', 'guitarra', 'percusion', 'teclado']
 
     //opciones niveles
-    const nivelOptions = ['Principiante', 'Medio', 'Avanzado']
+    var nivelOptions = ['Principiante', 'Medio', 'Avanzado']
 
     //Todos los campos funcionan igual, por ejemplo, el campo "nombre" se actualiza con el valor del 
     //campo de entrada correspondiente. Se utiliza el método "setNombre" para actualizar el estado del campo "nombre".

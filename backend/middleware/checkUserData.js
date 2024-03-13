@@ -2,7 +2,7 @@ const { usuarioModel } = require('../models')
 
 // Middleware para verificar si un usuario existe por correo
 const checkUserExists = async (req, res) => {
-    const { correo } = req.body
+    const { correo, nickname } = req.body
     try {
         console.log('Buscando usuario en la base de datos...')
         const user = await usuarioModel.findOne({ correo: correo })
@@ -11,7 +11,12 @@ const checkUserExists = async (req, res) => {
             console.log('Usuario encontrado:', user)
             return res.status(400).json({ message: 'El usuario ya existe' })
         }
-        
+        //Ahora comprobamos si el nickname ya existe
+        const user2 = await usuarioModel.findOne({ nickname: nickname })
+        if (user2) {
+            console.log('Usuario encontrado:', user2)
+            return res.status(400).json({ message: 'El nickname ya existe' })
+        }        
         return res.status(200).json({ message: 'El usuario no existe' })
     } catch (error) {
         return res.status(500).json({ message: 'Error al buscar el usuario', error: error })

@@ -36,18 +36,16 @@ const createItem = async (req, res) => {
         handleHttpError(res, 'ERROR_CREATE_ITEMS')
     }
 }
-const updateItem = async (req, res) => {/*
+const updateItem = async (req, res) => {
     try{
         const {id, ...body} = matchedData(req)
-        // console.log("ID:", id)
-        // console.log("BODY:", body)
         const data = await HorarioModel.findOneAndUpdate({_id:id}, body, {new:true})
         res.send(data)
     }catch(err){
         console.log(err)
         handleHttpError(res, 'ERROR_UPDATE_ITEMS')
     }
-*/}
+}
 
 const deleteItem = async (req, res) => {/*
     try {
