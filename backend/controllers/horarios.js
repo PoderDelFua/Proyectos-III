@@ -1,4 +1,3 @@
-
 const { HorarioModel } = require('../models')
 
 const { handleHttpError} = require('../utils/handleError')
@@ -65,4 +64,5 @@ module.exports = {
     getItem,
     createItem, 
     updateItem,
-    deleteItem }
+    deleteItem 
+}

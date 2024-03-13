@@ -17,7 +17,8 @@ const usuarioSchema = new mongoose.Schema({
         unique: true
     },
     instrumento:[{
-        type: String
+        nombre: { type: String },
+        nivel: [{ type: String }]
     }],
     gusto_musical: {
         type: String
@@ -25,9 +26,6 @@ const usuarioSchema = new mongoose.Schema({
     bio: {
         type: String
     },
-    nivel: [{
-        type: String
-    }],
     horarios: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Horario'

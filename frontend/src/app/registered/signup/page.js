@@ -23,7 +23,6 @@ export default function RegisterUser() {
     const [instrumento, setInstrumento] = useState([]);
     const [gustoMusical, setGustoMusical] = useState('');
     const [bio, setBio] = useState('');
-    const [nivel, setNivel] = useState([]);
     const [correo, setCorreo] = useState('');
     const [password, setPassword] = useState('');
     const [nickname, setNickname] = useState('');
@@ -37,7 +36,6 @@ export default function RegisterUser() {
             instrumento,
             gusto_musical: gustoMusical,
             bio,
-            nivel,
             correo,
             password,
             nickname
@@ -98,7 +96,7 @@ export default function RegisterUser() {
                             <MultiSelect
                                 formFieldName={"instrumento"}
                                 options={instrumentoOptions}
-                                onChange={(selectedOptions) => setInstrumento(selectedOptions)}
+                                onChange={(selectedOptions) => setInstrumento(selectedOptions.map(option => ({ nombre: option, niveles: [] })))} 
                                 prompt="Seleccione uno o mas instrumentos" />
                         </div>
 
@@ -112,16 +110,27 @@ export default function RegisterUser() {
                             <textarea onChange={(e) => setBio(e.target.value)} name="bio" id="bio" rows="3" placeholder="Cuéntanos algo sobre ti..." className="w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600"></textarea>
                         </div>
 
-                        {instrumento.map((instrumentoSeleccionado) => (
-                            <div key={instrumentoSeleccionado} className="mb-6">
-                                <MultiSelect
-                                    formFieldName={`nivel_${instrumentoSeleccionado}`}
-                                    options={nivelOptions}
-                                    onChange={(selectedOptions) => setNivel(selectedOptions)}
-                                    prompt={`Seleccione el nivel para ${instrumentoSeleccionado}`}
-                                />
+                        {instrumento.map((inst, index) => (
+                            <div key={inst.nombre} className="mb-6">
+                            <MultiSelect
+                                formFieldName={`nivel_${inst.nombre}`}
+                                options={nivelOptions}
+                                value={inst.niveles}
+                                onChange={(selectedOptions) => {
+                                const newInstrumento = instrumento.map((instrumento, idx) => {
+                                    if (index === idx) {
+                                    return { ...instrumento, nivel: selectedOptions };
+                                    }
+                                    return instrumento;
+                                });
+                                setInstrumento(newInstrumento);
+                                }}
+                                prompt={`Seleccione el nivel para ${inst.nombre}`}
+                            />
                             </div>
-                        ))}
+                        ))
+                        }
+
                         
                         <div className="mb-6">
                             <label htmlFor="nickname" className="block text-gray-800 font-bold">Nickname:</label>

@@ -1,5 +1,6 @@
 const { usuarioModel } = require("../models")
 const { handleHttpError } = require("../utils/handleError")
+const { matchedData } = require("express-validator")
 
 const getItems = async (req, res) => {
     try{
@@ -38,24 +39,16 @@ const checkUserExists = async (req, res) => {
 }
 
 const updateItem = async (req, res) => {
-    const { id } = req.params 
-    const { disponibilidad } = req.body 
+    try{
+        const { id, ...body } = matchedData(req)
 
-    try {
-        const data = await usuarioModel.findByIdAndUpdate(
-            id,
-            { disponibilidad: disponibilidad },
-            { new: true } 
-        )
-
-        if (!data) {
-            handleHttpError(res, "USER_NOT_EXISTS", 404)
-        }
-
+        const data = await usuarioModel.findByIdAndUpdate(id, body, {new:true})
+        //Tenemos que enviar el objeto actualizado, por eso usamos {new:true}
+        //El body debe contener los campos a actualizar, no es necesario enviar todos los campos
         res.send({data})
-    } catch (error) {
-        handleHttpError(res, "ERROR_UPDATE_USER")
-    }
+     }catch(err){
+            handleHttpError(res, "ERROR_UPDATE_USER")
+        }
 }
 
 const deleteItem = async (req, res) => {

@@ -16,15 +16,14 @@ export default function ModifyUser() {
     const [instrumento, setInstrumento] = useState([]);
     const [gustoMusical, setGustoMusical] = useState('');
     const [bio, setBio] = useState('');
-    const [nivel, setNivel] = useState([]);
     const [correo, setCorreo] = useState('');
     const [password, setPassword] = useState('');
     const [nickname, setNickname] = useState('');
     
     //El hook useEffect se utiliza para cargar la información del usuario cuando la página se carga por primera vez.
     useEffect(() => {
-        //El token se obtiene del almacenamiento local y se utiliza para verificar si el usuario está autenticado.
 
+        //El token se obtiene del almacenamiento local y se utiliza para verificar si el usuario está autenticado.
         const token = localStorage.getItem('token');
         //Si no hay token, redirigimos al usuario a la página de inicio.
         if(!token){
@@ -66,21 +65,23 @@ export default function ModifyUser() {
         e.preventDefault()
         //Se asignan los valores de user por si no se actualizan los campos que se envien los que ya tenia
         const user = {
-            nombre: userData.nombre,
-            instrumento: userData.instrumento ,
-            gusto_musical: userData.gusto_musical,
-            bio: userData.bio,
-            nivel: userData.nivel,
+            id: userData._id,
+            nombre: nombre || userData.nombre,
+            instrumento: instrumento || userData.instrumento,
+            gusto_musical: gustoMusical || userData.gusto_musical,
+            bio: bio || userData.bio,
             correo: userData.correo,
-            password: userData.password,
-            nickname: userData.nickname
+            nickname: nickname || userData.nickname
         };
 
         try {
-            const response = await fetch(`${BACKEND_URI}/usuario/updateItem/${userData._id}`, {
-                method: 'PUT',
+            console.log(userData._id)
+            console.log(user)
+            const response = await fetch(`${BACKEND_URI}/usuario/${userData._id}`, {
+                method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
                 },
                 body: JSON.stringify(user),
             });
@@ -149,7 +150,7 @@ export default function ModifyUser() {
                             <MultiSelect
                                 formFieldName={"instrumento"}
                                 options={instrumentoOptions}
-                                onChange={(selectedOptions) => setInstrumento(selectedOptions)}
+                                onChange={(selectedOptions) => setInstrumento(selectedOptions.map(option => ({ nombre: option, niveles: [] })))} 
                                 prompt="Seleccione uno o mas instrumentos" />
                         </div>
 
@@ -158,16 +159,27 @@ export default function ModifyUser() {
                             <textarea onChange={(e) => setBio(e.target.value)} name="bio" id="bio" rows="3" placeholder={userData.bio} className="w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600"></textarea>
                         </div>
 
-                        {instrumento.map((instrumentoSeleccionado) => (
-                            <div key={instrumentoSeleccionado} className="mb-6">
-                                <MultiSelect
-                                    formFieldName={`nivel_${instrumentoSeleccionado}`}
-                                    options={nivelOptions}
-                                    onChange={(selectedOptions) => setNivel(selectedOptions)}
-                                    prompt={`Seleccione el nivel para ${instrumentoSeleccionado}`}
-                                />
+
+                        {instrumento.map((inst, index) => (
+                            <div key={inst.nombre} className="mb-6">
+                            <MultiSelect
+                                formFieldName={`nivel_${inst.nombre}`}
+                                options={nivelOptions}
+                                value={inst.niveles}
+                                onChange={(selectedOptions) => {
+                                const newInstrumento = instrumento.map((instrumento, idx) => {
+                                    if (index === idx) {
+                                    return { ...instrumento, nivel: selectedOptions };
+                                    }
+                                    return instrumento;
+                                });
+                                setInstrumento(newInstrumento);
+                                }}
+                                prompt={`Seleccione el nivel para ${inst.nombre}`}
+                            />
                             </div>
-                        ))}
+                        ))
+                        }
 
                         <div className="mb-6">
                             <label htmlFor="nickname" className="block text-gray-800 font-bold">Nickname:</label>

@@ -14,13 +14,14 @@ const validatorRegister = [
     check("password").isString().exists().notEmpty().withMessage("La contraseña es obligatoria."),
     check("nickname").isString().exists().notEmpty().withMessage("El nickname es obligatorio."),
     check("instrumento").isArray().exists().notEmpty().withMessage("El instrumento es obligatorio."),
-    check("nivel").isArray().exists().notEmpty().withMessage("El nivel es obligatorio."),
     check("gusto_musical").isString().exists().notEmpty().withMessage("El gusto musical es obligatorio."),
     check("bio").isString().exists().notEmpty().withMessage("La bio es obligatoria."),
     (req, res, next) => {
         validateResults(req, res, next)
     }
 ]
+
+
 const validatorLogin = [
     check("correo").exists().notEmpty().isString().withMessage("El correo no es válido."),
     check("password").exists().notEmpty().isLength( {min:6, max: 16} ).withMessage("La contraseña no es válida."),
@@ -41,5 +42,17 @@ const validatorActivity = [
     }
 ]
 
+const validatorUpdateUser = [
+    check("id").isString().exists().notEmpty().withMessage("El id es obligatorio."),
+    check("nombre").isString().optional(),
+    check("nickname").isString().optional(),
+    check("instrumento").isArray().optional(),
+    check("gusto_musical").isString().optional(),
+    check("nivel").isArray().optional(),
+    check("bio").isString().optional(),
+    (req, res, next) => {
+        validateResults(req, res, next)
+    }
+]
 
-module.exports = { validatorRegister, validatorLogin, validatorActivity}
+module.exports = { validatorRegister, validatorLogin, validatorActivity, validatorUpdateUser }
