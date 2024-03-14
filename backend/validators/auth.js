@@ -36,19 +36,16 @@ const validatorActivity = [
     check("fecha").isString().exists().notEmpty().withMessage("La fecha es obligatoria."),
     check("instrumento").isArray().exists().notEmpty().withMessage("El instrumento es obligatorio."),
     check("gusto_musical").isString().exists().notEmpty().withMessage("El gusto musical es obligatorio."),
-    check("nivel").isArray().exists().notEmpty().withMessage("El nivel es obligatorio."),
     (req, res, next) => {
         validateResults(req, res, next)
     }
 ]
 
 const validatorUpdateUser = [
-    check("id").isString().exists().notEmpty().withMessage("El id es obligatorio."),
     check("nombre").isString().optional(),
     check("nickname").isString().optional(),
     check("instrumento").isArray().optional(),
     check("gusto_musical").isString().optional(),
-    check("nivel").isArray().optional(),
     check("bio").isString().optional(),
     (req, res, next) => {
         validateResults(req, res, next)

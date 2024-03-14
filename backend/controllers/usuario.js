@@ -1,4 +1,5 @@
 const { usuarioModel } = require("../models")
+const usuario = require("../models/nosql/usuario")
 const { handleHttpError } = require("../utils/handleError")
 const { matchedData } = require("express-validator")
 
@@ -12,13 +13,10 @@ const getItems = async (req, res) => {
 }
 
 const getItem = async (req, res) => {
-    const { id } = req.params // Asumiendo que usas el ID del usuario en la ruta como /:id
+    datosUser = req.user
     try {
-        const data = await usuarioModel.findById(id)
-        if (!data) {
-            handleHttpError(res, "USER_NOT_EXISTS", 404)
-        }
-        res.send({data})
+        const data = await usuarioModel.findById(datosUser._id)
+        res.send({data})        
     } catch (err) {
         handleHttpError(res, "ERROR_GET_USER")
     }
@@ -40,9 +38,9 @@ const checkUserExists = async (req, res) => {
 
 const updateItem = async (req, res) => {
     try{
-        const { id, ...body } = matchedData(req)
-
-        const data = await usuarioModel.findByIdAndUpdate(id, body, {new:true})
+        var datosUser = req.user
+        datosUser = matchedData(req)
+        const data = await usuarioModel.findByIdAndUpdate(req.user._id, datosUser, {new: true})
         //Tenemos que enviar el objeto actualizado, por eso usamos {new:true}
         //El body debe contener los campos a actualizar, no es necesario enviar todos los campos
         res.send({data})
