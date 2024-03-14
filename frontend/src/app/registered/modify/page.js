@@ -49,7 +49,15 @@ export default function UpdateUser() {
     
             fetchData()
         }, [])
-
+        useEffect(() => {
+            if (userData) {
+                setNombre(userData.nombre)
+                setInstrumento([...userData.instrumento])
+                setGustoMusical(userData.gusto_musical)
+                setBio(userData.bio)
+                setNickname(userData.nickname)
+            }
+        }, [userData]) 
     if (!userData) {
         return <div>Cargando...</div>
     }
