@@ -68,8 +68,8 @@ export default function RegisterUser() {
         })
             .then((res) => res.json())
             .then((data) => console.log(data))
-
-        router.push('/')
+        //Si no hay errores, el usuario es redirigido a la página de inicio de sesión.
+        router.push('/login')
     }
     //opciones instrumentos
     var instrumentoOptions  = ['violin', 'guitarra', 'percusion', 'teclado']

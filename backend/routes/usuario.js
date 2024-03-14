@@ -6,8 +6,8 @@ const { getItems, getItem, updateItem, deleteItem } = require("../controllers/us
 const {validatorUpdateUser} = require("../validators/auth")
 
 router.post("/checkUserExists", checkUserExists)
-router.get("/:id", authMiddleware, getItem)
+router.get("/getUserData", authMiddleware, getItem)
 
-router.patch("/:id", authMiddleware, validatorUpdateUser, updateItem)
+router.patch("/updateUserData", authMiddleware, validatorUpdateUser, updateItem)
 
 module.exports = router

@@ -20,7 +20,7 @@ const authMiddleware = async (req, res, next) => {
 
         const user = await usuarioModel.findById(dataToken._id)
         req.user = user // Inyecto al user en la petición
-
+        req.user._id = dataToken._id // Inyecto el id en la petición
         next()
 
     }catch(err){
