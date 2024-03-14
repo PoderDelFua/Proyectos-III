@@ -11,7 +11,7 @@ const validatorRegister = [
         }
     }),
     check("nombre").isString().exists().notEmpty().withMessage("El nombre es obligatorio."),
-    check("password").isString().exists().notEmpty().withMessage("La contraseña es obligatoria."),
+    check("password").isString().exists().notEmpty().isLength( {min:6, max: 16} ).withMessage("La contraseña debe tener entre 6 y 16 caracteres."),
     check("nickname").isString().exists().notEmpty().withMessage("El nickname es obligatorio."),
     check("instrumento").isArray().exists().notEmpty().withMessage("El instrumento es obligatorio."),
     check("gusto_musical").isString().exists().notEmpty().withMessage("El gusto musical es obligatorio."),
