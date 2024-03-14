@@ -16,12 +16,11 @@ const actividadesSchema = new mongoose.Schema({
     gusto_musical: {
         type: String
     },
-    instrumento: [{
-        type: String
+    instrumento:[{
+        nombre: { type: String },
+        nivel: [{ type: String }]
     }],
-    nivel: [{
-        type: String
-    }],
+
     usuarios: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Usuario'
