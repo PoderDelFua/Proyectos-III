@@ -1,6 +1,5 @@
 "use client"
 
-import Navbar from '@/components/Navbar';
 import MultiSelect from '@/components/MultiSelect';
 
 import { useState } from 'react';
@@ -83,7 +82,6 @@ export default function RegisterUser() {
     //Y al hacer clic en el botón "Registrarse", se llama a la función "handleSubmit" que envía los datos del usuario al servidor.
     return (
         <section>
-            <Navbar />
             <div className="min-h-screen bg-gray-100 flex justify-center">
                 <div className="py-6 px-8 mt-20 bg-white rounded shadow-xl">
                     <form onSubmit={handleSubmit}>
