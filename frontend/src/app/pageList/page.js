@@ -82,7 +82,7 @@ export default function PageList() {
                             <option value="guitarra">guitarra</option>
                         </select>
                     </form>
-                    <div className='grid grid-cols-3 gap-4 mt-8'>
+                    <div className='grid grid-cols-3 gap-4 mt-8 auto-rows-auto'>
                         {pageCards.map(page => (
                             <PageCard page={page} userId='' userName='' key={page.id} />
                         ))}

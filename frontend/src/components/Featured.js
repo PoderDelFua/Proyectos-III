@@ -13,7 +13,7 @@ function Featured() {
   ];
 
   return (
-    <div className="fixed inset-y-0 right-0 w-64 bg-white shadow-lg rounded-l-3xl p-4">
+    <div className="fixed inset-y-0 right-0 w-64 bg-white shadow-2xl rounded-l-3xl p-4">
       <div className="flex justify-between items-center">
         <h2 className="text-lg font-semibold">Destacados</h2>
         <CogIcon className="h-5 w-5" />
