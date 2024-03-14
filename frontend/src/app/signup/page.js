@@ -20,7 +20,7 @@ export default function RegisterUser() {
 
     const [nombre, setNombre] = useState('')
     const [instrumento, setInstrumento] = useState([])
-    const [gustoMusical, setGustoMusical] = useState('')
+    const [gustoMusical, setGustoMusical] = useState([])
     const [bio, setBio] = useState('')
     const [correo, setCorreo] = useState('')
     const [password, setPassword] = useState('')
@@ -72,10 +72,13 @@ export default function RegisterUser() {
         router.push('/login')
     }
     //opciones instrumentos
-    var instrumentoOptions  = ['violin', 'guitarra', 'percusion', 'teclado']
+    var instrumentoOptions = ['Flauta travesera', 'Flauta', 'Clarinete', 'Saxofón', 'Trompeta', 'Trombón', 'Trompa', 'Tuba', 'Oboe', 'Fagot', 'Guitarra acústica', 'Guitarra eléctrica', 'Guitarra clásica', 'Bajo eléctrico', 'Violín', 'Viola', 'Violonchelo', 'Contrabajo', 'Ukelele', 'Banjo', 'Piano/Teclado eléctrico', 'Batería', 'Xilófono', 'Cajón']
 
     //opciones niveles
     var nivelOptions = ['Principiante', 'Medio', 'Avanzado']
+
+    //opciones generos musicales
+    var generosOptions = ['Rock', 'Jazz', 'Música clásica', 'Pop', 'Metal']
 
     //Todos los campos funcionan igual, por ejemplo, el campo "nombre" se actualiza con el valor del 
     //campo de entrada correspondiente. Se utiliza el método "setNombre" para actualizar el estado del campo "nombre".
@@ -99,8 +102,11 @@ export default function RegisterUser() {
                         </div>
 
                         <div className="mb-6">
-                            <label htmlFor="gustoMusical" className="block text-gray-800 font-bold">Gusto musical:</label>
-                            <input onChange={(e) => setGustoMusical(e.target.value)} type="text" name="gustoMusical" id="gustoMusical" placeholder="Tu gusto musical" className="w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600" />
+                            <MultiSelect
+                                    formFieldName={"gustoMusical"}
+                                    options={generosOptions}
+                                    onChange={(selectedOptions) => setGustoMusical(selectedOptions)} 
+                                    prompt="Seleccione los géneros musicales que te interesen" />
                         </div>
 
                         <div className="mb-6">

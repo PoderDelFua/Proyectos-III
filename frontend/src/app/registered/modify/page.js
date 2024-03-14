@@ -11,7 +11,7 @@ export default function UpdateUser() {
     const [userData, setUserData] = useState(null)
     const [nombre, setNombre] = useState('')
     const [instrumento, setInstrumento] = useState([])
-    const [gustoMusical, setGustoMusical] = useState('')
+    const [gustoMusical, setGustoMusical] = useState([])
     const [bio, setBio] = useState('')
     const [nickname, setNickname] = useState('')
     
@@ -99,8 +99,9 @@ export default function UpdateUser() {
         }
     }
 
-    var instrumentoOptions = ['violin', 'guitarra', 'percusion', 'teclado']
+    var instrumentoOptions = ['Flauta travesera', 'Flauta', 'Clarinete', 'Saxofón', 'Trompeta', 'Trombón', 'Trompa', 'Tuba', 'Oboe', 'Fagot', 'Guitarra acústica', 'Guitarra eléctrica', 'Guitarra clásica', 'Bajo eléctrico', 'Violín', 'Viola', 'Violonchelo', 'Contrabajo', 'Ukelele', 'Banjo', 'Piano/Teclado eléctrico', 'Batería', 'Xilófono', 'Cajón']
     var nivelOptions = ['Principiante', 'Medio', 'Avanzado']
+    var generosOptions = ['Rock', 'Jazz', 'Música clásica', 'Pop', 'Metal']
 
     return (
         <section>
@@ -111,17 +112,20 @@ export default function UpdateUser() {
                             <label htmlFor="nombre" className="block text-gray-800 font-bold">Nombre completo:</label>
                             <input value={nombre} onChange={(e) => setNombre(e.target.value)} type="text" name="nombre" id="nombre" placeholder="John Doe" className="w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600" />
                         </div>
-                    <div className="mb-6">
-                        <MultiSelect
-                                formFieldName={"instrumento"}
-                                options={instrumentoOptions}
-                                onChange={(selectedOptions) => setInstrumento(selectedOptions.map(option => ({ nombre: option, niveles: [] })))} 
-                                prompt="Seleccione uno o mas instrumentos" />
+                        <div className="mb-6">
+                            <MultiSelect
+                                    formFieldName={"instrumento"}
+                                    options={instrumentoOptions}
+                                    onChange={(selectedOptions) => setInstrumento(selectedOptions.map(option => ({ nombre: option, niveles: [] })))} 
+                                    prompt="Seleccione uno o mas instrumentos" />
                         </div>
 
                         <div className="mb-6">
-                            <label htmlFor="gustoMusical" className="block text-gray-800 font-bold">Gusto musical:</label>
-                            <input value={gustoMusical} onChange={(e) => setGustoMusical(e.target.value)} type="text" name="gustoMusical" id="gustoMusical" placeholder="Tu gusto musical" className="w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600" />
+                            <MultiSelect
+                                    formFieldName={"gustoMusical"}
+                                    options={generosOptions}
+                                    onChange={(selectedOptions) => setGustoMusical(selectedOptions)} 
+                                    prompt="Seleccione los géneros musicales que te interesen" />
                         </div>
 
                         <div className="mb-6">

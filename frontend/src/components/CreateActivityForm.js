@@ -85,7 +85,7 @@ export default function UpdateUser() {
         router.push('/profile')
     }
 
-    var instrumentoOptions = ['violin', 'guitarra', 'percusion', 'teclado']
+    var instrumentoOptions = ['Flauta travesera', 'Flauta', 'Clarinete', 'Saxofón', 'Trompeta', 'Trombón', 'Trompa', 'Tuba', 'Oboe', 'Fagot', 'Guitarra acústica', 'Guitarra eléctrica', 'Guitarra clásica', 'Bajo eléctrico', 'Violín', 'Viola', 'Violonchelo', 'Contrabajo', 'Ukelele', 'Banjo', 'Piano/Teclado eléctrico', 'Batería', 'Xilófono', 'Cajón']
     var nivelOptions = ['Principiante', 'Medio', 'Avanzado']
     var visibilidadOptions = ['Privado', 'Publico']
 

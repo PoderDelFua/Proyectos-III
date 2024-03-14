@@ -51,7 +51,7 @@ function Sidebar() {
                 </div>
               )}
               <a
-                href="#"
+                href="/registered/modify"
                 onClick={() => handleItemClick('profile')}
                 className={`group flex items-center py-2 px-4 text-black ${
                   activeItem === 'profile' ? 'bg-white rounded-l-full' : 'hover:bg-light-gray rounded-full'
