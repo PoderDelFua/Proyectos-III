@@ -2,6 +2,8 @@
 
 import Navbar from '@/components/Navbar';
 import PageCard from '@/components/PageCard'
+import Sidebar from '@/components/Sidebar';
+import Featured from '@/components/Featured';
 
 import { useState, useEffect } from 'react'
 
@@ -61,30 +63,37 @@ export default function PageList() {
 
     return (
         <section>
-            <div>
-                <Navbar />
-            </div>
+            {/* <div>
+                <Sidebar />
+            </div> */}
             <div className="h-screen bg-white shadow-inner flex justify-center">
-                <div className="relative p-4 w-full max-w-3xl h-full md:h-auto">
+                {/*<Sidebar /> {/* This will be the left sidebar */}
+                <div className="relative p-4 w h md:h-auto">
                     <form onSubmit={handleSearch} className="flex flex-col md:flex-row gap-3">
-                        <div className="flex">
+                        <div className="flex flex-grow">
                             <input type="text" placeholder="Search for webpages..." onChange={(e) => setSearchTerm(e.target.value)}
-                                   className="w-full md:w-80 px-3 h-10 rounded-l border-2 border-indigo-600 focus:outline-none focus:border-indigo-500" />
+                                   className="w-full px-3 h-10 rounded-l border-2 border-indigo-600 focus:outline-none focus:border-indigo-500" />
                             <button type="submit" className="bg-indigo-600 text-white rounded-r px-2 md:px-3 py-0 md:py-1">Buscar</button>
                         </div>
                         <select id="activity" name="activity" onChange={(e) => setActivity(e.target.value)}
-                                className="w-full h-10 border-2 border-indigo-600 focus:outline-none focus:border-indigo-500 text-gray-700 rounded px-2 md:px-3 py-0 md:py-1 tracking-wider">
+                                className="w-full md:w-1/3 h-10 border-2 border-indigo-600 focus:outline-none focus:border-indigo-500 text-gray-700 rounded px-4 py-2 tracking-wider">
                             <option value="any">Cualquier instrumento</option>
                             <option value="violin">violin</option>
                             <option value="guitarra">guitarra</option>
                         </select>
                     </form>
-                    <div className='grid mt-8'>
+                    <div className='grid grid-cols-3 gap-4 mt-8'>
                         {pageCards.map(page => (
                             <PageCard page={page} userId='' userName='' key={page.id} />
                         ))}
                     </div>
                 </div>
+            </div>
+            <div>
+                <Sidebar />
+            </div>
+            <div>
+                <Featured />
             </div>
         </section>
     );

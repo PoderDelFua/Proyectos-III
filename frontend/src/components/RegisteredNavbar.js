@@ -14,7 +14,7 @@ export default function RegisteredNavbar({ userId, userEmail }) {
                     </div>
                     <div className="flex space-x-4 items-center">
                         <Link href={`/registered/${userId}/modify`} className="text-gray-800 text-sm">{userEmail}</Link>
-                        <Link href="/"  className="bg-indigo-600 px-4 py-2 rounded text-white hover:bg-indigo-500 text-sm">LOGOUT</Link>
+                        <Link href="/" className="bg-indigo-600 px-4 py-2 rounded text-white hover:bg-indigo-500 text-sm">LOGOUT</Link>
                     </div>
                 </div>
             </nav>

@@ -6,15 +6,9 @@ import MultiSelect from '@/components/MultiSelect';
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { BACKEND_URI } from '@/config/env';
+//import { v4 as uuidv4 } from 'uuid'; Hace falta esto????
 
-//Funciona de la siguiente manera:
-//1. El usuario llena el formulario con sus datos.
-//2. Al hacer clic en el botón "Registrarse", se envía una solicitud POST al servidor con los datos del usuario.
-//3. El servidor verifica si el usuario ya existe en la base de datos.
-//4. Si el usuario no existe, se crea un nuevo usuario en la base de datos.
-//5. El servidor responde con un mensaje de éxito.
-//6. El usuario es redirigido a la página de inicio de sesión.
+const BACKEND_URL = "http://localhost:9000/api";
 
 export default function RegisterUser() {
     const router = useRouter();
@@ -30,7 +24,8 @@ export default function RegisterUser() {
     
     const handleSubmit = async (e) => {
         e.preventDefault()
-        // user es un objeto que contiene los datos del usuario, que se enviará al servidor.
+
+
         const user = {
             nombre,
             instrumento,
@@ -40,27 +35,28 @@ export default function RegisterUser() {
             password,
             nickname
         };
-        // userExistsResponse es la respuesta del servidor a la solicitud POST para verificar si el usuario ya existe.
-        const userExistsResponse = await fetch(`${BACKEND_URI}/usuario/checkUserExists`, {
+
+        const userExistsResponse = await fetch(`${BACKEND_URL}/usuario/checkUserExists`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ correo, nickname}),
+            body: JSON.stringify({ correo }),
         });
         
 
         const data = await userExistsResponse.json()
-        // Si el usuario ya existe, se muestra un mensaje de error.
+        console.log(data)
+
         if (data.status == 500) {
             alert(data.message)
             return
         } else if (data.exists) {
-            alert("The user with this email/nickname already exists")
+            alert("The user already exists")
             return
         }
-        // Si el usuario no existe, se crea un nuevo usuario en la base de datos.
-        fetch(`${BACKEND_URI}/auth/register`, {
+
+        fetch(`${BACKEND_URL}/usuario`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -72,15 +68,9 @@ export default function RegisterUser() {
 
         router.push('/')
     }
-    //opciones instrumentos
-    var instrumentoOptions  = ['violin', 'guitarra', 'percusion', 'teclado']
 
-    //opciones niveles
-    var nivelOptions = ['Principiante', 'Medio', 'Avanzado']
+    const instrumentoOptions  = ['violin', 'guitarra', 'percusion', 'teclado']
 
-    //Todos los campos funcionan igual, por ejemplo, el campo "nombre" se actualiza con el valor del 
-    //campo de entrada correspondiente. Se utiliza el método "setNombre" para actualizar el estado del campo "nombre".
-    //Y al hacer clic en el botón "Registrarse", se llama a la función "handleSubmit" que envía los datos del usuario al servidor.
     return (
         <section>
             <Navbar />
@@ -96,7 +86,7 @@ export default function RegisterUser() {
                             <MultiSelect
                                 formFieldName={"instrumento"}
                                 options={instrumentoOptions}
-                                onChange={(selectedOptions) => setInstrumento(selectedOptions.map(option => ({ nombre: option, niveles: [] })))} 
+                                onChange={(selectedOptions) => setInstrumento(selectedOptions)}
                                 prompt="Seleccione uno o mas instrumentos" />
                         </div>
 
@@ -110,28 +100,6 @@ export default function RegisterUser() {
                             <textarea onChange={(e) => setBio(e.target.value)} name="bio" id="bio" rows="3" placeholder="Cuéntanos algo sobre ti..." className="w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600"></textarea>
                         </div>
 
-                        {instrumento.map((inst, index) => (
-                            <div key={inst.nombre} className="mb-6">
-                            <MultiSelect
-                                formFieldName={`nivel_${inst.nombre}`}
-                                options={nivelOptions}
-                                value={inst.niveles}
-                                onChange={(selectedOptions) => {
-                                const newInstrumento = instrumento.map((instrumento, idx) => {
-                                    if (index === idx) {
-                                    return { ...instrumento, nivel: selectedOptions };
-                                    }
-                                    return instrumento;
-                                });
-                                setInstrumento(newInstrumento);
-                                }}
-                                prompt={`Seleccione el nivel para ${inst.nombre}`}
-                            />
-                            </div>
-                        ))
-                        }
-
-                        
                         <div className="mb-6">
                             <label htmlFor="nickname" className="block text-gray-800 font-bold">Nickname:</label>
                             <input onChange={(e) => setNickname(e.target.value)} type="text" name="nickname" id="nickname" placeholder="Tu apodo" className="w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600" />
