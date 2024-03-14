@@ -1,14 +1,14 @@
 "use client"
 
-import { useState } from 'react';
-import { HomeIcon, UserIcon, Cog6ToothIcon, CalendarDaysIcon } from '@heroicons/react/24/solid';
+import { useState } from 'react'
+import { HomeIcon, UserIcon, Cog6ToothIcon, CalendarDaysIcon } from '@heroicons/react/24/solid'
 
 function Sidebar() {
-    const [activeItem, setActiveItem] = useState('home');
+    const [activeItem, setActiveItem] = useState('home')
 
     const handleItemClick = (item) => {
-        setActiveItem(item);
-    };
+        setActiveItem(item)
+    }
 
     return (
         <div className="flex h-screen">
@@ -115,7 +115,7 @@ function Sidebar() {
                 </div>
             </div>
         </div>
-    );
+    )
 }
 
-export default Sidebar;
+export default Sidebar

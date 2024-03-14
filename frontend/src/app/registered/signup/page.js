@@ -1,11 +1,11 @@
 "use client"
 
-import MultiSelect from '@/components/MultiSelect';
+import MultiSelect from '@/components/MultiSelect'
 
-import { useState } from 'react';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { BACKEND_URI } from '@/config/env';
+import { useState } from 'react'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import { BACKEND_URI } from '@/config/env'
 
 //Funciona de la siguiente manera:
 //1. El usuario llena el formulario con sus datos.
@@ -16,15 +16,15 @@ import { BACKEND_URI } from '@/config/env';
 //6. El usuario es redirigido a la página de inicio de sesión.
 
 export default function RegisterUser() {
-    const router = useRouter();
+    const router = useRouter()
 
-    const [nombre, setNombre] = useState('');
-    const [instrumento, setInstrumento] = useState([]);
-    const [gustoMusical, setGustoMusical] = useState('');
-    const [bio, setBio] = useState('');
-    const [correo, setCorreo] = useState('');
-    const [password, setPassword] = useState('');
-    const [nickname, setNickname] = useState('');
+    const [nombre, setNombre] = useState('')
+    const [instrumento, setInstrumento] = useState([])
+    const [gustoMusical, setGustoMusical] = useState('')
+    const [bio, setBio] = useState('')
+    const [correo, setCorreo] = useState('')
+    const [password, setPassword] = useState('')
+    const [nickname, setNickname] = useState('')
 
     
     const handleSubmit = async (e) => {
@@ -38,7 +38,7 @@ export default function RegisterUser() {
             correo,
             password,
             nickname
-        };
+        }
         // userExistsResponse es la respuesta del servidor a la solicitud POST para verificar si el usuario ya existe.
         const userExistsResponse = await fetch(`${BACKEND_URI}/usuario/checkUserExists`, {
             method: 'POST',
@@ -46,7 +46,7 @@ export default function RegisterUser() {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({ correo, nickname}),
-        });
+        })
         
 
         const data = await userExistsResponse.json()
@@ -117,11 +117,11 @@ export default function RegisterUser() {
                                 onChange={(selectedOptions) => {
                                 const newInstrumento = instrumento.map((instrumento, idx) => {
                                     if (index === idx) {
-                                    return { ...instrumento, nivel: selectedOptions };
+                                    return { ...instrumento, nivel: selectedOptions }
                                     }
-                                    return instrumento;
-                                });
-                                setInstrumento(newInstrumento);
+                                    return instrumento
+                                })
+                                setInstrumento(newInstrumento)
                                 }}
                                 prompt={`Seleccione el nivel para ${inst.nombre}`}
                             />
@@ -151,5 +151,5 @@ export default function RegisterUser() {
                 </div>
             </div>
         </section>
-    );
+    )
 }

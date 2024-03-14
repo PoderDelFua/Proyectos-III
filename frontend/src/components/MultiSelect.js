@@ -1,8 +1,8 @@
-"use client";
+"use client"
 
 // source code: https://github.com/prutya/tutorial-multi-select-dropdown/blob/main/
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react"
 
 export default function MultiSelect({
     formFieldName,
@@ -10,53 +10,53 @@ export default function MultiSelect({
     onChange,
     prompt = "Select one or more options",
 }) {
-    const [selectedOptions, setSelectedOptions] = useState([]);
-    const optionsListRef = useRef(null);
+    const [selectedOptions, setSelectedOptions] = useState([])
+    const optionsListRef = useRef(null)
 
     const handleChange = (e) => {
-        const isChecked = e.target.checked;
-        const option = e.target.value;
+        const isChecked = e.target.checked
+        const option = e.target.value
 
-        var selectedOptionSet = new Set(selectedOptions);
+        var selectedOptionSet = new Set(selectedOptions)
 
         if (isChecked) {
-            selectedOptionSet.add(option);
+            selectedOptionSet.add(option)
         } else {
-            selectedOptionSet.delete(option);
+            selectedOptionSet.delete(option)
         }
 
-        const newSelectedOptions = Array.from(selectedOptionSet);
+        const newSelectedOptions = Array.from(selectedOptionSet)
 
-        setSelectedOptions(newSelectedOptions);
-        onChange(newSelectedOptions);
-    };
+        setSelectedOptions(newSelectedOptions)
+        onChange(newSelectedOptions)
+    }
 
-    const isSelectAllEnabled = selectedOptions.length < options.length;
+    const isSelectAllEnabled = selectedOptions.length < options.length
 
     const handleSelectAllClick = (e) => {
-        e.preventDefault();
+        e.preventDefault()
 
-        const optionsInputs = optionsListRef.current.querySelectorAll("input");
+        const optionsInputs = optionsListRef.current.querySelectorAll("input")
         optionsInputs.forEach((input) => {
-            input.checked = true;
-        });
+            input.checked = true
+        })
 
-        setSelectedOptions([...options]);
-        onChange([...options]);
-    };
+        setSelectedOptions([...options])
+        onChange([...options])
+    }
 
-    const isClearSelectionEnabled = selectedOptions.length > 0;
+    const isClearSelectionEnabled = selectedOptions.length > 0
     const handleClearSelectionClick = (e) => {
-        e.preventDefault();
+        e.preventDefault()
 
-        const optionsInputs = optionsListRef.current.querySelectorAll("input");
+        const optionsInputs = optionsListRef.current.querySelectorAll("input")
         optionsInputs.forEach((input) => {
-            input.checked = false;
-        });
+            input.checked = false
+        })
 
-        setSelectedOptions([]);
-        onChange([]);
-    };
+        setSelectedOptions([])
+        onChange([])
+    }
 
     return (
         <label className="relative">
@@ -109,10 +109,10 @@ export default function MultiSelect({
                                     <span className="ml-1">{option}</span>
                                 </label>
                             </li>
-                        );
+                        )
                     })}
                 </ul>
             </div>
         </label>
-    );
+    )
 }

@@ -3,10 +3,10 @@
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from 'uuid'
 
 export default function PageCard({ page, userId, userName }) {
-    const router = useRouter();
+    const router = useRouter()
 
     const handleRedirect = (e) => {
         e.preventDefault()

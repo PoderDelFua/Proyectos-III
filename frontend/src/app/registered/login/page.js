@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
-import { BACKEND_URI } from '@/config/env';
+import { BACKEND_URI } from '@/config/env'
 
 export default function LoginUser() {
 
@@ -11,7 +11,7 @@ export default function LoginUser() {
     //Seteamos el estado de correo y password porque son los datos que vamos a necesitar para iniciar sesión.
     const [correo, setcorreo] = useState("")
     const [password, setPassword] = useState("")
-    const [error, setError] = useState("");
+    const [error, setError] = useState("")
     // El evento handleSubmit se activa cuando el usuario hace clic en el botón "Entrar".
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -20,36 +20,36 @@ export default function LoginUser() {
             correo: correo,
             password: password,
         }
-// userExistsResponse es la respuesta del servidor a la solicitud POST para verificar si el usuario ya existe.
+        // userExistsResponse es la respuesta del servidor a la solicitud POST para verificar si el usuario ya existe.
         const userExistsResponse = await fetch(`${BACKEND_URI}/auth/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({ correo, password }),
-        });
-// Si el usuario ya existe, se muestra un mensaje de error.        
+        })
+        // Si el usuario ya existe, se muestra un mensaje de error.        
         if (!userExistsResponse.ok) {
-            setError('El usuario o la contraseña no son correctos.');
-            return;
+            setError('El usuario o la contraseña no son correctos.')
+            return
         }
-// data es la respuesta del servidor a la solicitud POST para verificar si el usuario ya existe.
-//Contiene el token y el usuario que se enviará al servidor.
-//Podemos acceder a las propiedades del objeto usuario para obtener el id del usuario, 
-//Su nombre, correo, nivel, instrumento.. etc. Menos la contraseña que viene encriptada.
-        const data = await userExistsResponse.json();
+        // data es la respuesta del servidor a la solicitud POST para verificar si el usuario ya existe.
+        //Contiene el token y el usuario que se enviará al servidor.
+        //Podemos acceder a las propiedades del objeto usuario para obtener el id del usuario, 
+        //Su nombre, correo, nivel, instrumento.. etc. Menos la contraseña que viene encriptada.
+        const data = await userExistsResponse.json()
         if (data.usuario) {      
             //Guardamos el token en el localstorage. Se utiliza para verificar si el usuario está autenticado.      
-            localStorage.setItem('token', data.token);
-            router.push(`/registered/${data.usuario._id}`);
+            localStorage.setItem('token', data.token)
+            router.push(`/registered/${data.usuario._id}`)
         } else {
-            setError('El usuario o la contraseña no son correctos.');
+            setError('El usuario o la contraseña no son correctos.')
         }
     }
     //El evento handleCancelClick se activa cuando el usuario hace clic en el botón "Cancelar".
     //Nos redirige a la página principal.
     const handleCancelClick = () => {
-        router.push('/');
+        router.push('/')
     }
 
     //La página de inicio de sesión contiene un formulario con dos campos de entrada: correo y contraseña.
