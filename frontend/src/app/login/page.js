@@ -41,7 +41,7 @@ export default function LoginUser() {
         if (data.usuario) {      
             //Guardamos el token en el localstorage. Se utiliza para verificar si el usuario está autenticado.      
             localStorage.setItem('token', data.token)
-            router.push(`/registered/${data.usuario._id}`)
+            router.push(`/home`)
         } else {
             setError('El usuario o la contraseña no son correctos.')
         }
@@ -83,7 +83,7 @@ export default function LoginUser() {
                             <button type="submit" className="cursor-pointer py-2 px-4 text-white font-bold w-1/2 rounded custom-enter-button">Entrar</button>
                         </div>
                             
-                        <Link href="/registered/signup" className="text-sm font-thin hover:underline mt-8 inline-block custom-letras-registrate">¿No estás registrado? <span className="custom-letras-registrate-color">Regístrate ahora</span></Link>
+                        <Link href="/signup" className="text-sm font-thin hover:underline mt-8 inline-block custom-letras-registrate">¿No estás registrado? <span className="custom-letras-registrate-color">Regístrate ahora</span></Link>
                         
                     </form>
                 </div>

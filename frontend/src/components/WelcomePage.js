@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import Link from 'next/link'
 
 export default function WelcomePage() {
     return (
@@ -12,12 +12,12 @@ export default function WelcomePage() {
                 <h1 className="text-4xl font-bold mb-2">Bienvenido</h1>
                 <p className="text-gray-600 mb-8">Descripción</p>
                 
-                <Link href="/registered/login" className="bg-black text-white px-8 py-3 rounded-full font-semibold hover:bg-gray-800 transition duration-200">
+                <Link href="/login" className="bg-black text-white px-8 py-3 rounded-full font-semibold hover:bg-gray-800 transition duration-200">
                     Únete
                 </Link>
                 
                 <p className="mt-8">
-                    <Link href="/unregistered/home" className="text-gray-500 text-sm">
+                    <Link href="/home" className="text-gray-500 text-sm">
                         Continuar sin unirse
                     </Link>
                 </p>
