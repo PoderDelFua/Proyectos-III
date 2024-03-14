@@ -1,6 +1,5 @@
 "use client"
 
-import Navbar from '@/components/Navbar';
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
@@ -64,9 +63,6 @@ export default function LoginUser() {
     //La contraseña pasa por un desecriptado en el servidor y si es correcta, se devuelve el token y el usuario.
     return (
         <section>
-           <div>
-                <Navbar />
-            </div>
             <div className="h-full flex justify-start min-h-screen bg-cover bg-[url('/fondo-login.png')]">
                 <div className=" py-8 px-14 flex h-auto mt-6 mb-20 rounded ml-16 custom-container-login">
                     <form onSubmit={handleSubmit}>
