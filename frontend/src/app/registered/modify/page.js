@@ -1,6 +1,8 @@
 "use client"
 
 import MultiSelect from '@/components/MultiSelect'
+import Sidebar from '@/components/Sidebar'
+
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { BACKEND_URI } from '@/config/env'
@@ -105,8 +107,9 @@ export default function UpdateUser() {
 
     return (
         <section>
-            <div className="min-h-screen bg-gray-100 flex justify-center">
-                <div className="py-6 px-8 mt-20 bg-white rounded shadow-xl">
+            <Sidebar selectedTab="profile" />
+            <div className="min-h-screen bg-white flex justify-center">
+                <div className="py-6 px-8 my-20 bg-light-gray rounded-3xl">
                     <form onSubmit={handleSubmit}>
                         <div className="mb-6">
                             <label htmlFor="nombre" className="block text-gray-800 font-bold">Nombre completo:</label>

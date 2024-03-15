@@ -59,7 +59,7 @@ export default function MultiSelect({
     }
 
     return (
-        <label className="relative">
+        <label className="relative bg-white">
             <input type="checkbox" className="hidden peer" />
     
             <div className="cursor-pointer after:content-['▼'] after:text-xs after:ml-1 after:inline-flex after:items-center peer-checked:after:-rotate-180 after:transition-transform inline-flex border rounded px-5 py-2">
