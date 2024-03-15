@@ -13,7 +13,7 @@ const getItems = async (req, res) => {
 }
 
 const getItem = async (req, res) => {
-    datosUser = req.user
+    var datosUser = req.user
     try {
         const data = await usuarioModel.findById(datosUser._id)
         res.send({data})        

@@ -6,6 +6,7 @@ import Sidebar from '@/components/Sidebar';
 import Featured from '@/components/Featured';
 
 import { useState, useEffect } from 'react'
+import { BACKEND_URI } from '@/config/env'
 
 export default function PageList() {
     const [activity, setActivity] = useState('any');
@@ -13,22 +14,23 @@ export default function PageList() {
     const [pageCards, setPageCards] = useState([]);
     const [pagesData, setPagesData] = useState(null);
 
+
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const pageResponse = await fetch('/api/webpages', {
+                const response = await fetch(`${BACKEND_URI}/actividades/getActivityData`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
                     },
                 });
-
-                let pageResponseData = await pageResponse.json();
-                pageResponseData = pageResponseData.filter((page) =>
-                    page.state != 0
-                );
-                setPagesData(pageResponseData)
-                setPageCards(pageResponseData)
+                if (!response.ok) {
+                    throw new Error('No se pudo cargar la información de las actividades')
+                }
+                const data = await response.json()
+                setPagesData(data.data)
+                setPageCards(data.data)
+                //Imprimimos nombre
             } catch (error) {
                 console.error("Error: ", error)
             }
@@ -42,14 +44,13 @@ export default function PageList() {
 
         let pagesList = pagesData
         if (searchTerm != '') {
-            pagesList = pagesList.filter((page) =>
-                page.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                page.summary.toLowerCase().includes(searchTerm.toLowerCase())
-            );
-        }
-        if (activity != 'any') {
-            pagesList = pagesList.filter((page) =>
-                page.activity.toString().toLowerCase() == activity.toString().toLowerCase()
+            pagesList = pagesList.filter((data) =>
+                data.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                data.descripcion.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                data.localidad.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                data.provincia.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                data.instrumento.some(instr => instr.toLowerCase().includes(searchTerm.toLowerCase())) || // Aquí se verifica si algún instrumento coincide con el searchTerm
+                data.gusto_musical.some(gusto => gusto.toLowerCase().includes(searchTerm.toLowerCase())) // Lo mismo para gusto_musical
             );
         }
 
@@ -104,10 +105,15 @@ export default function PageList() {
                             <option value="bateria">bateria</option>
                         </select>
                     </form>
-                    <div className='grid grid-cols-3 gap-4 mt-8 auto-rows-auto'>
-                        {pageCards.map(page => (
-                            <PageCard page={page} userId='' userName='' key={page.id} />
-                        ))}
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+                    {pageCards.map(page => {
+                        return <PageCard
+                            page={page}
+                            userId=''
+                            userName=''
+                            key={page._id}
+                        />;
+                    })}
                     </div>
                 </div>
             </div>

@@ -7,24 +7,26 @@ const actividadesSchema = new mongoose.Schema({
     descripcion: {
         type: String
     },
-    fecha: {
-        type: Date
-    },
     lugar: {
         type: String
     },
-    gusto_musical: {
+    gusto_musical: [{
         type: String
-    },
+    }],
     instrumento:[{
         nombre: { type: String },
         nivel: [{ type: String }]
     }],
-
+    prioridad: {
+        type: Boolean
+    },
     usuarios: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Usuario'
     }],
+    horarios: {
+        type: String
+    },
     grupo: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Grupo'

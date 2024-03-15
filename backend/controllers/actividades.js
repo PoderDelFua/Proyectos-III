@@ -8,7 +8,7 @@ const getItems = async (req, res) => {
         const data = await actividadesModel.find({})
         res.send({data})
     } catch (err) {
-        handleHttpError(res, "ERROR_GET_USERS")
+        handleHttpError(res, "ERROR_GET_ACTIVIDADES")
     }
 }
 
@@ -27,19 +27,18 @@ const getItem = async (req, res) => {
 
 const updateItem = async (req, res) => {
     try {
-        const {id, ...body} = matchedData(req)
-
-        const data = await usuarioModel.findByIdAndUpdate(id, body, {new: true})
+        req = matchedData(req)
+        const data = await actividadesModel.findByIdAndUpdate(req.pageId, {$push: {usuarios: req.userId}}, {new: true})
         res.send({data})
-    } catch (err) {
-        handleHttpError(res, "ERROR_UPDATE_USER")
+    }catch (error) {
+        handleHttpError(res, "ERROR_UPDATE_ACTIVIDAD")
     }
 }
 
 const deleteItem = async (req, res) => {
     const {id} = req.params
     try {
-        const data = await actividades
+        const data = await actividadesModel.findByIdAndDelete(id)
         if (!data) {
             handleHttpError(res, "ACTIVIDAD_NOT_EXISTS", 404)
         }

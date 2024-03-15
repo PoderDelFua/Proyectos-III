@@ -21,7 +21,7 @@ const usuarioSchema = new mongoose.Schema({
         nivel: [{ type: String }]
     }],
     gusto_musical: {
-        type: String
+        type: [String]
     },
     bio: {
         type: String

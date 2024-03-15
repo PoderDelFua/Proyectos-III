@@ -119,7 +119,7 @@ export default function UpdateUser() {
                             <MultiSelect
                                     formFieldName={"instrumento"}
                                     options={instrumentoOptions}
-                                    onChange={(selectedOptions) => setInstrumento(selectedOptions.map(option => ({ nombre: option, niveles: [] })))} 
+                                    onChange={(selectedOptions) => setInstrumento(selectedOptions.map(option => ({ nombre: option, nivel: [] })))}
                                     prompt="Seleccione uno o mas instrumentos" />
                         </div>
 
@@ -141,7 +141,7 @@ export default function UpdateUser() {
                             <MultiSelect
                                 formFieldName={`nivel_${inst.nombre}`}
                                 options={nivelOptions}
-                                value={inst.niveles}
+                                value={inst.nivel}
                                 onChange={(selectedOptions) => {
                                 const newInstrumento = instrumento.map((instrumento, idx) => {
                                     if (index === idx) {

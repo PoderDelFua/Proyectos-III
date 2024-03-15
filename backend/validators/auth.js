@@ -14,7 +14,7 @@ const validatorRegister = [
     check("password").isString().exists().notEmpty().isLength( {min:6, max: 16} ).withMessage("La contraseña debe tener entre 6 y 16 caracteres."),
     check("nickname").isString().exists().notEmpty().withMessage("El nickname es obligatorio."),
     check("instrumento").isArray().exists().notEmpty().withMessage("El instrumento es obligatorio."),
-    check("gusto_musical").isString().exists().notEmpty().withMessage("El gusto musical es obligatorio."),
+    check("gusto_musical").isArray().exists().notEmpty().withMessage("El gusto musical es obligatorio."),
     check("bio").isString().exists().notEmpty().withMessage("La bio es obligatoria."),
     (req, res, next) => {
         validateResults(req, res, next)
@@ -28,28 +28,44 @@ const validatorLogin = [
     (req, res, next) => {
         return validateResults(req, res, next)
     }
-]   
+]
+
+const validatorUpdateUser = [
+    check("_id").isMongoId().exists().notEmpty().withMessage("El id es obligatorio."),
+    check("nombre").isString().optional(),
+    check("correo").isEmail().optional(),
+    check("nickname").isString().optional(),
+    check("instrumento").isArray().optional(),
+    check("gusto_musical").isArray().optional(),
+    check("bio").isString().optional(),
+    check("horarios").isString().optional(),
+    check("grupos").isArray().optional(),
+
+    (req, res, next) => {
+        validateResults(req, res, next)
+    }
+]
 const validatorActivity = [
     check("nombre").isString().exists().notEmpty().withMessage("El nombre es obligatorio."),
     check("descripcion").isString().exists().notEmpty().withMessage("La descripcion es obligatoria."),
     check("lugar").isString().exists().notEmpty().withMessage("El lugar es obligatorio."),
-    check("fecha").isString().exists().notEmpty().withMessage("La fecha es obligatoria."),
     check("instrumento").isArray().exists().notEmpty().withMessage("El instrumento es obligatorio."),
-    check("gusto_musical").isString().exists().notEmpty().withMessage("El gusto musical es obligatorio."),
+    check("gusto_musical").isArray().exists().notEmpty().withMessage("El gusto musical es obligatorio."),
+    check("prioridad").isBoolean().exists().notEmpty().withMessage("La prioridad es obligatoria."),
+    check("horarios").isString().exists().notEmpty().withMessage("El horario es obligatorio."),
+    check("grupo").isMongoId().optional(),
+    check("usuarios").isArray().optional(),
     (req, res, next) => {
         validateResults(req, res, next)
     }
 ]
 
-const validatorUpdateUser = [
-    check("nombre").isString().optional(),
-    check("nickname").isString().optional(),
-    check("instrumento").isArray().optional(),
-    check("gusto_musical").isString().optional(),
-    check("bio").isString().optional(),
+const validatorUpdateActivity = [
+    check("pageId").isMongoId().exists().notEmpty().withMessage("El id de la actividad es obligatorio."),
+    check("userId").isMongoId().exists().notEmpty().withMessage("El id del usuario es obligatorio."),
     (req, res, next) => {
         validateResults(req, res, next)
     }
 ]
 
-module.exports = { validatorRegister, validatorLogin, validatorActivity, validatorUpdateUser }
+module.exports = { validatorRegister, validatorLogin, validatorActivity, validatorUpdateUser, validatorUpdateActivity }

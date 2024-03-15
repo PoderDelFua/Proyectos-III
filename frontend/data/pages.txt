@@ -8,3 +8,4 @@
 {"id":"5","state":1,"activity":"violin","title":"Club de Violín Armonía","summary":"Únete al Club de Violín Armonía y sumérgete en el mundo de la música clásica y contemporánea. Aprende a tocar este hermoso instrumento, mejora tus habilidades musicales y participa en emocionantes presentaciones y conciertos. ¡Todos son bienvenidos, desde principiantes hasta músicos experimentados!","scoring":6,"visits":0,"reviews":[]},
 {"id":"6","state":1,"activity":"violin","title":"Club de Violín Armonía","summary":"Únete al Club de Violín Armonía y sumérgete en el mundo de la música clásica y contemporánea. Aprende a tocar este hermoso instrumento, mejora tus habilidades musicales y participa en emocionantes presentaciones y conciertos. ¡Todos son bienvenidos, desde principiantes hasta músicos experimentados!","scoring":6,"visits":0,"reviews":[]}
 ]
+
