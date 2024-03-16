@@ -5,8 +5,8 @@ import PageCard from '@/components/PageCard'
 import Sidebar from '@/components/Sidebar';
 import Featured from '@/components/Featured';
 
-import { useState, useEffect } from 'react'
-import { BACKEND_URI } from '@/config/env'
+import {useState, useEffect} from 'react'
+import {BACKEND_URI} from '@/config/env'
 
 export default function PageList() {
     const [activity, setActivity] = useState('any');
@@ -37,27 +37,54 @@ export default function PageList() {
         }
 
         fetchData()
-    }, [])
+    }, []);
+    useEffect(() => {
+        if (pagesData) {
+            filterCards();
+        }
+    }, [searchTerm, activity, pagesData]); // Este useEffect se dispara cuando searchTerm, activity, o pagesData cambian.
 
-    const handleSearch = (e) => {
-        e.preventDefault()
+    const filterCards = () => {
+        let filteredList = pagesData || [];
 
-        let pagesList = pagesData
-        if (searchTerm != '') {
-            pagesList = pagesList.filter((data) =>
-                data.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                data.descripcion.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                data.localidad.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                data.provincia.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                data.instrumento.some(instr => instr.toLowerCase().includes(searchTerm.toLowerCase())) || // Aquí se verifica si algún instrumento coincide con el searchTerm
-                data.gusto_musical.some(gusto => gusto.toLowerCase().includes(searchTerm.toLowerCase())) // Lo mismo para gusto_musical
+        if (activity !== 'any') {
+            const lowerCaseActivity = activity.toLowerCase();
+            filteredList = filteredList.filter((data) =>
+                (Array.isArray(data.instrumento) && data.instrumento.some(instr =>
+                    instr.nombre && instr.nombre.toLowerCase() === lowerCaseActivity)) || // Verificamos que instr.nombre no sea undefined antes de llamar a toLowerCase()
+                (Array.isArray(data.gusto_musical) && data.gusto_musical.includes(activity))
             );
         }
 
-        setPageCards(pagesList)
+        setPageCards(filteredList);
+    };
 
+
+
+    const handleSearch = (e) => {
+        e.preventDefault()
+        let filteredList = pagesData;
+
+        if (searchTerm !== '') {
+            filteredList = filteredList.filter((data) => {
+                const term = searchTerm.toLowerCase();
+                return data.nombre.toLowerCase().includes(term) ||
+                    data.descripcion.toLowerCase().includes(term) ||
+                    data.instrumento.some(instr => typeof instr === 'string' && instr.toLowerCase().includes(term)) ||
+                    data.gusto_musical.some(gusto => typeof gusto === 'string' && gusto.toLowerCase().includes(term));
+            });
+        }
+
+
+        if (activity !== 'any') {
+            filteredList = filteredList.filter((data) =>
+                data.instrumento.includes(activity) ||
+                data.gusto_musical.includes(activity)
+            );
+        }
+
+        setPageCards(filteredList)
     }
-
     if (!pagesData) {
         return <div>Loading...</div>
     }
@@ -72,14 +99,17 @@ export default function PageList() {
                 <div className="relative p-4 w h md:h-auto">
                     <form onSubmit={handleSearch} className="flex flex-col md:flex-row gap-3">
                         <div className="flex flex-grow">
-                            <input type="text" placeholder="Search for webpages..." onChange={(e) => setSearchTerm(e.target.value)}
-                                   className="w-full px-3 h-10 rounded-l border-2 border-indigo-600 focus:outline-none focus:border-indigo-500" />
-                            <button type="submit" className="bg-indigo-600 text-white rounded-r px-2 md:px-3 py-0 md:py-1">Buscar</button>
+                            <input type="text" placeholder="Search for webpages..."
+                                   onChange={(e) => setSearchTerm(e.target.value)}
+                                   className="w-full px-3 h-10 rounded-l border-2 border-indigo-600 focus:outline-none focus:border-indigo-500"/>
+                            <button type="submit"
+                                    className="bg-indigo-600 text-white rounded-r px-2 md:px-3 py-0 md:py-1">Buscar
+                            </button>
                         </div>
                         <select id="activity" name="activity" onChange={(e) => setActivity(e.target.value)}
                                 className="w-full md:w-1/3 h-10 border-2 border-indigo-600 focus:outline-none focus:border-indigo-500 text-gray-700 rounded px-4 py-2 tracking-wider">
                             <option value="any">Cualquier instrumento</option>
-                            <option value="violin">Violín</option>
+                            <option value="Violín">Violín</option>
                             <option value="guitarra">Guitarra</option>
                             <option value="flauta travesera">Flauta travesera</option>
                             <option value="flauta">flauta</option>
@@ -106,22 +136,22 @@ export default function PageList() {
                         </select>
                     </form>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
-                    {pageCards.map(page => {
-                        return <PageCard
-                            page={page}
-                            userId=''
-                            userName=''
-                            key={page._id}
-                        />;
-                    })}
+                        {pageCards.map(page => {
+                            return <PageCard
+                                page={page}
+                                userId=''
+                                userName=''
+                                key={page._id}
+                            />;
+                        })}
                     </div>
                 </div>
             </div>
             <div>
-                <Sidebar />
+                <Sidebar/>
             </div>
             <div>
-                <Featured />
+                <Featured/>
             </div>
         </section>
     );

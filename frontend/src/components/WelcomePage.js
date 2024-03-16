@@ -1,6 +1,7 @@
 import Link from 'next/link'
 
 export default function WelcomePage() {
+//Rehacer pagina, no podemos estar con link, usar navbar
     return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
             <div className="bg-white p-10 rounded-lg shadow-md text-center max-w-xl">
