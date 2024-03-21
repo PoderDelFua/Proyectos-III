@@ -20,6 +20,7 @@ export default function UpdateUser() {
 
     useEffect(() => {
             const token = localStorage.getItem('token')
+
             if (!token) {
                 router.push('/login')
                 return
@@ -37,7 +38,9 @@ export default function UpdateUser() {
                     })               
                     //Si la respuesta no es correcta, se lanza un error.     
                     if (!response.ok) {
+                        localStorage.removeItem('token')
                         throw new Error('No se pudo cargar la información del usuario')
+                        router.push('/login')
                     }
                     console.log("Buscando datos del usuario...")
                     const data = await response.json()
