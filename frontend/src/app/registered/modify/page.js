@@ -161,7 +161,6 @@ export default function UpdateUser() {
                             <label htmlFor="nickname" className="block text-gray-800 font-bold">Nickname:</label>
                             <input value={nickname} onChange={(e) => setNickname(e.target.value)} type="text" name="nickname" id="nickname" placeholder="Tu apodo" className="w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600" />
                         </div>
-
                         <button type="submit" className="cursor-pointer py-2 px-4 block mt-6 bg-indigo-500 text-white font-bold w-full text-center rounded">Actualizar datos</button>
                     </form>
                 </div>

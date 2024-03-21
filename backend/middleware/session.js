@@ -5,6 +5,7 @@ const { usuarioModel } = require("../models")
 const authMiddleware = async (req, res, next) => {
     try{
         if (!req.headers.authorization) {
+            localStorage.removeItem('token')
             handleHttpError(res, "NOT_TOKEN", 401)
             return
         }
@@ -24,6 +25,7 @@ const authMiddleware = async (req, res, next) => {
         next()
 
     }catch(err){
+        localStorage.removeItem('token')
         console.log(err)
         handleHttpError(res, "NOT_SESSION", 401)
     }

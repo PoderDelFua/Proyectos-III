@@ -109,7 +109,7 @@ export default function PageList() {
                         <select id="activity" name="activity" onChange={(e) => setActivity(e.target.value)}
                                 className="w-full md:w-1/3 h-10 border-2 border-indigo-600 focus:outline-none focus:border-indigo-500 text-gray-700 rounded px-4 py-2 tracking-wider">
                             <option value="any">Cualquier instrumento</option>
-                            <option value="Violín">Violín</option>
+                            <option value="violin">violin</option>
                             <option value="guitarra">Guitarra</option>
                             <option value="flauta travesera">Flauta travesera</option>
                             <option value="flauta">flauta</option>
@@ -125,7 +125,6 @@ export default function PageList() {
                             <option value="guitarra electrica">Guitarra electrica</option>
                             <option value="guitarra clasica">Guitarra clasica</option>
                             <option value="bajo electrico">bajo electrico</option>
-                            <option value="violin">violin</option>
                             <option value="viola">viola</option>
                             <option value="violonchelo">violonchelo</option>
                             <option value="contrabajo">contrabajo</option>

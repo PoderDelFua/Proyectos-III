@@ -26,6 +26,7 @@ const verifyToken = async (tokenJwt) => {
     try {
         return jwt.verify(tokenJwt, JWT_SECRET)
     }catch(err) {
+        localStorage.removeItem('token')
         console.log(err)
     }
 }
