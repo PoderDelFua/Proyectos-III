@@ -13,7 +13,7 @@ const authMiddleware = async (req, res, next) => {
         const token = req.headers.authorization.split(' ').pop() 
         //Del token, miramos en Payload (revisar verifyToken de utils/handleJwt)
         const dataToken = await verifyToken(token)
-        if(!dataToken._id) {
+        if(!dataToken || !dataToken._id) {
             handleHttpError(res, "ERROR_ID_TOKEN", 401)
             return
         }
