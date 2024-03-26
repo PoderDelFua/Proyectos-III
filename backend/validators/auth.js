@@ -2,7 +2,7 @@ const { check } = require("express-validator")
 const validateResults = require("../utils/handleValidator")
 
 const validatorRegister = [
-    check("correo").isEmail().withMessage("El correo debe ser un email de la utad."),
+    //check("correo").isEmail().withMessage("El correo debe tener en formato de un correo electrónico."),
     check("correo").custom((value) => {
         if (value.endsWith("@live.u-tad.com") || value.endsWith("@u-tad.com")){
             return true
