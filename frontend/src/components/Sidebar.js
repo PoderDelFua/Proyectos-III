@@ -11,7 +11,7 @@ function Sidebar({ selectedTab = 'home' }) {
   };
 
   return (
-    <div className="fixed inset-y-0 left-0 w-64 bg-primary-gray rounded-r-3xl">
+    <div className="fixed inset-y-0 left-0 w-64 bg-primary-gray rounded-r-3xl z-50">
       <div className="flex flex-col h-full">
         {/* Logo container */}
         <div className="flex justify-center items-center pt-10 pb-2">
@@ -33,7 +33,7 @@ function Sidebar({ selectedTab = 'home' }) {
               }`}
             >
               <HomeIcon className="mr-5 h-7 w-7" />
-              <span className="text-2xl font-semibold">Home</span>
+              <span className="text-xl font-semibold">Home</span>
             </a>
             {activeItem === 'home' && (
               <div className="relative">
@@ -50,14 +50,14 @@ function Sidebar({ selectedTab = 'home' }) {
               </div>
             )}
             <a
-              href="/registered/modify"
+              href="/registered/profile"
               onClick={() => handleItemClick('profile')}
               className={`group flex items-center py-2 px-4 text-black ${
                 activeItem === 'profile' ? 'bg-white rounded-l-full' : 'hover:bg-light-gray rounded-full'
               }`}
             >
               <UserIcon className="mr-5 h-7 w-7" />
-              <span className="text-2xl font-semibold">Perfil</span>
+              <span className="text-xl font-semibold">Perfil</span>
             </a>
             {activeItem === 'profile' && (
               <div className="relative">
@@ -81,7 +81,7 @@ function Sidebar({ selectedTab = 'home' }) {
               }`}
             >
               <Cog6ToothIcon className="mr-5 h-7 w-7" />
-              <span className="text-2xl font-semibold">Ajustes</span>
+              <span className="text-xl font-semibold">Ajustes</span>
             </a>
             {activeItem === 'settings' && (
               <div className="relative">
@@ -105,7 +105,7 @@ function Sidebar({ selectedTab = 'home' }) {
               }`}
             >
               <CalendarDaysIcon className="mr-5 h-7 w-7" />
-              <span className="text-2xl font-semibold">Calendario</span>
+              <span className="text-xl font-semibold">Calendario</span>
             </a>
             {activeItem === 'calendar' && (
               <div className="relative">
