@@ -17,7 +17,7 @@ function Sidebar({ selectedTab = 'home' }) {
         <div className="flex justify-center items-center pt-10 pb-2">
           <img src="/logoU.png" alt="Logo" className="h-20 w-20 rounded-full" /> {/* Replace with your image path */}
         </div>
-        <nav className="flex-1 pl-4 py-10 space-y-2">
+        <nav className="flex-1 pl-4 py-10 space-y-4">
           <div className={`${activeItem !== 'home' ? 'pr-10' : '' }`}>
             {activeItem === 'home' && (
               <div className="relative">
@@ -32,8 +32,8 @@ function Sidebar({ selectedTab = 'home' }) {
                 activeItem === 'home' ? 'bg-white rounded-l-full' : 'hover:bg-light-gray rounded-full'
               }`}
             >
-              <HomeIcon className="mr-3 h-5 w-5" />
-              <span className="text-sm font-medium">Home</span>
+              <HomeIcon className="mr-5 h-7 w-7" />
+              <span className="text-2xl font-semibold">Home</span>
             </a>
             {activeItem === 'home' && (
               <div className="relative">
@@ -56,8 +56,8 @@ function Sidebar({ selectedTab = 'home' }) {
                 activeItem === 'profile' ? 'bg-white rounded-l-full' : 'hover:bg-light-gray rounded-full'
               }`}
             >
-              <UserIcon className="mr-3 h-5 w-5" />
-              <span className="text-sm font-medium">Perfil</span>
+              <UserIcon className="mr-5 h-7 w-7" />
+              <span className="text-2xl font-semibold">Perfil</span>
             </a>
             {activeItem === 'profile' && (
               <div className="relative">
@@ -80,8 +80,8 @@ function Sidebar({ selectedTab = 'home' }) {
                 activeItem === 'settings' ? 'bg-white rounded-l-full' : 'hover:bg-light-gray rounded-full'
               }`}
             >
-              <Cog6ToothIcon className="mr-3 h-5 w-5" />
-              <span className="text-sm font-medium">Ajustes</span>
+              <Cog6ToothIcon className="mr-5 h-7 w-7" />
+              <span className="text-2xl font-semibold">Ajustes</span>
             </a>
             {activeItem === 'settings' && (
               <div className="relative">
@@ -104,8 +104,8 @@ function Sidebar({ selectedTab = 'home' }) {
                 activeItem === 'calendar' ? 'bg-white rounded-l-full' : 'hover:bg-light-gray rounded-full'
               }`}
             >
-              <CalendarDaysIcon className="mr-3 h-5 w-5" />
-              <span className="text-sm font-medium">Calendario</span>
+              <CalendarDaysIcon className="mr-5 h-7 w-7" />
+              <span className="text-2xl font-semibold">Calendario</span>
             </a>
             {activeItem === 'calendar' && (
               <div className="relative">
