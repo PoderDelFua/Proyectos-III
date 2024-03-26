@@ -57,9 +57,9 @@ export default function PageCard({ page, userId, userName }) {
     return (
         <div className="flex flex-col bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden">
             <img src="bg.jpg" alt="Activity" className="object-cover w-full h-32" />
-            <div className="max-w-sm p-6 flex flex-col justify-between flex-grow">
+            <div className="max-w-sm p-6 flex flex-col justify-between">
                 <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">{page.nombre}</h5> {/* Cambiado a 'nombre' */}
-                <p className="mb-3 font-normal text-gray-700">{page.descripcion}</p> {/* Cambiado a 'descripcion' */}
+                <p className="mb-4 font-normal text-gray-700">{page.descripcion}</p> {/* Cambiado a 'descripcion' */}
                 <div className="flex items-center space-x-4">
                     <button onClick={handeInfo} type="button" className="text-white bg-indigo-600 hover:bg-indigo-500 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                         Ver más información
