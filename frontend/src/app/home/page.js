@@ -90,13 +90,12 @@ export default function PageList() {
     }
 
     return (
-        <section>
-            {/* <div>
-                <Sidebar />
-            </div> */}
-            <div className="h-screen bg-white shadow-inner flex justify-center">
-                {/*<Sidebar /> {/* This will be the left sidebar */}
-                <div className="relative p-4 w h md:h-auto">
+        <section className="flex-wrap">
+            <div className="w-full md:w-1/4">
+                <Sidebar/>
+            </div>
+            <div className="w-full h-screen bg-white shadow-inner flex justify-center">
+                <div className="relative p-4 w h md:h-auto md:w-2/3">
                     <form onSubmit={handleSearch} className="flex flex-col md:flex-row gap-3">
                         <div className="flex flex-grow">
                             <input type="text" placeholder="Search for webpages..."
@@ -149,10 +148,7 @@ export default function PageList() {
                     </div>
                 </div>
             </div>
-            <div>
-                <Sidebar/>
-            </div>
-            <div>
+            <div className="w-full md:w-1/4">
                 <Featured/>
             </div>
         </section>
