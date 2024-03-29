@@ -96,7 +96,7 @@ export default function PageList() {
             </div>
             <div className="w-full h-screen bg-white shadow-inner flex justify-center">
                 <div className="relative p-4 w h md:h-auto md:w-2/3">
-                    <form onSubmit={handleSearch} className="flex flex-col md:flex-row gap-3">
+                    <form onSubmit={handleSearch} className="flex flex-col md:flex-row gap-3 mb-8">
                         <div className="flex flex-grow">
                             <input type="text" placeholder="Search for webpages..."
                                    onChange={(e) => setSearchTerm(e.target.value)}
@@ -133,10 +133,11 @@ export default function PageList() {
                             <option value="bateria">Batería</option>
                         </select>
                     </form>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+
+                    <div className="custom-grid-itemActividad">
                         {pageCards.map(page => {
                             return (
-                                <div key={page._id} className="min-w-0">
+                                <div key={page._id} className="custom-page-card">
                                     <PageCard
                                         page={page}
                                         userId=''
