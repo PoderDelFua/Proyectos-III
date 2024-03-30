@@ -2,7 +2,7 @@ const { check } = require("express-validator")
 const validateResults = require("../utils/handleValidator")
 
 const validatorRegister = [
-    //check("correo").isEmail().withMessage("El correo debe tener en formato de un correo electrónico."),
+    check("correo").isEmail().withMessage("El correo debe tener en formato de un correo electrónico."),
     check("correo").custom((value) => {
         if (value.endsWith("@live.u-tad.com") || value.endsWith("@u-tad.com")){
             return true
@@ -38,7 +38,7 @@ const validatorUpdateUser = [
     check("instrumento").isArray().optional(),
     check("gusto_musical").isArray().optional(),
     check("bio").isString().optional(),
-    check("horarios").isString().optional(),
+    check("horarios").isMongoId().optional(),
     check("grupos").isArray().optional(),
 
     (req, res, next) => {

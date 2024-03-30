@@ -5,7 +5,7 @@ const {matchedData} = require("express-validator")
 
 const getItems = async (req, res) => {
     try {
-        const data = await usuarioModel.find({})
+        const data = await usuarioModel.findAllData()
         res.send({data})
     } catch (err) {
         handleHttpError(res, "ERROR_GET_USERS")
@@ -15,9 +15,12 @@ const getItems = async (req, res) => {
 const getItem = async (req, res) => {
     var datosUser = req.user
     try {
-        const data = await usuarioModel.findById(datosUser._id)
+        const data = await usuarioModel.findById(datosUser._id).populate('horarios')
+
+        //console.log(data)
         res.send({data})
     } catch (err) {
+        console.log(err)
         handleHttpError(res, "ERROR_GET_USER")
     }
 }

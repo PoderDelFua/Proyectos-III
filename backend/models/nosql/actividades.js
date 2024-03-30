@@ -25,7 +25,8 @@ const actividadesSchema = new mongoose.Schema({
         ref: 'Usuario'
     }],
     horarios: {
-        type: String
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Horarios'
     },
     grupo: {
         type: mongoose.Schema.Types.ObjectId,

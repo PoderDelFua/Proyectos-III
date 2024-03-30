@@ -1,14 +1,15 @@
-const { HorarioModel } = require('../models')
+const { horariosModel } = require('../models')
 
 const { handleHttpError} = require('../utils/handleError')
 const { matchedData } = require('express-validator')
 
 const getItems = async (req, res) => {
     try{
-        const data = await HorarioModel.find({})
+        const data = await horariosModel.find({})
         res.send(data)
     }catch(err){
         //Si nos sirve el de por defecto que hemos establecido, no es necesario pasar el 403
+        console.log(err)
         handleHttpError(res, 'ERROR_GET_ITEMS', 403)
     }
 }
@@ -28,7 +29,7 @@ const getItem = async (req, res) => {/*
 const createItem = async (req, res) => {
     try {
         const body = matchedData(req) //El dato filtrado por el modelo (probar con body=req)
-        const data = await HorarioModel.create(body)
+        const data = await horariosModel.create(body)
         res.send(data)
     }catch(err){
         console.log(err)
