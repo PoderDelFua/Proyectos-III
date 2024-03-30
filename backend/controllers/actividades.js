@@ -5,7 +5,7 @@ const {matchedData} = require("express-validator")
 
 const getItems = async (req, res) => {
     try {
-        const data = await actividadesModel.find({})
+        const data = await actividadesModel.find({}).populate("usuarios", "nombre").populate("horarios", "fecha").populate("grupo", "nombre")
         res.send({data})
     } catch (err) {
         handleHttpError(res, "ERROR_GET_ACTIVIDADES")
