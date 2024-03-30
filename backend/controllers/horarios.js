@@ -14,17 +14,18 @@ const getItems = async (req, res) => {
     }
 }
 
-const getItem = async (req, res) => {/*
+const getItem = async (req, res) => {
+    // console.log("getItem")
     try{
         const {id} = matchedData(req) //Me quedo solo con el id
-        // console.log("ID:", id)
-        const data = await HorarioModel.findById(id)
+        //console.log("ID:", id)
+        const data = await horariosModel.findById(id)
         res.send(data)
     } catch(err){
         //console.log(err)
         handleHttpError(res, "ERROR_GET_ITEM")
     }
-*/}
+}
 
 const createItem = async (req, res) => {
     try {
@@ -39,7 +40,7 @@ const createItem = async (req, res) => {
 const updateItem = async (req, res) => {
     try{
         const {id, ...body} = matchedData(req)
-        const data = await HorarioModel.findOneAndUpdate({_id:id}, body, {new:true})
+        const data = await horariosModel.findOneAndUpdate({_id:id}, body, {new:true})
         res.send(data)
     }catch(err){
         console.log(err)
@@ -47,18 +48,28 @@ const updateItem = async (req, res) => {
     }
 }
 
-const deleteItem = async (req, res) => {/*
+const patchItem = async (req, res) => {
+    try {
+        const {id, ...body} = matchedData(req)
+        const data = await horariosModel.findOneAndUpdate({_id:id}, body, {new:true})
+        res.send({data})
+    } catch (err) {
+        handleHttpError(res, "ERROR_PATCH_USER")
+    }
+}
+
+const deleteItem = async (req, res) => {
     try {
         const {id} = matchedData(req)
         // console.log("ID:", id)
-        const data = await HorarioModel.deleteOne({_id:id}); // "deleteOne" realiza el borrado físico en la BD
-        // const data = await HorarioModel.delete({_id:id}); // "delete" realiza el borrado lógico
+        const data = await horariosModel.deleteOne({_id:id}); // "deleteOne" realiza el borrado físico en la BD
+        // const data = await horariosModel.delete({_id:id}); // "delete" realiza el borrado lógico
         res.send(data)    
     }catch(err){
         console.log(err)
         handleHttpError(res, 'ERROR_DELETE_ITEM')
     }
-*/}
+}
 
 
 module.exports = { 
@@ -66,5 +77,6 @@ module.exports = {
     getItem,
     createItem, 
     updateItem,
+    patchItem,
     deleteItem 
 }
