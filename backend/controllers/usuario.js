@@ -1,4 +1,4 @@
-const {usuarioModel} = require("../models")
+const {usuarioModel, actividadesModel} = require("../models")
 const usuario = require("../models/nosql/usuario")
 const {handleHttpError} = require("../utils/handleError")
 const {matchedData} = require("express-validator")
@@ -65,12 +65,30 @@ const deleteItem = async (req, res) => {
         handleHttpError(res, "ERROR_DELETE_USER")
     }
 }
+const updateActivityData = async (req, res) => {
+    try {
+        console.log("Hola desde updateActivityData");
+        req = matchedData(req);
+        const data = await usuarioModel.findByIdAndUpdate(
+            req.userId,
+            { $push: { actividades: req.pageId } },
+            { new: true }
+        );
+        console.log(data);
+        res.send({ data });
+    } catch (error) {
+        handleHttpError(res, "ERROR_UPDATE_USER_ACTIVIDAD");
+    }
+}
+
+
 
 module.exports = {
     getItems,
     getItem,
     checkUserExists,
     updateItem,
-    deleteItem
+    deleteItem,
+    updateActivityData
 }
    

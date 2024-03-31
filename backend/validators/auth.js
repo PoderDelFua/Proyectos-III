@@ -40,7 +40,7 @@ const validatorUpdateUser = [
     check("bio").isString().optional(),
     check("horarios").isMongoId().optional(),
     check("grupos").isArray().optional(),
-
+    check("actividades").isArray().optional(),
     (req, res, next) => {
         validateResults(req, res, next)
     }
@@ -67,5 +67,12 @@ const validatorUpdateActivity = [
         validateResults(req, res, next)
     }
 ]
+const validatorUpdateUserActivity = [
+    check("userId").isMongoId().exists().notEmpty().withMessage("El id del usuario es obligatorio."),
+    check("pageId").isMongoId().exists().notEmpty().withMessage("El id de la actividad es obligatorio."),
+    (req, res, next) => {
+        validateResults(req, res, next)
+    }
+]
 
-module.exports = { validatorRegister, validatorLogin, validatorActivity, validatorUpdateUser, validatorUpdateActivity }
+module.exports = { validatorRegister, validatorLogin, validatorActivity, validatorUpdateUser, validatorUpdateActivity , validatorUpdateUserActivity}

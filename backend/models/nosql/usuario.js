@@ -34,6 +34,10 @@ const usuarioSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Grupo'
     }],
+    actividades: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Actividades'
+    }],
 }, {
     timestamps: true,
     versionKey: false

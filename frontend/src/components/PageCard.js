@@ -30,6 +30,15 @@ export default function PageCard({ page, userId, userName }) {
                     console.log("Buscando datos del usuario...")
                     const data = await response.json()
                     setUserData(data.data)
+                    //Comprobamos si el usuario ya está unido a la actividad
+                    if (data.data.actividades.includes(page._id)) {
+                        setNotificationMessage('Ya estás unido a esta actividad');
+                        setShowNotification(true);
+                        setTimeout(() => {
+                            setShowNotification(false);
+                        }, 3000); // Oculta la notificación a los 3 segundos
+                        return
+                    }
                     //Ahora que tenemos los datos del usuario, podemos hacer la llamada para unirlo a la actividad
                     const response2 = await fetch(`${BACKEND_URI}/actividades/addUserToActivity`, {
                         method: 'PATCH',
@@ -45,6 +54,31 @@ export default function PageCard({ page, userId, userName }) {
                     if(!response2.ok){
                         throw new Error('No se pudo unir al usuario a la actividad')
                     }else{
+                        const response3 = await fetch(`${BACKEND_URI}/usuario/updateActivityData`, {
+                            method: 'PATCH',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': `Bearer ${token}`,
+                        },
+                            body: JSON.stringify({
+                                userId: data.data._id,
+                                pageId: page._id
+                            })
+                        })
+                        if(!response3.ok){
+                            throw new Error('No se pudo actualizar la información del usuario')
+                        }
+                        //Comprobamos si el usuario ya está unido a la actividad
+                        if (userData.actividades.includes(page._id)) {
+                            setNotificationMessage('Ya estás unido a esta actividad');
+                            setShowNotification(true);
+                            setTimeout(() => {
+                                setShowNotification(false);
+                            }, 3000); // Oculta la notificación a los 3 segundos
+                            return
+                        }
+
+
                         // Actualiza el estado para mostrar la notificación
                         setNotificationMessage('Usuario unido a la actividad ✔');
                         setShowNotification(true);
