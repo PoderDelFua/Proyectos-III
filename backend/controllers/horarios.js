@@ -54,7 +54,7 @@ const patchItem = async (req, res) => {
         const data = await horariosModel.findOneAndUpdate({_id:id}, body, {new:true})
         res.send({data})
     } catch (err) {
-        handleHttpError(res, "ERROR_PATCH_USER")
+        handleHttpError(res, "ERROR_PATCH_HORARIO")
     }
 }
 

@@ -39,8 +39,9 @@ const usuarioSchema = new mongoose.Schema({
     versionKey: false
 })
 
+
 usuarioSchema.statics.findAllData = function() {
-    console.log("hola desde all data")
+    //console.log("hola desde all data")
     // "this." hace referencia a su propio modelo
     const joinData = this.aggregate([
         {
@@ -62,7 +63,6 @@ usuarioSchema.statics.findAllData = function() {
 
 usuarioSchema.statics.findOneData = function(id) {
     console.log(id)
-    console.log("hola ")
     // "this." hace referencia a su propio modelo
     const joinData = this.aggregate([
         {
@@ -87,4 +87,6 @@ usuarioSchema.statics.findOneData = function(id) {
     ])
     return joinData
 }
+
+
 module.exports = mongoose.model('Usuario', usuarioSchema, 'usuario')

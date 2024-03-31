@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const mongooseDelete = require("mongoose-delete")
 
 const mensajes = new mongoose.Schema({
     autorMensaje: {
@@ -29,4 +30,5 @@ const mensajes = new mongoose.Schema({
     versionKey: false
 })
 
+mensajes.plugin(mongooseDelete, { overrideMethods: 'all' })
 module.exports = mongoose.model('Mensajes', mensajes, 'mensajes')
