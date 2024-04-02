@@ -11,10 +11,6 @@ const mensajes = new mongoose.Schema({
         type: String,
         required: true
     },
-    timestamp: {
-        type: Date,
-        required: true
-    },
     grupo:{
         type: String,
         required: true
@@ -23,8 +19,12 @@ const mensajes = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Mensajes',
         required: false
+    },
+    mediaId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Storage',
+        required: false
     }
-
 }, {
     timestamps: true,
     versionKey: false

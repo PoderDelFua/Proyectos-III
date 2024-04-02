@@ -12,21 +12,31 @@ const validatorGetItem = [
 const validatorCreateItem = [
     check("autorMensaje").exists().notEmpty().isMongoId().withMessage("The value must be a valid MongoId"),
     check("mensaje").exists().notEmpty().isString().withMessage("The value must be a string"),
-    check("timestamp").exists().notEmpty().isISO8601().withMessage("The value must be in ISO 8601 format. timestamp: 2024-03-31T12:00:00Z"),
     check("grupo").exists().notEmpty().isString().withMessage("The value must be a string"),
     check("padreMensaje").optional().isMongoId().withMessage("The value must be a valid MongoId"),
-
+    check("mediaId").optional().isMongoId().withMessage("The value ( madiaId ) must be a valid MongoId"),
     (req, res, next) => {
         return validateResults(req, res, next)
     }
 ]
+
+const validatorCreateItemTok = [
+    check("mensaje").exists().notEmpty().isString().withMessage("The value must be a string"),
+    check("grupo").exists().notEmpty().isString().withMessage("The value must be a string"),
+    check("padreMensaje").optional().isMongoId().withMessage("The value must be a valid MongoId"),
+    check("mediaId").optional().isMongoId().withMessage("The value ( madiaId ) must be a valid MongoId"),
+    (req, res, next) => {
+        return validateResults(req, res, next)
+    }
+]
+
 
 const validatorUpdateItem = [
     check("autorMensaje").optional().isMongoId(),
     check("mensaje").optional().isString(),
-    check("timestamp").optional().isDate(),
     check("grupo").optional().isString(),
     check("padreMensaje").optional().isMongoId(),
+    check("mediaId").optional().isMongoId(),
 
     (req, res, next) => {
         return validateResults(req, res, next)
@@ -37,4 +47,4 @@ const validatorUpdateItem = [
 
 
 
-module.exports = { validatorGetItem, validatorCreateItem, validatorUpdateItem}
+module.exports = { validatorGetItem, validatorCreateItem, validatorUpdateItem, validatorCreateItemTok}

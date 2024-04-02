@@ -18,3 +18,5 @@ app.use("/api", require("./routes")) //Lee routes/index.js por defecto
 app.listen(port, () => {
     console.log("Servidor escuchando en el puerto " + port)
 })
+
+app.use(express.static("storage")) // http://localhost:9000/file-1712093846161.jpeg

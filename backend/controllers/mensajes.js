@@ -17,6 +17,7 @@ const getItems = async (req, res) => {
                 select: 'nombre -_id'
             }
         })
+        .populate('mediaId', 'url filename -_id')
 
         res.send(data)
     }catch(err){
@@ -27,7 +28,18 @@ const getItems = async (req, res) => {
 const getItem = async (req, res) => {
     try{
         const {id} = matchedData(req)
-        const data = await mensajesModel.findById(id).populate('autorMensaje', 'nombre -_id')
+        const data = await mensajesModel.findById(id)
+        .populate('autorMensaje', 'nombre -_id')
+        .populate({
+            path: 'padreMensaje',
+            select: 'mensaje-_id',
+            populate: {
+                path: 'autorMensaje',
+                select: 'nombre -_id'
+            }
+        })
+        .populate('mediaId', 'url filename -_id')
+
         if (!data) {
             return res.status(404).send('Mensaje not found');
         }
@@ -43,9 +55,22 @@ const createItem = async (req, res) => {
         body = matchedData(req)
         //console.log(body)
         const data = await (await mensajesModel.create(body))
-        //.populate('autorMensaje', 'nombre')
-        .populate('padreMensaje', 'mensaje')
-        res.send(data)
+        
+        const populatedData = await mensajesModel.populate(data, [
+            { path: 'autorMensaje', select: 'nombre -_id' },
+            {
+            path: 'padreMensaje',
+            select: 'mensaje-_id',
+            populate: {
+                path: 'autorMensaje',
+                select: 'nombre -_id'
+            }
+            },
+            { path: 'mediaId', select: 'url filename -_id' }
+        ])
+
+
+        res.send(populatedData)
     }catch(err){
         console.log(err)
         handleHttpError(res, 'ERROR_CREATE_ITEMS')
@@ -67,7 +92,8 @@ const deleteItem = async (req, res) => {
     try {
         const {id} = matchedData(req)
         //const data = await tracksModel.deleteOne({_id:id}); // "deleteOne" realiza el borrado físico en la BD
-        const data = await mensajesModel.delete({_id:id}); // "delete" realiza el borrado lógico
+        const data = await mensajesModel.delete({_id:id})
+
         res.send(data)    
     }catch(err){
         console.log(err)
@@ -79,7 +105,18 @@ const deleteItem = async (req, res) => {
 const getHilo = async (req, res) => {
     try {
         const {grupo} = req.params
-        const data = await mensajesModel.find({grupo}).sort({updatedAt: -1}).populate('autorMensaje', 'nombre -_id');
+        const data = await mensajesModel.find({grupo}).sort({updatedAt: -1})
+        .populate('autorMensaje', 'nombre -_id')
+        .populate({
+            path: 'padreMensaje',
+            select: 'mensaje-_id',
+            populate: {
+                path: 'autorMensaje',
+                select: 'nombre -_id'
+            }
+        })
+        .populate('mediaId', 'url filename -_id')
+        
         res.send(data)
     }catch(err){
         console.log(err)
@@ -87,6 +124,69 @@ const getHilo = async (req, res) => {
     }
 }
 
+const getDistinctGrupos = async (req, res) => {
+    try {
+        const data = await mensajesModel.distinct('grupo')
+        res.send(data)
+    }catch(err){
+        console.log(err)
+        handleHttpError(res, 'ERROR_GET_DISTINCT_GRUPOS')
+    }
+}
+
+const getMensajesUserTok = async (req, res) => {
+    try {
+        const data = await mensajesModel.find({autorMensaje: req.user._id})
+        .populate('autorMensaje', 'nombre -_id')
+        .populate({
+            path: 'padreMensaje',
+            select: 'mensaje-_id',
+            populate: {
+                path: 'autorMensaje',
+                select: 'nombre -_id'
+            }
+        })
+        .populate('mediaId', 'url filename -_id')
+
+        res.send(data)
+    }catch(err){
+        console.log(err)
+        handleHttpError(res, 'ERROR_GET_ITEMS_MENSAJES', 403)
+    }
+}
+
+
+const postMensajeUsuarioTok = async (req, res) => {
+    var datosUser = req.user
+    var idUser = datosUser._id
+    try {
+        body = matchedData(req)
+        body.autorMensaje = idUser;
+
+        //console.log(body)
+        const data = await mensajesModel.create(body);
+        const populatedData = await mensajesModel.populate(data, [
+            { path: 'autorMensaje', select: 'nombre -_id' },
+            {
+            path: 'padreMensaje',
+            select: 'mensaje-_id',
+            populate: {
+                path: 'autorMensaje',
+                select: 'nombre -_id'
+            }
+            },
+            { path: 'mediaId', select: 'url filename -_id' }
+        ]);
+        res.send(populatedData);
+
+    }catch(err){
+        console.log(err)
+        handleHttpError(res, 'ERROR_CREATE_ITEMS')
+    }
+    
+}
+
+ 
 
 module.exports = { 
     getItems, 
@@ -95,5 +195,8 @@ module.exports = {
     updateItem,
     deleteItem,
 
-    getHilo
+    getHilo,
+    getDistinctGrupos,
+    getMensajesUserTok,
+    postMensajeUsuarioTok
 }
