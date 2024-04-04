@@ -20,8 +20,6 @@ const actividadesSchema = new mongoose.Schema({
     prioridad: {
         type: Boolean
     },
-    // añadir publica o privada
-    // añadir jefe de la actividad (la persona que puede invitar a otros usuarios a la actividad)
     usuarios: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Usuario'
