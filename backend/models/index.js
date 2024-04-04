@@ -3,7 +3,7 @@ const models = {
     actividadesModel: require('./nosql/actividades'),
     horariosModel: require('./nosql/horarios'),
     mensajesModel: require('./nosql/mensajes'),
-    storageModel: require('./nosql/storage')    
+    hiloModel: require('./nosql/hilo'),
 }
 
 module.exports = models
