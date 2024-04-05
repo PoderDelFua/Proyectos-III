@@ -158,6 +158,9 @@ export default function PageList() {
                                         page={page}
                                         userId=''
                                         userName=''
+                                        isExpanded={showActInfo}
+                                        openInfo={handleOpenActInfo}
+                                        closeInfo={handleCloseActInfo}
                                     />
                                 </div>
                             );

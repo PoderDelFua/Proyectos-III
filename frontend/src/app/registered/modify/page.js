@@ -21,24 +21,11 @@ export default function UpdateUser() {
     const [gustoMusical, setGustoMusical] = useState([])
     const [bio, setBio] = useState('')
     const [nickname, setNickname] = useState('')
-    
-    var date = "";
-    var time = "";
 
-    const handleDateChange = (newDate) => {
-        date = new Date(newDate);
-        console.log("Date: ", date.toLocaleDateString());
-    };
-    const handleTimeChange = (newTime) => {
-       
-        time = new Date(newTime);
-        console.log("Time: ", time.toLocaleTimeString());
-    
-    };
 
     useEffect(() => {
         const token = localStorage.getItem('token')
-        const fecha = date + " " + time;
+
         if (!token) {
             router.push('/login')
             return
@@ -71,7 +58,6 @@ export default function UpdateUser() {
 
         fetchData()
     }, [])
-    
     useEffect(() => {
         if (userData) {
             setNombre(userData.nombre)
@@ -88,10 +74,9 @@ export default function UpdateUser() {
     const handleSubmit = async (e) => {
         e.preventDefault()
         const token = localStorage.getItem('token')
-        const fecha = date + "T" + time;
         //Se asignan los valores de user por si no se actualizan los campos que se envien los que ya tenia
         const user = {
-            _id: userData._id,
+            id: userData._id,
             nombre: nombre || userData.nombre,
             instrumento: instrumento || userData.instrumento,
             gusto_musical: gustoMusical || userData.gusto_musical,
@@ -113,18 +98,15 @@ export default function UpdateUser() {
 
             if (response.ok) {
                 const data = await response.json();
-                router.push(`/registered/profile`)
+                router.push(`/home`)
             } else {
                 const errorData = await response.text();
-
                 console.error('Error during update operation:', errorData);
             }
         } catch (error) {
             console.error('Error during update operation:', error);
         }
     }
-
-
 
     var instrumentoOptions = ['Flauta travesera', 'Flauta', 'Clarinete', 'Saxofón', 'Trompeta', 'Trombón', 'Trompa', 'Tuba', 'Oboe', 'Fagot', 'Guitarra acústica', 'Guitarra eléctrica', 'Guitarra clásica', 'Bajo eléctrico', 'Violín', 'Viola', 'Violonchelo', 'Contrabajo', 'Ukelele', 'Banjo', 'Piano/Teclado eléctrico', 'Batería', 'Xilófono', 'Cajón']
     var nivelOptions = ['Principiante', 'Medio', 'Avanzado']
@@ -189,15 +171,8 @@ export default function UpdateUser() {
                         ))
                         }
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <DesktopDatePicker 
-                                inputFormat="MM/DD/YYYY"
-                                onAccept={handleDateChange}
-
-                            />
-                            <DesktopTimePicker 
-                                inputFormat="hh:mm A"
-                                onAccept={handleTimeChange}
-                            />
+                            <DesktopDatePicker inputFormat="MM/DD/YYYY"/>
+                            <DesktopTimePicker inputFormat="hh:mm A"/>
                         </LocalizationProvider>
                         <div className="mb-6">
                             <label htmlFor="nickname" className="block text-gray-800 font-bold">Nickname:</label>
@@ -215,3 +190,4 @@ export default function UpdateUser() {
         </section>
     )
 }
+
