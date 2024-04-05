@@ -3,8 +3,9 @@
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import {BACKEND_URI} from "@/config/env";
+import ActivityInfo from './ActivityInfo';
 
-export default function PageCard({ page, userId, userName }) {
+export default function PageCard({ page, userId, userName ,foto, isExpanded, openInfo, closeInfo }) {
     const router = useRouter();
     const token = localStorage.getItem('token')
     const [userData, setUserData] = useState(null)
@@ -99,7 +100,7 @@ export default function PageCard({ page, userId, userName }) {
 
 
     const handeInfo = (e) => {
-        alert("No implementado")
+        openInfo()
     }
 
     return (
@@ -109,7 +110,7 @@ export default function PageCard({ page, userId, userName }) {
                     {notificationMessage}
                 </div>
             )}
-            <img src="bg.jpg" alt="Activity" className="object-cover w-full h-32"/>
+            <img src={foto} alt="Imagen de la actividad" className="h-56 w-full object-cover" />
             <div className="max-w-sm p-6 flex flex-col justify-between">
                 <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">{page.nombre}</h5> {/* Cambiado a 'nombre' */}
                 <p className="mb-4 font-normal text-gray-700">{page.descripcion}</p> {/* Cambiado a 'descripcion' */}
@@ -118,6 +119,9 @@ export default function PageCard({ page, userId, userName }) {
                             className="cursor-pointer transition-all bg-indigo-600 text-white px-6 py-2 rounded-lg border-indigo-700 border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px] active:border-b-[2px] active:brightness-90 active:translate-y-[2px]">
                         Ver más información
                     </button>
+                    {isExpanded && (
+                        <ActivityInfo onClose={closeInfo} />
+                    )}
                     {token !== null && (
                         <button onClick={handleButton} type="button"
                                 className="cursor-pointer transition-all bg-indigo-600 text-white px-6 py-2 rounded-lg border-indigo-700 border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px] active:border-b-[2px] active:brightness-90 active:translate-y-[2px]">

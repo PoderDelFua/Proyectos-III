@@ -34,6 +34,7 @@ const actividadesSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Grupo'
     }
+
 }, {
     timestamps: true,
     versionKey: false

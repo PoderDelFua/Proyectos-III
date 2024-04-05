@@ -59,11 +59,20 @@ const createItem = async (req, res) => {
         handleHttpError(res, "ERROR_CREATE_ACTIVIDAD")
     }
 }
-
+const getItemsByUser = async (req, res) => {
+    try {
+        const {id} = req.params
+        const data = await actividadesModel.find({creadoPor: id})
+        res.send({data})
+    } catch (err) {
+        handleHttpError(res, "ERROR_GET_ACTIVIDADES")
+    }
+}
 module.exports = {
     getItems,
     getItem,
     updateItem,
     createItem,
-    deleteItem
+    deleteItem,
+    getItemsByUser
 }

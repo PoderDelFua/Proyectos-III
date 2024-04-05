@@ -139,7 +139,7 @@ export default function CreateActivity({ isOpen, closePopup }) {
             const data = await response.json()
             console.log(data)
             //Reload page
-            router.refresh()
+            closePopup()
 
         } catch (error) {
             console.error("Error al crear la actividad: ", error)
