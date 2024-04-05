@@ -49,10 +49,13 @@ const deleteItem = async (req, res) => {
 }
 const createItem = async (req, res) => {
     try {
-        req = matchedData(req)
-        const data = await actividadesModel.create(req)
+        const body = matchedData(req)
+        console.log(body)
+        const data = await actividadesModel.create(body)
+        console.log(data)
         res.send({data})
     } catch (error) {
+        console.error("Error al crear la actividad: ", error);
         handleHttpError(res, "ERROR_CREATE_ACTIVIDAD")
     }
 }

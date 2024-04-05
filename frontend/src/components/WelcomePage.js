@@ -1,4 +1,11 @@
+"use client"
 import Link from 'next/link'
+
+function cleanToken() {
+    localStorage.removeItem('token')
+}
+
+
 
 export default function WelcomePage() {
 //Rehacer pagina, no podemos estar con link, usar navbar
@@ -18,7 +25,7 @@ export default function WelcomePage() {
                 </Link>
 
                 <p className="mt-10">
-                    <Link href="/home" className="text-gray-500 text-base">
+                    <Link href="/home" className="text-gray-500 text-base" onClick={cleanToken}>
                         Continuar sin unirse
                     </Link>
                 </p>
