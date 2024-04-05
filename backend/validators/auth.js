@@ -31,7 +31,7 @@ const validatorLogin = [
 ]
 
 const validatorUpdateUser = [
-    check("_id").isMongoId().exists().notEmpty().withMessage("El id es obligatorio."),
+    check("id").isMongoId().exists().notEmpty().withMessage("El id es obligatorio."),
     check("nombre").isString().optional(),
     check("correo").isEmail().optional(),
     check("nickname").isString().optional(),
@@ -48,13 +48,12 @@ const validatorUpdateUser = [
 const validatorActivity = [
     check("nombre").isString().exists().notEmpty().withMessage("El nombre es obligatorio."),
     check("descripcion").isString().exists().notEmpty().withMessage("La descripcion es obligatoria."),
-    check("lugar").isString().exists().notEmpty().withMessage("El lugar es obligatorio."),
     check("instrumento").isArray().exists().notEmpty().withMessage("El instrumento es obligatorio."),
-    check("gusto_musical").isArray().exists().notEmpty().withMessage("El gusto musical es obligatorio."),
-    check("prioridad").isBoolean().exists().notEmpty().withMessage("La prioridad es obligatoria."),
     check("horarios").isString().exists().notEmpty().withMessage("El horario es obligatorio."),
     check("grupo").isMongoId().optional(),
+    check("lugar").isString().optional(),
     check("usuarios").isArray().optional(),
+    check("creadoPor").isMongoId().optional(),
     (req, res, next) => {
         validateResults(req, res, next)
     }
