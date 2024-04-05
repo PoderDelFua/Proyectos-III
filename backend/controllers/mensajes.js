@@ -186,6 +186,18 @@ const postMensajeUsuarioTok = async (req, res) => {
     
 }
 
+const deleteHilo = async (req, res) => {
+    try {
+        const {grupo} = req.params
+        const data = await mensajesModel.deleteMany({grupo})
+        res.send(data)
+    }catch(err){
+        console.log(err)
+        handleHttpError(res, 'ERROR_DELETE_HILO')
+    }
+}
+
+
  
 
 module.exports = { 
@@ -198,5 +210,6 @@ module.exports = {
     getHilo,
     getDistinctGrupos,
     getMensajesUserTok,
-    postMensajeUsuarioTok
+    postMensajeUsuarioTok,
+    deleteHilo
 }
