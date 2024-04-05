@@ -85,6 +85,7 @@ export default function PageCard({ page, userId, userName }) {
                         setTimeout(() => {
                             setShowNotification(false);
                         }, 3000); // Oculta la notificación a los 3 segundos
+
                     }
 
 

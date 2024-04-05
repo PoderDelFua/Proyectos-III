@@ -9,7 +9,7 @@ const { validatorGetItem, validatorCreateItem, validatorUpdateItem, validatorCre
 
 router.get("/", getItems)
 router.get("/getMsgByID/:id", validatorGetItem, getItem)
-router.post("/", authMiddleware, validatorCreateItem, createItem)
+router.post("/crearHilo", authMiddleware, validatorCreateItem, createItem)
 router.patch("/:id", authMiddleware, validatorGetItem, validatorUpdateItem,  updateItem)
 router.delete("/:id", authMiddleware, validatorGetItem, deleteItem)
 

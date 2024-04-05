@@ -4,6 +4,7 @@ import Navbar from '@/components/Navbar';
 import PageCard from '@/components/PageCard'
 import Sidebar from '@/components/Sidebar';
 import Featured from '@/components/Featured';
+import CreateActivity from '@/components/CreateActivityForm'; // Asegúrate de importar tu componente de formulario
 
 import {useState, useEffect} from 'react'
 import {BACKEND_URI} from '@/config/env'
@@ -13,7 +14,16 @@ export default function PageList() {
     const [searchTerm, setSearchTerm] = useState('');
     const [pageCards, setPageCards] = useState([]);
     const [pagesData, setPagesData] = useState(null);
+    const [showPopup, setShowPopup] = useState(false); // Estado para controlar la visibilidad del popup
 
+    const handleOpenPopup = () => {
+        setShowPopup(true);
+    };
+
+    // Función para cerrar el popup
+    const handleClosePopup = () => {
+        setShowPopup(false);
+    };
 
     useEffect(() => {
         const fetchData = async () => {
@@ -133,7 +143,13 @@ export default function PageList() {
                             <option value="bateria">Batería</option>
                         </select>
                     </form>
-
+                    <button
+                        onClick={handleOpenPopup} className={"bg-indigo-600 text-white px-4 py-2 rounded-lg border-indigo-700 border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px] active:border-b-[2px] active:brightness-90 active:translate-y-[2px]"}>
+                        +
+                    </button>
+                    {showPopup && (
+                        <CreateActivity isOpen={showPopup} closePopup={handleClosePopup} />
+                    )}
                     <div className="custom-grid-itemActividad">
                         {pageCards.map(page => {
                             return (

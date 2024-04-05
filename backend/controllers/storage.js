@@ -29,7 +29,11 @@ const getItem = async (req, res) => {
 const createItem = async (req, res) => {
     try {
         const { body, file } = req
-        const fileData = { 
+        if(!file) {
+            console.log("NO FILE")
+            return
+        }
+        const fileData = {
             filename: file.filename,
             url: process.env.PUBLIC_URL+"/"+file.filename
         }
