@@ -8,16 +8,16 @@ const { matchedData } = require('express-validator');
 const getItems = async (req, res) => {
     try{
         const data = await mensajesModel.find({})
-        .populate('autorMensaje', 'nombre -_id')
+        .populate('autorMensaje', 'nombre  ')
         .populate({
             path: 'padreMensaje',
-            select: 'mensaje-_id',
+            select: 'mensaje ',
             populate: {
                 path: 'autorMensaje',
-                select: 'nombre -_id'
+                select: 'nombre  '
             }
         })
-        .populate('mediaId', 'url filename -_id')
+        .populate('mediaId', 'url filename  ')
 
         res.send(data)
     }catch(err){
@@ -29,16 +29,16 @@ const getItem = async (req, res) => {
     try{
         const {id} = matchedData(req)
         const data = await mensajesModel.findById(id)
-        .populate('autorMensaje', 'nombre -_id')
+        .populate('autorMensaje', 'nombre  ')
         .populate({
             path: 'padreMensaje',
-            select: 'mensaje-_id',
+            select: 'mensaje ',
             populate: {
                 path: 'autorMensaje',
-                select: 'nombre -_id'
+                select: 'nombre  '
             }
         })
-        .populate('mediaId', 'url filename -_id')
+        .populate('mediaId', 'url filename  ')
 
         if (!data) {
             return res.status(404).send('Mensaje not found');
@@ -57,16 +57,16 @@ const createItem = async (req, res) => {
         const data = await (await mensajesModel.create(body))
         
         const populatedData = await mensajesModel.populate(data, [
-            { path: 'autorMensaje', select: 'nombre -_id' },
+            { path: 'autorMensaje', select: 'nombre  ' },
             {
             path: 'padreMensaje',
-            select: 'mensaje-_id',
+            select: 'mensaje ',
             populate: {
                 path: 'autorMensaje',
-                select: 'nombre -_id'
+                select: 'nombre  '
             }
             },
-            { path: 'mediaId', select: 'url filename -_id' }
+            { path: 'mediaId', select: 'url filename  ' }
         ])
 
 
@@ -106,16 +106,16 @@ const getHilo = async (req, res) => {
     try {
         const {grupo} = req.params
         const data = await mensajesModel.find({grupo}).sort({updatedAt: -1})
-        .populate('autorMensaje', 'nombre -_id')
+        .populate('autorMensaje', 'nombre  ')
         .populate({
             path: 'padreMensaje',
-            select: 'mensaje-_id',
+            select: 'mensaje ',
             populate: {
                 path: 'autorMensaje',
-                select: 'nombre -_id'
+                select: 'nombre  '
             }
         })
-        .populate('mediaId', 'url filename -_id')
+        .populate('mediaId', 'url filename  ')
         
         res.send(data)
     }catch(err){
@@ -137,16 +137,16 @@ const getDistinctGrupos = async (req, res) => {
 const getMensajesUserTok = async (req, res) => {
     try {
         const data = await mensajesModel.find({autorMensaje: req.user._id})
-        .populate('autorMensaje', 'nombre -_id')
+        .populate('autorMensaje', 'nombre  ')
         .populate({
             path: 'padreMensaje',
-            select: 'mensaje-_id',
+            select: 'mensaje ',
             populate: {
                 path: 'autorMensaje',
-                select: 'nombre -_id'
+                select: 'nombre  '
             }
         })
-        .populate('mediaId', 'url filename -_id')
+        .populate('mediaId', 'url filename  ')
 
         res.send(data)
     }catch(err){
@@ -166,16 +166,16 @@ const postMensajeUsuarioTok = async (req, res) => {
         //console.log(body)
         const data = await mensajesModel.create(body);
         const populatedData = await mensajesModel.populate(data, [
-            { path: 'autorMensaje', select: 'nombre -_id' },
+            { path: 'autorMensaje', select: 'nombre  ' },
             {
             path: 'padreMensaje',
-            select: 'mensaje-_id',
+            select: 'mensaje ',
             populate: {
                 path: 'autorMensaje',
-                select: 'nombre -_id'
+                select: 'nombre  '
             }
             },
-            { path: 'mediaId', select: 'url filename -_id' }
+            { path: 'mediaId', select: 'url filename  ' }
         ]);
         res.send(populatedData);
 
@@ -185,6 +185,18 @@ const postMensajeUsuarioTok = async (req, res) => {
     }
     
 }
+
+const deleteHilo = async (req, res) => {
+    try {
+        const {grupo} = req.params
+        const data = await mensajesModel.deleteMany({grupo})
+        res.send(data)
+    }catch(err){
+        console.log(err)
+        handleHttpError(res, 'ERROR_DELETE_HILO')
+    }
+}
+
 
  
 
@@ -198,5 +210,6 @@ module.exports = {
     getHilo,
     getDistinctGrupos,
     getMensajesUserTok,
-    postMensajeUsuarioTok
+    postMensajeUsuarioTok,
+    deleteHilo
 }
