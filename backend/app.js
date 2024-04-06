@@ -2,6 +2,9 @@ const express = require('express')
 const cors = require('cors')
 require('dotenv').config()
 
+const swaggerUi = require("swagger-ui-express")
+const swaggerSpecs = require("./docs/swagger")
+
 const app = express()
 
 //Le decimos a la app de express() que use cors para evitar el error Cross-Domain (XD)<- Es literalmente el nombre del error no es un xd
@@ -13,6 +16,10 @@ const port = process.env.PORT || 3000
 //Importamos la conexión a la BD
 const dbConnect = require('./config/mongo')
 dbConnect()
+app.use("/api-docs",
+    swaggerUi.serve,
+    swaggerUi.setup(swaggerSpecs)
+)
 app.use("/api", require("./routes")) //Lee routes/index.js por defecto
 
 app.listen(port, () => {
