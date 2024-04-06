@@ -16,6 +16,9 @@ const actividadesSchema = new mongoose.Schema({
     instrumento:[{
         type: String
     }],
+    nivel: [{
+        type: String
+    }],
     prioridad: {
         type: Boolean
     },
