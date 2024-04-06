@@ -80,7 +80,7 @@ export default function CreateActivity({ isOpen, closePopup }) {
         let time2 = time.toLocaleTimeString();
         let timeMix = auxHorarios + ' ' + time2;
         setAuxHorarios(timeMix)
-
+//Modificar a hora y dia separado
     };
     const handleSubmit = async (e) => {
         e.preventDefault()
