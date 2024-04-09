@@ -137,11 +137,12 @@ router.post("/tok", authMiddleware, validatorCreateItemTok, createItemTok)
  *          content:
  *              application/json:
  *                  schema:
- *                  type: object
- *                  properties:
- *                      titulo: String
- *                      default: "Hilo modificado 👻"
- *          parameters:
+ *                      type: object
+ *                      properties:
+ *                          titulo: 
+ *                              type: String
+ *                              default: "hilo Modificado"
+ *      parameters:
  *          -   name: id
  *              in: path
  *              required: true
