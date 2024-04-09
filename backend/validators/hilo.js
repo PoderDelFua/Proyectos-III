@@ -13,8 +13,8 @@ const validatorGetItem = [
 const validatorCreateItem = [
     check("creadorId").exists().notEmpty().isMongoId().withMessage("The value must be a valid MongoId"),
     check("titulo").exists().notEmpty().isString().withMessage("The value must be a string"),
-    check("descripcion").exists().notEmpty().isString().withMessage("The value must be a string"),
-    check("privado").exists().notEmpty().isBoolean().withMessage("The value must be a boolean"),
+    check("descripcion").optional().notEmpty().isString().withMessage("The value must be a string"),
+    check("privado").optional().notEmpty().isBoolean().withMessage("The value must be a boolean"),
     (req, res, next) => {
         return validateResults(req, res, next)
     }
@@ -23,7 +23,7 @@ const validatorCreateItem = [
 const validatorCreateItemTok = [
     check("titulo").exists().notEmpty().isString().withMessage("The value must be a string"),
     check("descripcion").exists().notEmpty().isString().withMessage("The value must be a string"),
-    check("privado").exists().notEmpty().isBoolean().withMessage("The value must be a boolean"),
+    check("privado").optional().notEmpty().isBoolean().withMessage("The value must be a boolean"),
     (req, res, next) => {
         return validateResults(req, res, next)
     }

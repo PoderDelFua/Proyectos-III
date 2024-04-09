@@ -96,6 +96,35 @@ const options = {
                     }
                 }
             },
+            hilo: {
+                type: "object",
+                required: ["titulo", "creadorId"],
+                properties:{
+                    titulo: {
+                        type: "string",
+                        required: true,
+                        example: "Título del hilo",
+                        description: "El título del hilo"
+                    },
+                    descripcion: {
+                        type: "string",
+                        example: "Descripción del hilo",
+                        description: "La descripción del hilo"
+                    },
+                    creadorId: {
+                        type: "string",
+                        format: "mongo id",
+                        example: "6607f0692634e54df0298ee3",
+                        description: "El ID del creador del hilo"
+                    },
+                    privado: {
+                        type: "boolean",
+                        example: true,
+                        description: "Indica si el hilo es privado o no"
+                    }
+                }
+
+            },
             mensaje: {
                 type: "object",
                 required: ["autorMensaje", "mensaje", "hiloId" ],

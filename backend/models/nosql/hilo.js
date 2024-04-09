@@ -16,7 +16,7 @@ const mensajes = new mongoose.Schema({
     },
     privado: {
         type: Boolean,
-        default: false
+        default: true
     }
 }, {
     timestamps: true,

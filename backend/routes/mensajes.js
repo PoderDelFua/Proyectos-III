@@ -21,7 +21,6 @@ const { validatorGetItem, validatorCreateItem, validatorUpdateItem, validatorCre
  *          '500':
  *              description: Server error
  */
-
 router.get("/", getItems)
 
 /**
