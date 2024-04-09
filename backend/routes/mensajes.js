@@ -39,7 +39,7 @@ router.get("/", getItems)
  *          description: ID of the message
  *          schema:
  *            type: string
- *            default: "66080979b791711d8c89140d"
+ *            default: "66153d12248271dc8c36d80e"
  *      responses:
  *          '200':
  *              description: Returns the inserted object
@@ -48,6 +48,51 @@ router.get("/", getItems)
  */
 router.get("/getMsgByID/:id", validatorGetItem, getItem)
 
+
+/**
+ * @openapi
+ * /api/mensajes/getMsgHilo/{id}:
+ *  get:
+ *      tags:
+ *      - Mensajes
+ *      summary: Todos los mensajes de un hilo
+ *      description: 'Devuelve todos los mensajes de un hilo en concreto'
+ *      parameters:
+ *          -   name: id
+ *              in: path
+ *              required: true
+ *              description: Id del hilo
+ *              schema:
+ *                  type: string
+ *                  default: "66146d4eadc5e52407a6eb04"
+ * 
+ *      responses:
+ *          '200':
+ *              description: Devuelve todos los mensajes del hilo
+ *          '500':
+ *              description: Server error
+ */
+router.get("/getMsgHilo/:id", validatorGetItem, getHilo)    
+
+
+/**
+ * @openapi
+ * /api/mensajes/getMensajesUserTok:
+ *  get:
+ *      tags:
+ *      - Mensajes
+ *      summary: Todos los mensajes de un usuario
+ *      description: Usando el token del usuario, devuelve todos los mensajes de un usuario escritos en cualquier sitio
+ *      responses:
+ *          '200':
+ *              description: Devuelve todos los mensajes del grupo borrados
+ *          '401':
+ *              description: Validation error
+ *      security:
+ *          - bearerAuth: []
+ * 
+ */
+router.get("/getMensajesUserTok", authMiddleware, getMensajesUserTok)
 
 /**
  * @openapi
@@ -88,7 +133,7 @@ router.post("/crearPost", authMiddleware, validatorCreateItem, createItem)
  *          description: ID del mensaje a modificar
  *          schema:
  *            type: string
- *            default: "65f22f0800c7c18e6fa74aaa"
+ *            default: "6615382a30e57b4421aba40a"
  *      requestBody:
  *          content:
  *              application/json:
@@ -132,48 +177,8 @@ router.patch("/:id", authMiddleware, validatorGetItem, validatorUpdateItem,  upd
 router.delete("/:id", authMiddleware, validatorGetItem, deleteItem)
 
 
-/**
- * @openapi
- * /api/mensajes/hilo/{grupo}:
- *  get:
- *      tags:
- *      - Mensajes
- *      summary: Todos los mensajes de un hilo
- *      description: 'Devuelve todos los mensajes de un hilo/grupo en concreto'
- *      parameters:
- *          -   name: grupo
- *              in: path
- *              required: true
- *              description: Grupo del hilo
- *              schema:
- *                  type: string
- *                  default: "FLAMENCO"
- * 
- *      responses:
- *          '200':
- *              description: Devuelve todos los mensajes del grupo
- *          '500':
- *              description: Server error
- */
-router.get("/getMsgHilo/:hiloId", getHilo)     //Para obtener los mensajes de un hilo
+ 
 
-/**
- * @openapi
- * /api/mensajes/getMensajesUserTok:
- *  get:
- *      tags:
- *      - Mensajes
- *      summary: Todos los mensajes de un usuario
- *      description: Usando el token del usuario, devuelve todos los mensajes de un usuario escritos en cualquier sitio
- *      responses:
- *          '200':
- *              description: Devuelve todos los mensajes del grupo borrados
- *          '401':
- *              description: Validation error
- *      security:
- *          - bearerAuth: []
- * 
- */
-router.get("/getMensajesUserTok", authMiddleware, getMensajesUserTok)
+
 
 module.exports = router

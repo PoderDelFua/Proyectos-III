@@ -98,23 +98,23 @@ const options = {
             },
             mensaje: {
                 type: "object",
-                required: ["autorMensaje", "mensaje", "grupo" ],
+                required: ["autorMensaje", "mensaje", "hiloId" ],
                 properties: {
                     autorMensaje: {
                         type: "string",
                         format: "mongo id",
-                        example: "65f22f0800c7c18e6fa74aaa",
+                        example: "6607f0692634e54df0298ee3",
                         description: "El autor del mensaje"
                     },
                     mensaje: {
                         type: "string",
-                        example: "Hola, ¿qué tal?",
+                        example: "Nuevo mensaje dentro de un hilo",
                         description: "El texto del mensaje"
                     },
-                    grupo: {
+                    hiloId: {
                         type: "string",
-                        example: "FLAMENCO",
-                        description: "El grupo asociado con el mensaje. Puede ser un foro generico o unchat de actividad"
+                        example: "66146d4eadc5e52407a6eb04",
+                        description: "El id del hilo asociado con el mensaje. Puede ser un foro generico o unchat de actividad"
                     },
                     padreMensaje: {
                         type: "string",

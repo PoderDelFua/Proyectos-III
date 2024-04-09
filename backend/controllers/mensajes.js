@@ -52,6 +52,64 @@ const getItem = async (req, res) => {
     }
 }
 
+
+const getHilo = async (req, res) => {
+    try {
+        const {id} = matchedData(req)
+        const hiloId = id
+        const data = await mensajesModel.find({hiloId}).sort({updatedAt: -1})
+        .populate('autorMensaje', 'nombre  ')
+        .populate({
+            path: 'padreMensaje',
+            select: 'mensaje ',
+            populate: {
+                path: 'autorMensaje',
+                select: 'nombre  '
+            }
+        })
+        .populate('mediaId', 'url filename  ')
+        .populate('hiloId' , 'titulo')
+        
+        res.send(data)
+    }catch(err){
+        console.log(err)
+        handleHttpError(res, 'ERROR_GET_HILO')
+    }
+}
+
+const getMensajesUserTok = async (req, res) => {
+    try {
+        const userId = req.user._id
+        const data = await mensajesModel.find({}).sort({updatedAt: -1})
+        .populate('autorMensaje', 'nombre  ')
+        .populate({
+            path: 'padreMensaje',
+            select: 'mensaje ',
+            populate: {
+                path: 'autorMensaje',
+                select: 'nombre  '
+            }
+        })
+        .populate('mediaId', 'url filename  ')
+        .populate('hiloId' , 'titulo')
+
+        res.send(data)
+    }catch(err){
+        console.log(err)
+        handleHttpError(res, 'ERROR_GET_ITEMS_MENSAJES', 403)
+    }
+}
+
+const getDistinctGrupos = async (req, res) => {
+    try {
+        const data = await mensajesModel.distinct('grupo')
+        res.send(data)
+    }catch(err){
+        console.log(err)
+        handleHttpError(res, 'ERROR_GET_DISTINCT_GRUPOS')
+    }
+}
+
 const createItem = async (req, res) => {
     try {
         body = matchedData(req)
@@ -103,62 +161,6 @@ const deleteItem = async (req, res) => {
     }
 }
 
-
-const getHilo = async (req, res) => {
-    try {
-        console.log(req.params)
-        const {hiloId} = req.params
-        const data = await mensajesModel.find({hiloId}).sort({updatedAt: -1})
-        .populate('autorMensaje', 'nombre  ')
-        .populate({
-            path: 'padreMensaje',
-            select: 'mensaje ',
-            populate: {
-                path: 'autorMensaje',
-                select: 'nombre  '
-            }
-        })
-        .populate('mediaId', 'url filename  ')
-        .populate('hiloId' , 'titulo')
-        
-        res.send(data)
-    }catch(err){
-        console.log(err)
-        handleHttpError(res, 'ERROR_GET_HILO')
-    }
-}
-
-const getDistinctGrupos = async (req, res) => {
-    try {
-        const data = await mensajesModel.distinct('grupo')
-        res.send(data)
-    }catch(err){
-        console.log(err)
-        handleHttpError(res, 'ERROR_GET_DISTINCT_GRUPOS')
-    }
-}
-
-const getMensajesUserTok = async (req, res) => {
-    try {
-        const data = await mensajesModel.find({autorMensaje: req.user._id})
-        .populate('autorMensaje', 'nombre  ')
-        .populate({
-            path: 'padreMensaje',
-            select: 'mensaje ',
-            populate: {
-                path: 'autorMensaje',
-                select: 'nombre  '
-            }
-        })
-        .populate('mediaId', 'url filename  ')
-        .populate('hiloId' , 'titulo')
-
-        res.send(data)
-    }catch(err){
-        console.log(err)
-        handleHttpError(res, 'ERROR_GET_ITEMS_MENSAJES', 403)
-    }
-}
 
 
 const postMensajeUsuarioTok = async (req, res) => {
