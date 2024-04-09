@@ -11,8 +11,14 @@ const mensajes = new mongoose.Schema({
         type: String,
         required: true
     },
+    /*
     grupo:{
         type: String,
+        required: true
+    },*/
+    hiloId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Hilo',
         required: true
     },
     padreMensaje: {

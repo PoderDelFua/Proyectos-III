@@ -18,6 +18,7 @@ const getItems = async (req, res) => {
             }
         })
         .populate('mediaId', 'url filename  ')
+        .populate('hiloId' , 'titulo')
 
         res.send(data)
     }catch(err){
@@ -39,6 +40,7 @@ const getItem = async (req, res) => {
             }
         })
         .populate('mediaId', 'url filename  ')
+        .populate('hiloId' , 'titulo')
 
         if (!data) {
             return res.status(404).send('Mensaje not found');
@@ -66,7 +68,7 @@ const createItem = async (req, res) => {
                 select: 'nombre  '
             }
             },
-            { path: 'mediaId', select: 'url filename  ' }
+            { path: 'mediaId', select: 'url filename  ' },
         ])
 
 
@@ -104,8 +106,9 @@ const deleteItem = async (req, res) => {
 
 const getHilo = async (req, res) => {
     try {
-        const {grupo} = req.params
-        const data = await mensajesModel.find({grupo}).sort({updatedAt: -1})
+        console.log(req.params)
+        const {hiloId} = req.params
+        const data = await mensajesModel.find({hiloId}).sort({updatedAt: -1})
         .populate('autorMensaje', 'nombre  ')
         .populate({
             path: 'padreMensaje',
@@ -116,6 +119,7 @@ const getHilo = async (req, res) => {
             }
         })
         .populate('mediaId', 'url filename  ')
+        .populate('hiloId' , 'titulo')
         
         res.send(data)
     }catch(err){
@@ -147,6 +151,7 @@ const getMensajesUserTok = async (req, res) => {
             }
         })
         .populate('mediaId', 'url filename  ')
+        .populate('hiloId' , 'titulo')
 
         res.send(data)
     }catch(err){
@@ -175,7 +180,8 @@ const postMensajeUsuarioTok = async (req, res) => {
                 select: 'nombre  '
             }
             },
-            { path: 'mediaId', select: 'url filename  ' }
+            { path: 'mediaId', select: 'url filename  ' },
+            { path: 'hiloId', select: 'titulo' }
         ]);
         res.send(populatedData);
 

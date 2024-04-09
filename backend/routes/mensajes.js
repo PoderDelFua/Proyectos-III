@@ -155,54 +155,7 @@ router.delete("/:id", authMiddleware, validatorGetItem, deleteItem)
  *          '500':
  *              description: Server error
  */
-router.get("/hilo/:grupo", getHilo)     //Para obtener los mensajes de un hilo
-
-
-
-/**
- * @openapi
- * /api/mensajes/deleteHilo/{grupo}:
- *  delete:
- *      tags:
- *      - Mensajes
- *      summary: Borrar todos los mensajes de un hilo/grupo
- *      description: Borra todos los mensajes de un hilo/grupo en concreto. Recordad que es case sensitive
- *      parameters:
- *          -   name: grupo
- *              in: path
- *              required: true
- *              description: Nombre del grupo a borrar
- *              schema:
- *                  type: string
- *                  default: "FLAMENCO"   
- *      responses:
- *          '200':
- *              description: Devuelve el numero de mensajes borrados
- *          '401':
- *              description: Validation error
- *      security:
- *          - bearerAuth: []
- * 
- */
-router.delete("/deleteHilo/:grupo", authMiddleware, deleteHilo) //Para borrar un hilo
-
-
-/**
- * @openapi
- * /api/mensajes/distinctGrupos/:
- *  get:
- *      tags:
- *      - Mensajes
- *      summary: Los distintos hilos/grupos de mensajes
- *      description: 'Devuelve los distintos grupos de mensajes'
- *      responses:
- *          '200':
- *              description: Devuelve todos los grupos
- *          '500':
- *              description: Server error
- */
-router.get("/distinctGrupos/", getDistinctGrupos) //Para obtener los grupos distintos
-
+router.get("/getMsgHilo/:hiloId", getHilo)     //Para obtener los mensajes de un hilo
 
 /**
  * @openapi

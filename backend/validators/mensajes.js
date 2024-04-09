@@ -12,7 +12,8 @@ const validatorGetItem = [
 const validatorCreateItem = [
     check("autorMensaje").exists().notEmpty().isMongoId().withMessage("The value must be a valid MongoId"),
     check("mensaje").exists().notEmpty().isString().withMessage("The value must be a string"),
-    check("grupo").exists().notEmpty().isString().withMessage("The value must be a string"),
+    //check("grupo").exists().notEmpty().isString().withMessage("The value must be a string"),
+    check("hiloId").exists().notEmpty().isMongoId().withMessage("The value ( hiloId ) must be a valid MongoId"),
     check("padreMensaje").optional().isMongoId().withMessage("The value must be a valid MongoId"),
     check("mediaId").optional().isMongoId().withMessage("The value ( madiaId ) must be a valid MongoId"),
     (req, res, next) => {
@@ -22,7 +23,8 @@ const validatorCreateItem = [
 
 const validatorCreateItemTok = [
     check("mensaje").exists().notEmpty().isString().withMessage("The value must be a string"),
-    check("grupo").exists().notEmpty().isString().withMessage("The value must be a string"),
+    //check("grupo").exists().notEmpty().isString().withMessage("The value must be a string"),
+    check("hiloId").exists().notEmpty().isMongoId().withMessage("The value ( hiloId ) must be a valid MongoId"),
     check("padreMensaje").optional().isMongoId().withMessage("The value must be a valid MongoId"),
     check("mediaId").optional().isMongoId().withMessage("The value ( madiaId ) must be a valid MongoId"),
     (req, res, next) => {
@@ -34,7 +36,8 @@ const validatorCreateItemTok = [
 const validatorUpdateItem = [
     check("autorMensaje").optional().isMongoId(),
     check("mensaje").optional().isString(),
-    check("grupo").optional().isString(),
+    //check("grupo").optional().isString(),
+    check("hiloId").optional().isMongoId(),
     check("padreMensaje").optional().isMongoId(),
     check("mediaId").optional().isMongoId(),
 
