@@ -6,6 +6,13 @@ import Sidebar from '@/components/Sidebar';
 import Featured from '@/components/Featured';
 import CreateActivity from '@/components/CreateActivityForm'; // Asegúrate de importar tu componente de formulario
 
+import Slider from '@/components/SliderNews';
+// const slides = [
+//     '/../slides/slide1.jpg',
+//     '/../slides/slide2.jpg',
+//     '/../slides/slide3.jpg',
+//   ];
+
 import {useState, useEffect} from 'react'
 import {BACKEND_URI} from '@/config/env'
 
@@ -112,6 +119,7 @@ export default function PageList() {
             </div>
             <div className="w-full h-screen bg-white shadow-inner flex justify-center">
                 <div className="relative p-4 w h md:h-auto md:w-2/3">
+                <div className = "rounded-lg mb-8"><Slider /></div>                
                     <form onSubmit={handleSearch} className="flex flex-col md:flex-row gap-3 mb-8">
                         <div className="flex flex-grow">
                             <input type="text" placeholder="Search for webpages..."
