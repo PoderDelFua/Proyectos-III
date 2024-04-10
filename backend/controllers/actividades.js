@@ -13,9 +13,10 @@ const getItems = async (req, res) => {
 }
 
 const getItem = async (req, res) => {
-    const {id} = req.params
+    
     try {
-        const data = await actividades
+        const {id} = matchedData(req)
+        const data = await actividadesModel.findById(id).populate("usuarios", "nombre").populate("grupo", "nombre")
         if (!data) {
             handleHttpError(res, "ACTIVIDAD_NOT_EXISTS", 404)
         }

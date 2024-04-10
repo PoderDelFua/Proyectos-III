@@ -73,5 +73,10 @@ const validatorUpdateUserActivity = [
         validateResults(req, res, next)
     }
 ]
-
-module.exports = { validatorRegister, validatorLogin, validatorActivity, validatorUpdateUser, validatorUpdateActivity , validatorUpdateUserActivity}
+const validatorIdFormat = [
+    check("id").exists().notEmpty().isMongoId(), 
+    (req, res, next) => {
+        return validateResults(req, res, next);
+    }
+]
+module.exports = { validatorRegister, validatorLogin, validatorActivity, validatorUpdateUser, validatorUpdateActivity , validatorUpdateUserActivity, validatorIdFormat}
