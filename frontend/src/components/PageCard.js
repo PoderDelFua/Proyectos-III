@@ -30,7 +30,7 @@ export default function PageCard({ page, foto }) {
                 const data = await response.json()
                 setUserData(data.data)
 
-                const response2 = await fetch(`${BACKEND_URI}/usuario/getItemById/${page.creadoPor}`, {
+                const response2 = await fetch(`${BACKEND_URI}/usuario/getUsersData/${page.creadoPor}`, {
                     method: 'GET',
                     headers: {
                         'Authorization': `Bearer ${token}`,
@@ -42,7 +42,7 @@ export default function PageCard({ page, foto }) {
                 console.log("Buscando datos del creador...")
                 const data2 = await response2.json()
                 console.log(data2)
-                setCreatorData(data2)
+                setCreatorData(data2.data)
             } catch (error) {
                 console.error("Error al cargar la información del usuario: ", error)
             }
@@ -134,10 +134,6 @@ export default function PageCard({ page, foto }) {
         setIsExpanded(false)
     }
 
-    if (!userData) {
-        return <div>Loading...</div>
-    }
-
     return (
         <div className="flex flex-col bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden">
             {showNotification && (
@@ -159,7 +155,7 @@ export default function PageCard({ page, foto }) {
                                       onClose={closeInfo} 
                                       page={page} 
                                       foto={foto} 
-                                      nickname={userData.nickname}
+                                      nickname={creatorData ? creatorData.nickname : 'nickname'}
                                       handleUnirse={handleButton} />
                     )}
                     {token !== null && (
