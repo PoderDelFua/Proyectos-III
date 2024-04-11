@@ -1,6 +1,5 @@
 "use client"
 
-import Navbar from '@/components/Navbar';
 import PageCard from '@/components/PageCard'
 import Sidebar from '@/components/Sidebar';
 import Featured from '@/components/Featured';
@@ -22,7 +21,6 @@ export default function PageList() {
     const [pageCards, setPageCards] = useState([]);
     const [pagesData, setPagesData] = useState(null);
     const [showPopup, setShowPopup] = useState(false); // Estado para controlar la visibilidad del popup
-    const [showActInfo, setShowActInfo] = useState(false);
     const handleOpenPopup = () => {
         setShowPopup(true);
     };
@@ -31,13 +29,7 @@ export default function PageList() {
     const handleClosePopup = () => {
         setShowPopup(false);
     };
-    const handleOpenActInfo = () => {
-        setShowActInfo(true);
-    }
 
-    const handleCloseActInfo = () => {
-        setShowActInfo(false);
-    }
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -173,9 +165,6 @@ export default function PageList() {
                                         userId=''
                                         userName=''
                                         foto='../bg.jpg'
-                                        isExpanded={showActInfo}
-                                        openInfo={handleOpenActInfo}
-                                        closeInfo={handleCloseActInfo}
                                     />
                                 </div>
                             );

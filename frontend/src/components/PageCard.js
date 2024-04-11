@@ -5,12 +5,13 @@ import { useState } from 'react'
 import {BACKEND_URI} from "@/config/env";
 import ActivityInfo from './ActivityInfo';
 
-export default function PageCard({ page, userId, userName ,foto, isExpanded, openInfo, closeInfo }) {
+export default function PageCard({ page, userId, userName ,foto }) {
     const router = useRouter();
     const token = localStorage.getItem('token')
     const [userData, setUserData] = useState(null)
     const [showNotification, setShowNotification] = useState(false);
     const [notificationMessage, setNotificationMessage] = useState('');
+    const [isExpanded, setIsExpanded] = useState(false);
 
     const handleButton = (e) => {
         //Llamada al back para añadir el usuario a la actividad
@@ -98,9 +99,12 @@ export default function PageCard({ page, userId, userName ,foto, isExpanded, ope
         }
     }
 
+    const openInfo = (e) => {
+        setIsExpanded(true)
+    }
 
-    const handeInfo = (e) => {
-        openInfo()
+    const closeInfo = (e) => {
+        setIsExpanded(false)
     }
 
     return (
@@ -115,12 +119,12 @@ export default function PageCard({ page, userId, userName ,foto, isExpanded, ope
                 <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">{page.nombre}</h5> {/* Cambiado a 'nombre' */}
                 <p className="mb-4 font-normal text-gray-700">{page.descripcion}</p> {/* Cambiado a 'descripcion' */}
                 <div className="flex items-center space-x-4">
-                    <button onClick={handeInfo} type="button"
+                    <button onClick={openInfo} type="button"
                             className="cursor-pointer transition-all bg-indigo-600 text-white px-6 py-2 rounded-lg border-indigo-700 border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px] active:border-b-[2px] active:brightness-90 active:translate-y-[2px]">
                         Ver más información
                     </button>
                     {isExpanded && (
-                        <ActivityInfo onClose={closeInfo} />
+                        <ActivityInfo isOpen={isExpanded} onClose={closeInfo} page={page} foto={foto} />
                     )}
                     {token !== null && (
                         <button onClick={handleButton} type="button"

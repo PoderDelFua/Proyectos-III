@@ -129,8 +129,8 @@ export default function UserProfile() {
                         <span className="font-bold">Instrumentos:</span>
                         {instrumento.map((item, index) => (
                             <span key={index} className="ml-2">
-                        {item.nombre} ({item.nivel})
-                      </span>
+                                {item.nombre} ({item.nivel})
+                            </span>
                         ))}
                     </div>
 
