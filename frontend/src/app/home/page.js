@@ -162,8 +162,6 @@ export default function PageList() {
                                 <div key={page._id} className="custom-page-card">
                                     <PageCard
                                         page={page}
-                                        userId=''
-                                        userName=''
                                         foto='../bg.jpg'
                                     />
                                 </div>

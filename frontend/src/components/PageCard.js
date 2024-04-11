@@ -1,17 +1,55 @@
 "use client"
 
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import {useState, useEffect} from 'react'
 import {BACKEND_URI} from "@/config/env";
 import ActivityInfo from './ActivityInfo';
 
-export default function PageCard({ page, userId, userName ,foto }) {
+export default function PageCard({ page, foto }) {
     const router = useRouter();
     const token = localStorage.getItem('token')
     const [userData, setUserData] = useState(null)
+    const [creatorData, setCreatorData] = useState(null)
     const [showNotification, setShowNotification] = useState(false);
     const [notificationMessage, setNotificationMessage] = useState('');
     const [isExpanded, setIsExpanded] = useState(false);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch(`${BACKEND_URI}/usuario/getUserData`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                    },
+                })
+                if (!response.ok) {
+                    throw new Error('No se pudo cargar la información del usuario')
+                }
+                console.log("Buscando datos del usuario...")
+                const data = await response.json()
+                setUserData(data.data)
+
+                const response2 = await fetch(`${BACKEND_URI}/usuario/getItemById/${page.creadoPor}`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                    },
+                })
+                if (!response2.ok) {
+                    throw new Error('No se pudo cargar la información del creador de la actividad')
+                }
+                console.log("Buscando datos del creador...")
+                const data2 = await response2.json()
+                console.log(data2)
+                setCreatorData(data2)
+            } catch (error) {
+                console.error("Error al cargar la información del usuario: ", error)
+            }
+        }
+
+        fetchData()
+    }, []);
 
     const handleButton = (e) => {
         //Llamada al back para añadir el usuario a la actividad
@@ -20,20 +58,9 @@ export default function PageCard({ page, userId, userName ,foto }) {
         } else {
             const fetchData = async () => {
                 try {
-                    const response = await fetch(`${BACKEND_URI}/usuario/getUserData`, {
-                        method: 'GET',
-                        headers: {
-                            'Authorization': `Bearer ${token}`,
-                        },
-                    })
-                    if (!response.ok) {
-                        throw new Error('No se pudo cargar la información del usuario')
-                    }
-                    console.log("Buscando datos del usuario...")
-                    const data = await response.json()
-                    setUserData(data.data)
+                    const data = userData
                     //Comprobamos si el usuario ya está unido a la actividad
-                    if (data.data.actividades.includes(page._id)) {
+                    if (data.actividades.includes(page._id)) {
                         setNotificationMessage('Ya estás unido a esta actividad');
                         setShowNotification(true);
                         setTimeout(() => {
@@ -49,7 +76,7 @@ export default function PageCard({ page, userId, userName ,foto }) {
                             'Authorization': `Bearer ${token}`,
                         },
                         body: JSON.stringify({
-                            userId: data.data._id,
+                            userId: data._id,
                             pageId: page._id
                         })
                     })
@@ -63,7 +90,7 @@ export default function PageCard({ page, userId, userName ,foto }) {
                                 'Authorization': `Bearer ${token}`,
                         },
                             body: JSON.stringify({
-                                userId: data.data._id,
+                                userId: data._id,
                                 pageId: page._id
                             })
                         })
@@ -107,6 +134,10 @@ export default function PageCard({ page, userId, userName ,foto }) {
         setIsExpanded(false)
     }
 
+    if (!userData) {
+        return <div>Loading...</div>
+    }
+
     return (
         <div className="flex flex-col bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden">
             {showNotification && (
@@ -124,7 +155,12 @@ export default function PageCard({ page, userId, userName ,foto }) {
                         Ver más información
                     </button>
                     {isExpanded && (
-                        <ActivityInfo isOpen={isExpanded} onClose={closeInfo} page={page} foto={foto} />
+                        <ActivityInfo isOpen={isExpanded} 
+                                      onClose={closeInfo} 
+                                      page={page} 
+                                      foto={foto} 
+                                      nickname={userData.nickname}
+                                      handleUnirse={handleButton} />
                     )}
                     {token !== null && (
                         <button onClick={handleButton} type="button"

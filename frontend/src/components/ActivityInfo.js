@@ -4,7 +4,7 @@ import React from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
 
-function ActivityInfo({ isOpen, onClose, page, foto }) {
+function ActivityInfo({ isOpen, onClose, page, foto, nickname, handleUnirse }) {
   return (
     <Transition.Root show={isOpen} as={Fragment}>
         <Dialog as="div" className="fixed inset-0 z-10 overflow-y-auto" onClose={onClose}>
@@ -34,11 +34,17 @@ function ActivityInfo({ isOpen, onClose, page, foto }) {
                 >
                     <div className="inline-block align-bottom bg-primary-gray rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-3xl sm:w-full sm:p-6">
                         <img src={foto} alt="Imagen de la actividad" className="h-56 w-full object-cover mb-4 rounded-lg" />
-                        <div className="flex justify-between items-center mb-4">
-                            <h2 className="text-xl font-bold">{page.nombre}</h2>
+                        <div className="flex justify-between items-center">
+                            <div className="flex justify-between items-center mb-4">
+                                <h2 className="text-xl font-bold">{page.nombre}</h2>
+                            </div>
+                            <button onClick={handleUnirse} type="button"
+                                    className="cursor-pointer transition-all bg-indigo-600 text-white px-6 py-2 rounded-lg border-indigo-700 border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px] active:border-b-[2px] active:brightness-90 active:translate-y-[2px]">
+                                Unirse
+                            </button>
                         </div>
                         <div className="mb-4">
-                            <p className="text-gray-600">Creado por @nickname</p>
+                            <p className="text-gray-600">Creado por @{nickname}</p>
                             <h3 className="text-lg font-bold">{page.horarios}</h3>
                         </div>
                         <p className="text-gray-700 mb-4">
