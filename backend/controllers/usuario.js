@@ -15,7 +15,20 @@ const getItems = async (req, res) => {
 const getItem = async (req, res) => {
     var datosUser = req.user
     try {
-        const data = await usuarioModel.findById(datosUser._id).populate('horarios')
+        const data = await usuarioModel.findById(datosUser._id)
+
+        //console.log(data)
+        res.send({data})
+    } catch (err) {
+        console.log(err)
+        handleHttpError(res, "ERROR_GET_USER")
+    }
+}
+
+const getItemById = async (req, res) => {
+    var id = req.params.id
+    try {
+        const data = await usuarioModel.findById(id)
 
         //console.log(data)
         res.send({data})
@@ -86,6 +99,7 @@ const updateActivityData = async (req, res) => {
 module.exports = {
     getItems,
     getItem,
+    getItemById,
     checkUserExists,
     updateItem,
     deleteItem,
