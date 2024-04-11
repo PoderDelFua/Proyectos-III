@@ -187,18 +187,10 @@ export default function UserProfile() {
                     </div>
                     
                     <div className="flex flex-wrap justify-between mt-8 mb-4">
-                        <button className={`text-2xl font-bold w-full sm:w-auto ${selectedTab === 'Publicaciones' ? 'border-b-2 border-black' : ''}`} onClick={() => handleTabChange('Publicaciones')}>Publicaciones</button>
-                        <button className={`text-2xl font-bold w-full sm:w-auto ${selectedTab === 'Respuestas' ? 'border-b-2 border-black' : ''}`} onClick={() => handleTabChange('Respuestas')}>Respuestas</button>
-                        <button 
-                            className={`text-2xl font-bold w-full sm:w-auto ${selectedTab === 'Actividades' ? 'border-b-2 border-black' : ''}`} 
-                            onClick={() => handleTabChange('Actividades')}>
-                            Actividades
-                        </button>
-                        <button 
-                            className={`text-2xl font-bold w-full sm:w-auto mr-8 ${selectedTab === 'Favoritos' ? 'border-b-2 border-black' : ''}`} 
-                            onClick={() => handleTabChange('Favoritos')}>
-                            Favoritos
-                        </button>
+                        <button className={`text-2xl font-bold w-full sm:w-auto ${selectedTab == 'Publicaciones' ? 'border-b-2 border-black' : ''}`} onClick={() => handleTabChange('Publicaciones')}>Publicaciones</button>
+                        <button className={`text-2xl font-bold w-full sm:w-auto ${selectedTab == 'Respuestas' ? 'border-b-2 border-black' : ''}`} onClick={() => handleTabChange('Respuestas')}>Respuestas</button>
+                        <button className={`text-2xl font-bold w-full sm:w-auto ${selectedTab == 'Actividades' ? 'border-b-2 border-black' : ''}`} onClick={() => handleTabChange('Actividades')}>Actividades</button>
+                        <button className={`text-2xl font-bold w-full sm:w-auto mr-8 ${selectedTab == 'Favoritos' ? 'border-b-2 border-black' : ''}`} onClick={() => handleTabChange('Favoritos')}>Favoritos</button>
                     </div>
                     {tabContent}
                 </div>

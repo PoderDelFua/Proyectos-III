@@ -1,7 +1,5 @@
 "use client"
 
-
-import Navbar from '@/components/Navbar';
 import PageCard from '@/components/PageCard'
 import Sidebar from '@/components/Sidebar';
 import Featured from '@/components/Featured';
