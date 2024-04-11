@@ -112,7 +112,7 @@ export default function PageList() {
             <div className="w-full h-screen bg-white shadow-inner flex justify-center">
                 <div className="relative p-4 w h md:h-auto md:w-2/3">
                 <div className = "rounded-lg mb-8"><Slider /></div>                
-                    <form onSubmit={handleSearch} className="flex flex-col md:flex-row gap-3 mb-8">
+                    <form onSubmit={handleSearch} className="flex flex-col md:flex-row gap-3 mb-4">
                         <div className="flex flex-grow">
                             <input type="text" placeholder="Search for webpages..."
                                    onChange={(e) => setSearchTerm(e.target.value)}
@@ -149,10 +149,12 @@ export default function PageList() {
                             <option value="bateria">Batería</option>
                         </select>
                     </form>
-                    <button
-                        onClick={handleOpenPopup} className={"bg-indigo-600 text-white px-4 py-2 rounded-lg border-indigo-700 border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px] active:border-b-[2px] active:brightness-90 active:translate-y-[2px]"}>
-                        +
-                    </button>
+                    <div className="flex justify-end mb-4">
+                        <button
+                            onClick={handleOpenPopup} className={"bg-indigo-600 text-white w-10 h-10 flex items-center justify-center rounded-full border-indigo-700 border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px] active:border-b-[2px] active:brightness-90 active:translate-y-[2px] ml-auto"}>
+                            +
+                        </button>
+                    </div>
                     {showPopup && (
                         <CreateActivity isOpen={showPopup} closePopup={handleClosePopup} />
                     )}
