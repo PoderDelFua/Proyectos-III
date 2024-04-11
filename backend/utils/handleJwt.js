@@ -18,6 +18,20 @@ const tokenSign = async (user) => {
     return sign
 }
 
+const tokenRecovery = async (user) => {
+    const sign = jwt.sign(
+        {
+            _id: user._id,
+            correo: user.correo
+        },
+        JWT_SECRET,
+        {
+            expiresIn: "20m"
+        }
+    )
+    return sign
+}
+
 /**
  * Token se sesión
  * @param {*} tokenJwt 
@@ -30,4 +44,4 @@ const verifyToken = async (tokenJwt) => {
     }
 }
 
-module.exports = { tokenSign, verifyToken }
+module.exports = { tokenSign, verifyToken, tokenRecovery }

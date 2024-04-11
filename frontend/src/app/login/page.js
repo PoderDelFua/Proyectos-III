@@ -84,7 +84,8 @@ export default function LoginUser() {
                         </div>
                             
                         <Link href="/signup" className="text-sm font-thin hover:underline mt-8 inline-block custom-letras-registrate">¿No estás registrado? <span className="custom-letras-registrate-color">Regístrate ahora</span></Link>
-                        
+                        <Link href="/recover" className="text-sm font-thin hover:underline mt-8 inline-block custom-letras-registrate">¿Has olvidado tu contraseña? <span className="custom-letras-registrate-color">Recuperar Contraseña</span></Link>
+
                     </form>
                 </div>
             </div>

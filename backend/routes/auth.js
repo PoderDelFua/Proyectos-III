@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
-const { registerCtrl, loginCtrl } = require("../controllers/auth")
-const { validatorRegister, validatorLogin} = require("../validators/auth")
+const { registerCtrl, loginCtrl, forgotPasswordCtrl, recoverPassCtrl } = require("../controllers/auth")
+const { validatorRegister, validatorLogin, validatorForgotPassword, validatorChangePassword} = require("../validators/auth")
 const { checkUserExists } = require("../middleware/checkUserData")
 
 //POST http://localhost:9000/api/auth/register
@@ -38,5 +38,9 @@ router.post("/register", validatorRegister, registerCtrl)
  *
  * 
  */
-router.post("/login", validatorLogin, loginCtrl) 
+router.post("/login", validatorLogin, loginCtrl)
+//router.post("/recover/:token",validatorChangePassword, recoverPassCtrl)
+
+router.post("/forgot-password", validatorForgotPassword, forgotPasswordCtrl)
+
 module.exports = router

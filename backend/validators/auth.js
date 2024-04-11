@@ -79,4 +79,18 @@ const validatorIdFormat = [
         return validateResults(req, res, next);
     }
 ]
-module.exports = { validatorRegister, validatorLogin, validatorActivity, validatorUpdateUser, validatorUpdateActivity , validatorUpdateUserActivity, validatorIdFormat}
+const validatorChangePassword = [
+    check("password").isString().exists().notEmpty().isLength( {min:6, max: 16} ).withMessage("La contraseña debe tener entre 6 y 16 caracteres."),
+    (req, res, next) => {
+        return validateResults(req, res, next);
+    }
+]
+
+const validatorForgotPassword = [
+    check("correo").exists().notEmpty().withMessage("El correo debe tener en formato de un correo electrónico."),
+    (req, res, next) => {
+        return validateResults(req, res, next);
+    }
+]
+
+module.exports = { validatorRegister, validatorLogin, validatorActivity, validatorUpdateUser, validatorUpdateActivity , validatorUpdateUserActivity, validatorIdFormat, validatorForgotPassword, validatorChangePassword}
