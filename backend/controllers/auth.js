@@ -5,6 +5,7 @@ const {handleHttpError} = require("../utils/handleError")
 const {usuarioModel} = require("../models")
 const nodemailer = require("nodemailer");
 const {configDotenv} = require("dotenv");
+const transporter = require("../config/transporter")
 //Accedemos al env para obtener las credenciales
 require('dotenv').config()
 
@@ -76,13 +77,7 @@ const loginCtrl = async (req, res) => {
 
 const forgotPasswordCtrl = async (req, res) => {
     //Mover trasnporter a config y exportarlo
-    const transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-            user: process.env.EMAIL,
-            pass: process.env.PASSWORD
-        }
-    });
+
 
     try {
         req = matchedData(req)
