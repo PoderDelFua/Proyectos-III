@@ -8,7 +8,7 @@ const {validatorUpdateUser, validatorUpdateUserActivity} = require("../validator
 router.post("/checkUserExists", checkUserExists)
 router.get("/getUserData", authMiddleware, getItem)
 router.get("/getUsersData/:id", getItemById)
-
+router.get("/getUsersData", getItems)
 router.patch("/updateUserData", authMiddleware, validatorUpdateUser, updateItem)
 router.patch("/updateActivityData", authMiddleware, validatorUpdateUserActivity, updateActivityData)
 module.exports = router
