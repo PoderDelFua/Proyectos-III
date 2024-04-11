@@ -119,6 +119,6 @@ const resetPassword = async (req, res) => {
 
 
 module.exports = {
-    getItems, getItem, checkUserExists, updateItem, deleteItem, updateActivityData, changePassword, resetPassword
+    getItems, getItem, checkUserExists, updateItem, deleteItem, updateActivityData, changePassword, resetPassword, getItemById
 }
    
