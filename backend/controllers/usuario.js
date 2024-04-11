@@ -2,6 +2,7 @@ const {usuarioModel, actividadesModel} = require("../models")
 const usuario = require("../models/nosql/usuario")
 const {handleHttpError} = require("../utils/handleError")
 const {matchedData} = require("express-validator")
+const {encrypt} = require("../utils/handlePassword");
 
 const getItems = async (req, res) => {
     try {
@@ -80,29 +81,44 @@ const deleteItem = async (req, res) => {
 }
 const updateActivityData = async (req, res) => {
     try {
-        console.log("Hola desde updateActivityData");
         req = matchedData(req);
-        const data = await usuarioModel.findByIdAndUpdate(
-            req.userId,
-            { $push: { actividades: req.pageId } },
-            { new: true }
-        );
-        console.log(data);
-        res.send({ data });
+        const data = await usuarioModel.findByIdAndUpdate(req.userId, {$push: {actividades: req.pageId}}, {new: true});
+        res.send({data});
     } catch (error) {
         handleHttpError(res, "ERROR_UPDATE_USER_ACTIVIDAD");
     }
 }
 
+const changePassword = async (req, res) => {
+    try {
+        var datosUser = req.user
+        datosUser = matchedData(req)
+        const data = await usuarioModel.findByIdAndUpdate(req.user._id, datosUser, {new: true})
+        res.send({data})
+    } catch (err) {
+        handleHttpError(res, "ERROR_UPDATE_USER")
+    }
+}
+
+const resetPassword = async (req, res) => {
+    try {
+        var datosUser = matchedData(req)
+        const user = await usuarioModel.findById(req.user._id)
+        if (!user) {
+            handleHttpError(res, "USER_NOT_EXISTS", 404)
+            return
+        }
+        const password = await encrypt(datosUser.password)
+        const data = await usuarioModel.findByIdAndUpdate(user._id, {password}, {new: true})
+        res.send({message: "Contraseña actualizada correctamente"})
+    } catch (err) {
+        handleHttpError(res, "ERROR_RESET_PASSWORD")
+    }
+
+}
 
 
 module.exports = {
-    getItems,
-    getItem,
-    getItemById,
-    checkUserExists,
-    updateItem,
-    deleteItem,
-    updateActivityData
+    getItems, getItem, checkUserExists, updateItem, deleteItem, updateActivityData, changePassword, resetPassword
 }
    
