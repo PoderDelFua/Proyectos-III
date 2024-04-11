@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { BACKEND_URI } from '@/config/env'
+import Image from 'next/image';
 
 export default function LoginUser() {
 
@@ -63,30 +64,40 @@ export default function LoginUser() {
     //La contraseña pasa por un desecriptado en el servidor y si es correcta, se devuelve el token y el usuario.
     return (
         <section>
-            <div className="h-full flex justify-start min-h-screen bg-cover bg-[url('/fondo-login.png')]">
-                <div className=" py-8 px-14 flex h-auto mt-6 mb-20 rounded ml-16 custom-container-login">
-                    <form onSubmit={handleSubmit}>
-                        <div className="lg:flex">
-                            <img src="/LOGO_UTAD.png" alt="u-tad image" style={{ width:'400px', height:'auto' }} className="mb-4" />
-                        </div>   
-                        <div className="mb-6">
-                            <label htmlFor="correo" className="block custom-letras-correo">Introduce tu correo U-tad</label>
-                            <input onChange={(e) => setcorreo(e.target.value)} type="correo" name="correo" id="correo" className="w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600 :ring-indigo-600 custom-rectangulo" />
-                        </div>
-                        <div className="">
-                            <label htmlFor="password" className="block custom-letras-correo">Contraseña</label>
-                            <input onChange={(e) => setPassword(e.target.value)} type="password" name="password" id="password"  className="w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600 :ring-indigo-600 custom-rectangulo" /> 
-                            {error && <p className="text-red-500  mt-8 mb-8 text-center">{error}</p>}
-                        </div>
-                        <div className="flex justify-between mt-8 mb-8">
-                            <button type="button" onClick={handleCancelClick} className="cursor-pointer py-2 px-4 text-white font-bold w-1/2 rounded mr-8 custom-cancel-button">Cancelar</button>
-                            <button type="submit" className="cursor-pointer py-2 px-4 text-white font-bold w-1/2 rounded custom-enter-button">Entrar</button>
-                        </div>
-                            
-                        <Link href="/signup" className="text-sm font-thin hover:underline mt-8 inline-block custom-letras-registrate">¿No estás registrado? <span className="custom-letras-registrate-color">Regístrate ahora</span></Link>
-                        <Link href="/recover" className="text-sm font-thin hover:underline mt-8 inline-block custom-letras-registrate">¿Has olvidado tu contraseña? <span className="custom-letras-registrate-color">Recuperar Contraseña</span></Link>
+            <div className="h-screen flex justify-start">
+                <div className="absolute inset-0 z-0">
+                    <Image
+                        src="/fondo-login.png" 
+                        alt="Imagen de fondo"
+                        layout="fill"
+                        objectFit="cover" 
+                        quality={100}
+                    />
+                </div>
+                <div className="w-full md:w-1/2 lg:w-2/5 z-10 p-8">
+                    <div className="bg-white shadow-xl rounded-lg p-6 custom-container-login">
+                        <form onSubmit={handleSubmit}>
+                            <div>
+                                <img src="/LOGO_UTAD.png" alt="u-tad image" style={{ width:'400px', height:'auto' }} className="mb-4" />
+                            </div>   
+                            <div className="mb-6">
+                                <label htmlFor="correo" className="block custom-letras-correo">Introduce tu correo U-tad</label>
+                                <input onChange={(e) => setcorreo(e.target.value)} type="correo" name="correo" id="correo" className="w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600 :ring-indigo-600 custom-rectangulo" />
+                            </div>
+                            <div className="">
+                                <label htmlFor="password" className="block custom-letras-correo">Contraseña</label>
+                                <input onChange={(e) => setPassword(e.target.value)} type="password" name="password" id="password"  className="w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600 :ring-indigo-600 custom-rectangulo" /> 
+                                {error && <p className="text-red-500  mt-8 mb-8 text-center">{error}</p>}
+                            </div>
+                            <div className="flex justify-between mt-8 mb-8">
+                                <button type="button" onClick={handleCancelClick} className="cursor-pointer py-2 px-4 text-white font-bold w-1/2 rounded mr-8 custom-cancel-button">Cancelar</button>
+                                <button type="submit" className="cursor-pointer py-2 px-4 text-white font-bold w-1/2 rounded custom-enter-button">Entrar</button>
+                            </div>
 
-                    </form>
+                            <Link href="/signup" className="text-sm font-thin hover:underline mt-8 mb-4 inline-block custom-letras-registrate">¿No estás registrado? <span className="custom-letras-registrate-color">Regístrate ahora</span></Link>
+                            <Link href="/recover" className="text-sm font-thin hover:underline mt-8 inline-block custom-letras-registrate">¿Has olvidado tu contraseña? <span className="custom-letras-registrate-color">Recuperar Contraseña</span></Link>
+                       </form>
+                    </div>
                 </div>
             </div>
         </section>

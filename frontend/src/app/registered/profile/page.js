@@ -20,6 +20,7 @@ export default function UserProfile() {
     const [nickname, setNickname] = useState('')
     const [pagesData, setPagesData] = useState(null)
     const [pageCards, setPageCards] = useState([])
+    const [selectedTab, setSelectedTab] = useState('Publicaciones')
 
     let setParametrosData = {
         nombre: '',
@@ -100,6 +101,57 @@ export default function UserProfile() {
         return <div>Cargando...</div>
     }
 
+    const handleTabChange = (tab) => {
+        setSelectedTab(tab);
+    };
+
+    let tabContent;
+    switch (selectedTab) {
+        case 'Publicaciones':
+            tabContent = (
+                <div className="custom-grid-itemActividad">
+                    {pageCards.map(page => (
+                        <div key={page._id} className="custom-page-card">
+                            <PageCard
+                                page={page}
+                                userId=''
+                                userName=''
+                                foto='../bg.jpg'
+                            />
+                        </div>
+                    ))}
+                </div>
+            );
+            break;
+        case 'Respuestas':
+            tabContent = <p>Contenido de Respuestas</p>;
+            break;
+        case 'Actividades':
+            tabContent = (
+                <div className="custom-grid-itemActividad">
+                    {pageCards.map(page => (
+                        <div key={page._id} className="custom-page-card">
+                            <PageCard
+                                page={page}
+                                userId=''
+                                userName=''
+                                foto='../bg.jpg'
+                            />
+                        </div>
+                    ))}
+                </div>
+            );
+            break;
+        case 'Favoritos':
+            tabContent = <p>Contenido de Favoritos</p>;
+            break;
+        default:
+            tabContent = null;
+    }
+    //Página de perfil del usuario logeado. Se muestran datos relevantes del usuario como su nombre, nickname, biografía, instrumentos
+    //y sus respectivos niveles. En esta página aparece el botón que redirecciona a /registered/modify para modiciar los datos del usuario.
+    //También hay una sección donde aparece las actividades publicadas por el usuario, las respuestas del foro(falta por implementar), las 
+    //actividades las cuales está unido(falta por implementar), y sus actividades favoritas(falta por implementar)
     return (
         <div className="flex min-h-screen">
             <div className="w-48">
@@ -129,62 +181,18 @@ export default function UserProfile() {
                         <span className="font-bold">Instrumentos:</span>
                         {instrumento.map((item, index) => (
                             <span key={index} className="ml-2">
-                        {item.nombre} ({item.nivel})
-                      </span>
+                                {item.nombre} ({item.nivel})
+                            </span>
                         ))}
                     </div>
-
-                    <div className="mt-8 grid grid-cols-4 gap-4">
-                        <div className="col-span-2">
-                            <Link href="#">
-                                <h3 className="font-bold">Publicaciones</h3>
-                            </Link>
-                            <div className="custom-grid-itemActividad">
-                                {pageCards.map(page => {
-                                    return (
-                                        <div key={page._id} className="custom-page-card">
-                                            <PageCard
-                                                page={page}
-                                                userId=''
-                                                userName=''
-                                                foto='../bg.jpg'
-                                            />
-                                        </div>
-                                    );
-                                })}
-                            </div>
-                        </div>
-                        <div className="col-span-2">
-                            <Link href="#">
-                                <h3 className="font-bold">Respuestas</h3>
-                            </Link>
-                        </div>
-                        <div className="col-span-2">
-                            <Link href="#">
-                                <h3 className="font-bold ">Actividades</h3>
-                            </Link>
-                            <div className="custom-grid-itemActividad">
-                                {pageCards.map(page => {
-                                    return (
-                                        <div key={page._id} className="custom-page-card">
-                                            <PageCard
-                                                page={page}
-                                                userId=''
-                                                userName=''
-                                                foto='../bg.jpg'
-                                            />
-                                        </div>
-                                    );
-                                })}
-                            </div>
-                        </div>
-                        <div className="col-span-2">
-                            <Link href="#">
-                                <h3 className="font-bold">Favoritos</h3>
-                            </Link>
-                        </div>
+                    
+                    <div className="flex flex-wrap justify-between mt-8 mb-4">
+                        <button className={`text-2xl font-bold w-full sm:w-auto ${selectedTab == 'Publicaciones' ? 'border-b-2 border-black' : ''}`} onClick={() => handleTabChange('Publicaciones')}>Publicaciones</button>
+                        <button className={`text-2xl font-bold w-full sm:w-auto ${selectedTab == 'Respuestas' ? 'border-b-2 border-black' : ''}`} onClick={() => handleTabChange('Respuestas')}>Respuestas</button>
+                        <button className={`text-2xl font-bold w-full sm:w-auto ${selectedTab == 'Actividades' ? 'border-b-2 border-black' : ''}`} onClick={() => handleTabChange('Actividades')}>Actividades</button>
+                        <button className={`text-2xl font-bold w-full sm:w-auto mr-8 ${selectedTab == 'Favoritos' ? 'border-b-2 border-black' : ''}`} onClick={() => handleTabChange('Favoritos')}>Favoritos</button>
                     </div>
-
+                    {tabContent}
                 </div>
             </div>
         </div>
