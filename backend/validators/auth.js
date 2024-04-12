@@ -16,6 +16,7 @@ const validatorRegister = [
     check("instrumento").isArray().exists().notEmpty().withMessage("El instrumento es obligatorio."),
     check("gusto_musical").isArray().exists().notEmpty().withMessage("El gusto musical es obligatorio."),
     check("bio").isString().exists().notEmpty().withMessage("La bio es obligatoria."),
+    check("role").optional().isString().isIn(["user", "admin"]).withMessage("El rol no es válido.Roles: [\"user\", \"admin\"]"),
     (req, res, next) => {
         validateResults(req, res, next)
     }
@@ -41,6 +42,8 @@ const validatorUpdateUser = [
     check("horarios").isMongoId().optional(),
     check("grupos").isArray().optional(),
     check("actividades").isArray().optional(),
+    check("role").optional().isString().isIn(["user", "admin"]).withMessage("El rol no es válido.Roles: [\"user\", \"admin\"]"),
+
     (req, res, next) => {
         validateResults(req, res, next)
     }

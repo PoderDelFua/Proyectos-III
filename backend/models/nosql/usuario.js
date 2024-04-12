@@ -26,6 +26,11 @@ const usuarioSchema = new mongoose.Schema({
     bio: {
         type: String
     },
+    role:{
+        type: String,
+        enum: ["user", "admin"], // es como el enum de SQL
+        default: "user"
+    },
     horarios: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Horarios'

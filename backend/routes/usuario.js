@@ -5,6 +5,7 @@ const { checkUserExists } = require("../middleware/checkUserData")
 const { getItems, getItem, updateItem, getItemById,deleteItem, updateActivityData, resetPassword} = require("../controllers/usuario")
 const {validatorUpdateUser, validatorUpdateUserActivity, validatorChangePassword} = require("../validators/auth")
 
+const checkRol = require("../middleware/rol")
 
 router.post("/checkUserExists", checkUserExists)
 router.get("/getUserData", authMiddleware, getItem)
