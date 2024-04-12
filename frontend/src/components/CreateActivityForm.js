@@ -188,13 +188,6 @@ export default function CreateActivity({ isOpen, closePopup }) {
                                         <form onSubmit={handleSubmit}
                                               className="space-y-6 bg-white p-6 rounded-md shadow-md">
                                             <div>
-                                                <label htmlFor="foto"
-                                                       className="block text-sm font-medium text-gray-700">Añadir una
-                                                    foto:</label>
-                                                <input type="file" name="foto" onChange={handleFotoChange}
-                                                       className="mt-1 w-full border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"/>
-                                            </div>
-                                            <div>
                                                 <label htmlFor="nombre"
                                                        className="block text-sm font-medium text-gray-700">Nombre de la
                                                     actividad:</label>
@@ -236,6 +229,13 @@ export default function CreateActivity({ isOpen, closePopup }) {
                                                                                         className="mt-1 w-full border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"/>}
                                                     />
                                                 </LocalizationProvider>
+                                            </div>
+                                            <div>
+                                                <label htmlFor="foto"
+                                                       className="block text-sm font-medium text-gray-700">Añadir una
+                                                    foto:</label>
+                                                <input type="file" name="foto" onChange={handleFotoChange}
+                                                       className="mt-1 w-full border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"/>
                                             </div>
                                             <div>
                                                 <button type="submit"
