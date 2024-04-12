@@ -2,6 +2,7 @@ const { storageModel } = require('../models')
 const { handleHttpError } = require('../utils/handleError')
 const { matchedData } = require('express-validator')
 const fs = require("fs")
+require('dotenv').config()
 
 const PUBLIC_URL = process.env.PUBLIC_URL
 const MEDIA_PATH = __dirname + "/../storage"
