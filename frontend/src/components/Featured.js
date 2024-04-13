@@ -31,7 +31,7 @@ function Featured() {
         ))}
       </div>
       <div className="text-center mt-4">
-        <a href="#" className="text-sm text-blue-600 hover:underline">Mostrar más</a>
+        <a href="/foro" className="text-sm text-blue-600 hover:underline">Mostrar más</a>
       </div>
     </div>
   );
