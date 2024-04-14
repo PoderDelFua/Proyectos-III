@@ -43,7 +43,7 @@ const validatorUpdateUser = [
     check("grupos").isArray().optional(),
     check("actividades").isArray().optional(),
     check("role").optional().isString().isIn(["user", "admin"]).withMessage("El rol no es válido.Roles: [\"user\", \"admin\"]"),
-
+    check("favoritos").isArray().optional(),
     (req, res, next) => {
         validateResults(req, res, next)
     }
@@ -63,8 +63,15 @@ const validatorActivity = [
 ]
 
 const validatorUpdateActivity = [
-    check("pageId").isMongoId().exists().notEmpty().withMessage("El id de la actividad es obligatorio."),
-    check("userId").isMongoId().exists().notEmpty().withMessage("El id del usuario es obligatorio."),
+    check("pageId").isMongoId().exists().notEmpty().withMessage("El pageId (id de actividad) es obligatorio."),
+    check("nombre").optional().isString().exists().notEmpty().withMessage("El nombre es obligatorio."),
+    check("descripcion").optional().isString().exists().notEmpty().withMessage("La descripcion es obligatoria."),
+    check("instrumento").optional().isArray().exists().notEmpty().withMessage("El instrumento es obligatorio."),
+    check("horarios").optional().isString().exists().notEmpty().withMessage("El horario es obligatorio."),
+    check("grupo").isMongoId().optional(),
+    check("lugar").isString().optional(),
+    check("usuarios").isArray().optional(),
+    check("creadoPor").isMongoId().optional(),
     (req, res, next) => {
         validateResults(req, res, next)
     }

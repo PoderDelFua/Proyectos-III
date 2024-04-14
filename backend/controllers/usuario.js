@@ -118,7 +118,72 @@ const resetPassword = async (req, res) => {
 }
 
 
+const getActivities = async (req, res) => {
+    try {
+        const idUser = req.user._id
+        const data = await usuarioModel.findById(idUser).populate("actividades")
+        const actividades = data.actividades;
+        res.send({actividades})
+    } catch (err) {
+        handleHttpError(res, "ERROR_GET_ACTIVITIES")
+    }
+}
+
+const addFavoritos = async (req, res) => {
+    try {
+        const idUser = req.user._id
+        const {id} = matchedData(req)
+        const validacion = await usuarioModel.findOne({ _id: idUser, favoritos: id });
+        if(validacion !== null){
+            return res.send({ message: "El la actividad ya está en favoritos" });
+        }
+        const data = await usuarioModel.findByIdAndUpdate(idUser, {$push: {favoritos: id}}, {new: true})
+        res.send({data})
+    } catch (err) {
+        console.log(err)
+        handleHttpError(res, "ERROR_ADD_FAVORITOS")
+    }
+}
+
+const removeFavoritos = async (req, res) => {
+    try {
+        const idUser = req.user._id
+        const {id} = matchedData(req)
+        const data = await usuarioModel.findByIdAndUpdate(idUser, {$pull: {favoritos: id}}, {new: true})
+        res.send({data})
+    }catch (err) {
+        handleHttpError(res, "ERROR_REMOVE_FAVORITOS")
+    }
+}
+
+const getFavoritos = async (req, res) => {
+    try {
+        const idUser = req.user._id
+        const data = await usuarioModel.findById(idUser).populate("favoritos")
+        const favoritos = data.favoritos
+        res.send({favoritos})
+    } catch (err) {
+        console.log(err)
+        handleHttpError(res, "ERROR_GET_FAVORITOS")
+    }
+}
+
 module.exports = {
-    getItems, getItem, checkUserExists, updateItem, deleteItem, updateActivityData, changePassword, resetPassword, getItemById
+    getItems, 
+    getItem, 
+    checkUserExists, 
+    updateItem, 
+    deleteItem, 
+    updateActivityData, 
+    
+    changePassword, 
+    resetPassword, 
+    getItemById,
+
+    getActivities,
+    getFavoritos,
+    addFavoritos,
+    removeFavoritos
+
 }
    

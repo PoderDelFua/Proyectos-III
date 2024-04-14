@@ -4,7 +4,7 @@ const router = express.Router()
 const { authMiddleware } = require('../middleware/session')
 const { handleStorage } = require('../utils/handleStorage')
 
-const { getItems, getItem, createItem, updateItem, deleteItem, getHilo, getDistinctGrupos, getMensajesUserTok ,postMensajeUsuarioTok, deleteHilo } = require("../controllers/mensajes")
+const { getItems, getItem, createItem, updateItem, deleteItem, getHilo, getMensajesUserTok, likeMsg, removeLikeMsg, getDistinctGrupos, postMensajeUsuarioTok, deleteHilo } = require("../controllers/mensajes")
 const { validatorGetItem, validatorCreateItem, validatorUpdateItem, validatorCreateItemTok } = require("../validators/mensajes")
 
 /**
@@ -176,8 +176,56 @@ router.patch("/:id", authMiddleware, validatorGetItem, validatorUpdateItem,  upd
 router.delete("/:id", authMiddleware, validatorGetItem, deleteItem)
 
 
- 
+/**
+ * @openapi
+ * /api/mensajes/likeMsg/{id}:
+ *  patch:
+ *      tags:
+ *      - Mensajes
+ *      summary: Añade un like a un mensaje
+ *      description: Usa el ID del mensaje para añadir un like
+ *      parameters:
+ *        - name: id
+ *          in: path
+ *          required: true
+ *          description: ID del mensaje con nuevo like
+ *          schema:
+ *            type: string
+ *            default: "661bc0e807f697bd07799670"
+ *      responses:
+ *          '200':
+ *              description: Returns the updated object
+ *          '401':
+ *              description: Validation error
+ *      security:
+ *         - bearerAuth: []
+ */
+router.patch("/likeMsg/:id", authMiddleware, validatorGetItem, likeMsg)
 
-
+/**
+ * @openapi
+ * /api/mensajes/likeMsg/{id}:
+ *  patch:
+ *      tags:
+ *      - Mensajes
+ *      summary: Resta un like a un mensaje
+ *      description: Usa el ID del mensaje para restar un like
+ *      parameters:
+ *        - name: id
+ *          in: path
+ *          required: true
+ *          description: ID del mensaje para restar un like
+ *          schema:
+ *            type: string
+ *            default: "661bc0e807f697bd07799670"
+ *      responses:
+ *          '200':
+ *              description: Returns the updated object
+ *          '401':
+ *              description: Validation error
+ *      security:
+ *         - bearerAuth: []
+ */
+router.patch("/removeLikeMsg/:id", authMiddleware, validatorGetItem, removeLikeMsg)
 
 module.exports = router

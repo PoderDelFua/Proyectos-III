@@ -5,7 +5,7 @@ const {matchedData} = require("express-validator")
 
 const getItems = async (req, res) => {
     try {
-        const data = await actividadesModel.find({}).populate("usuarios", "nombre").populate("horarios", "fecha").populate("grupo", "nombre")
+        const data = await actividadesModel.find({}).populate("usuarios", "nombre").populate("grupo", "nombre")
         res.send({data})
     } catch (err) {
         handleHttpError(res, "ERROR_GET_ACTIVIDADES")
@@ -26,13 +26,40 @@ const getItem = async (req, res) => {
     }
 }
 
-const updateItem = async (req, res) => {
+const addUser = async (req, res) => {
     try {
-        req = matchedData(req)
-        const data = await actividadesModel.findByIdAndUpdate(req.pageId, {$push: {usuarios: req.userId}}, {new: true})
+        const { pageId, userId } = matchedData(req);
+        const validacion = await actividadesModel.findOne({ _id: pageId, usuarios: userId });
+        if(validacion !== null){
+            return res.send({ message: "El usuario YA está en la actividad" });
+        }
+        const data = await actividadesModel.findByIdAndUpdate(pageId, {$push: {usuarios: userId}}, {new: true})
         res.send({data})
     }catch (error) {
+        console.error("Error al añadir id usuario a la actividad: ", error);
         handleHttpError(res, "ERROR_UPDATE_ACTIVIDAD")
+    }
+}
+
+const removeUser = async (req, res) => {
+    try {
+        const { pageId, userId } = matchedData(req);
+        const data = await actividadesModel.findByIdAndUpdate(pageId, { $pull: { usuarios: userId } }, { new: true });
+        res.send({ data });
+    } catch (error) {
+        console.error("Error al eliminar id usuario de actividad: ", error);
+        handleHttpError(res, "ERROR_UPDATE_ACTIVIDAD");
+    }
+}
+
+const updateItem = async (req, res) => {
+    try {
+        const { pageId, ...body } = matchedData(req);
+        const data = await actividadesModel.findByIdAndUpdate(pageId, body, { new: true });
+        res.send({ data });
+    } catch (error) {   
+        console.error("Error al actualizar la actividad: ", error);
+        handleHttpError(res, "ERROR_UPDATE_ACTIVIDAD");
     }
 }
 
@@ -70,6 +97,8 @@ const getItemsByUser = async (req, res) => {
 module.exports = {
     getItems,
     getItem,
+    addUser,
+    removeUser,
     updateItem,
     createItem,
     deleteItem,

@@ -1,8 +1,8 @@
 const express = require("express")
 const router = express.Router()
 const { authMiddleware } = require('../middleware/session')
-const { getItems, getItem, updateItem, deleteItem, createItem,getItemsByUser} = require("../controllers/actividades")
-const { validatorActivity, validatorUpdateActivity, validatorIdFormat} = require("../validators/auth")
+const { getItems, getItem, addUser, removeUser, updateItem, deleteItem, createItem,getItemsByUser} = require("../controllers/actividades")
+const { validatorActivity, validatorUpdateActivity, validatorUpdateUserActivity, validatorIdFormat} = require("../validators/auth")
 
 /**
  * @openapi
@@ -53,7 +53,7 @@ router.get("/getActivityData/:id", validatorIdFormat, getItem)
  * /api/actividades/getActivityDataByUser/{id}:
  *  get:
  *      tags:
- *      -   Actividades
+ *      - Actividades
  *      summary: Devuelve las actividades creadas por un usuarioID
  *      description: 'Devuelve las actividades creadas por un usuario utilizando el ID del usuario'
  *      parameters:
@@ -66,7 +66,7 @@ router.get("/getActivityData/:id", validatorIdFormat, getItem)
  *                  default: "65ec99e310fb5cb916394f5a"
  *      responses:
  *          '200':
- *              description: Devuelve el hilo borrado
+ *              description: Devuelve las actividades de un user
  *          '401':
  *              description: Validation error
  *      security:
@@ -79,13 +79,85 @@ router.get("/getActivityDataByUser/:id", authMiddleware, getItemsByUser)
  * @openapi
  * /api/actividades/addUserToActivity:
  *  patch:
- *    tags:
- *      - Actividades
- *    summary: Añade un usuario a una Actividad 
- *    description: 'Solo Se le pasa el ID de la actividad y el ID del usuario a añadir a la actividad'
- * 
+ *      tags:
+ *          - Actividades
+ *      summary: Añade un usuario a una Actividad
+ *      description: 'Solo Se le pasa el ID de la actividad y el ID del usuario a añadir a la actividad'
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      properties:
+ *                          pageId:
+ *                              type: string
+ *                              default: "6619227183b23e752d8ecaa3"
+ *                          userId:
+ *                              type: string
+ *                              default: "66190822c08814ed29171752"
+ *      responses:
+ *          '200':
+ *              description: Devuelve la actividad con el usuario añadido
+ *          '401':
+ *              description: Validation error
+ *      security:
+ *          - bearerAuth: []
  */
-router.patch("/addUserToActivity", authMiddleware,validatorUpdateActivity, updateItem)
+router.patch("/addUserToActivity", authMiddleware,validatorUpdateUserActivity, addUser)
+
+/**
+ * @openapi
+ * /api/actividades/removeUserToActivity:
+ *  patch:
+ *      tags:
+ *          - Actividades
+ *      summary: Quita un usuario a una Actividad
+ *      description: 'Solo Se le pasa el ID de la actividad y el ID del usuario a quitar a la actividad'
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      properties:
+ *                          pageId:
+ *                              type: string
+ *                              default: "6619227183b23e752d8ecaa3"
+ *                          userId:
+ *                              type: string
+ *                              default: "66190822c08814ed29171752"
+ *      responses:
+ *          '200':
+ *              description: Devuelve la actividad con el usuario quitado
+ *          '401':
+ *              description: Validation error
+ *      security:
+ *          - bearerAuth: []
+ */
+router.patch("/removeUserToActivity", authMiddleware,validatorUpdateUserActivity, removeUser)
+
+/**
+ * @openapi
+ * /api/actividades/updateActivity:
+ *  patch:
+ *      tags:
+ *      - Actividades
+ *      summary: Modifica toda una actividad
+ *      description: 'Le puedes pasar todo los campos de la actividad para modificarla, se necesita el ID de la actividad a modificar'
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#/components/schemas/actividades'
+ *      responses:
+ *          '200':
+ *              description: Devuelve la actividad creada
+ *          '401':
+ *              description: Validation error
+ */
+router.patch("/updateActivity", authMiddleware,validatorUpdateActivity, updateItem)
 
 /**
  * @openapi

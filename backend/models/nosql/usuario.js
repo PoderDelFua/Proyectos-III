@@ -41,61 +41,18 @@ const usuarioSchema = new mongoose.Schema({
     }],
     actividades: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Actividades'
+        ref: 'Actividades',
+        unique: true
+    }],
+    favoritos: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Actividades', 
+        unique: true
     }],
 }, {
     timestamps: true,
     versionKey: false
 })
-
-
-usuarioSchema.statics.findAllData = function() {
-    //console.log("hola desde all data")
-    // "this." hace referencia a su propio modelo
-    const joinData = this.aggregate([
-        {
-            // lookup =~ join (STAGE 1)
-            $lookup: {
-                from: "horarios",
-                localField: "horarios", // tracks.mediaId
-                foreignField: "_id",   // storages._id
-                as: "horario_despliegue" // Alias audio
-            }
-        },
-      /*{
-            // From left join to inner join (STAGE 2) 
-            $unwind:"$audio"
-        } */
-    ])
-    return joinData
-}
-
-usuarioSchema.statics.findOneData = function(id) {
-    console.log(id)
-    // "this." hace referencia a su propio modelo
-    const joinData = this.aggregate([
-        {
-            // Match by id (STAGE 1)
-            $match: {
-                _id: mongoose.Types.ObjectId(id)
-            }
-        },
-        {
-            // lookup =~ join (STAGE 2)
-            $lookup: {
-                from: "Horarios",
-                localField: "horarios", // tracks.mediaId
-                foreignField: "_id",   // storages._id
-                as: "horario_despliegue" // Alias audio
-            }
-        },
-        {
-            // Unwind the horario_despliegue array (STAGE 3)
-            $unwind: "$horario_despliegue"
-        }
-    ])
-    return joinData
-}
 
 
 module.exports = mongoose.model('Usuario', usuarioSchema, 'usuario')

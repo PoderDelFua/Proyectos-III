@@ -11,11 +11,10 @@ const mensajes = new mongoose.Schema({
         type: String,
         required: true
     },
-    /*
-    grupo:{
-        type: String,
-        required: true
-    },*/
+    likes: {
+        type: Number,
+        default: 0
+    },
     hiloId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Hilo',

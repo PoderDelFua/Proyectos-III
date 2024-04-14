@@ -205,6 +205,28 @@ const deleteHilo = async (req, res) => {
     }
 }
 
+const likeMsg = async (req, res) => {
+    try {
+        const {id} = matchedData(req)
+        const data = await mensajesModel.findOneAndUpdate({_id:id}, {$inc: {likes: 1}}, {new:true})
+        res.send(data)
+    }catch(err){
+        console.log(err)
+        handleHttpError(res, 'ERROR_LIKE_MSG')
+    }
+}
+
+
+const removeLikeMsg = async (req, res) => {
+    try {
+        const {id} = matchedData(req)
+        const data = await mensajesModel.findOneAndUpdate({_id:id}, {$dec: {likes: -1}}, {new:true})
+        res.send(data)
+    }catch(err){
+        console.log(err)
+        handleHttpError(res, 'ERROR_LIKE_MSG')
+    }
+}
 
  
 
@@ -214,6 +236,9 @@ module.exports = {
     createItem, 
     updateItem,
     deleteItem,
+
+    likeMsg,
+    removeLikeMsg,
 
     getHilo,
     getDistinctGrupos,
