@@ -44,6 +44,9 @@ const validatorUpdateUser = [
     check("actividades").isArray().optional(),
     check("role").optional().isString().isIn(["user", "admin"]).withMessage("El rol no es válido.Roles: [\"user\", \"admin\"]"),
     check("favoritos").isArray().optional(),
+    check("favoritos.*").isMongoId().optional(),
+    check("likes").isArray().optional(),
+    check("likes.*").isMongoId().optional(),
     (req, res, next) => {
         validateResults(req, res, next)
     }

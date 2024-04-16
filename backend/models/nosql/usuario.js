@@ -49,10 +49,14 @@ const usuarioSchema = new mongoose.Schema({
         ref: 'Actividades', 
         unique: true
     }],
+    likes:[{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Mensajes'
+    }],
 }, {
     timestamps: true,
     versionKey: false
-})
+});
 
+module.exports = mongoose.model('Usuario', usuarioSchema, 'usuario');
 
-module.exports = mongoose.model('Usuario', usuarioSchema, 'usuario')

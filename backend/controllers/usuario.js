@@ -6,9 +6,10 @@ const {encrypt} = require("../utils/handlePassword");
 
 const getItems = async (req, res) => {
     try {
-        const data = await usuarioModel.findAllData()
+        const data = await usuarioModel.find({})
         res.send({data})
     } catch (err) {
+        console.log(err)
         handleHttpError(res, "ERROR_GET_USERS")
     }
 }
@@ -31,7 +32,7 @@ const getItemById = async (req, res) => {
     try {
         const data = await usuarioModel.findById(id)
 
-        //console.log(data)
+        // console.log(data)
         res.send({data})
     } catch (err) {
         console.log(err)

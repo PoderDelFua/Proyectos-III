@@ -1,5 +1,5 @@
 
-const { mensajesModel } = require('../models');
+const { mensajesModel, usuarioModel } = require('../models');
 const { handleHttpError } = require('../utils/handleError');
 const { matchedData } = require('express-validator');
 
@@ -206,10 +206,25 @@ const deleteHilo = async (req, res) => {
 }
 
 const likeMsg = async (req, res) => {
+    const datosUserReq = req.user
+    const idUser = datosUserReq._id
+   
     try {
         const {id} = matchedData(req)
-        const data = await mensajesModel.findOneAndUpdate({_id:id}, {$inc: {likes: 1}}, {new:true})
-        res.send(data)
+        const datosUser = await usuarioModel.findById(idUser)
+
+        if (datosUser.likes.includes(id)) {
+            return res.send('Mensaje already liked by user');
+
+        }else{
+            datosUser.likes.push(id)
+            await datosUser.save()
+            console.log("Array likes add: ", datosUser.likes)
+            
+            const data = await mensajesModel.findOneAndUpdate({_id:id}, {$inc: {likes: 1}}, {new:true})
+            res.send(data)
+        }
+        
     }catch(err){
         console.log(err)
         handleHttpError(res, 'ERROR_LIKE_MSG')
@@ -218,10 +233,24 @@ const likeMsg = async (req, res) => {
 
 
 const removeLikeMsg = async (req, res) => {
+    const datosUserReq = req.user
+    const idUser = datosUserReq._id
+
     try {
         const {id} = matchedData(req)
-        const data = await mensajesModel.findOneAndUpdate({_id:id}, {$dec: {likes: -1}}, {new:true})
-        res.send(data)
+        const datosUser = await usuarioModel.findById(idUser)
+
+        if (!datosUser.likes.includes(id)) {
+            return res.send('Mensaje is not liked by user');
+
+        }else{
+            datosUser.likes.pull(id)
+            await datosUser.save()
+            console.log("Array likes removed: ", datosUser.likes)
+            
+            const data = await mensajesModel.findOneAndUpdate({_id:id}, {$inc: {likes: -1}}, {new:true})
+            res.send(data)
+        }
     }catch(err){
         console.log(err)
         handleHttpError(res, 'ERROR_LIKE_MSG')
