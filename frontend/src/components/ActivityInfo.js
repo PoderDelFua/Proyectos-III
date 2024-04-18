@@ -42,14 +42,14 @@ function ActivityInfo({ isOpen, onClose, page, foto, nickname, handleUnirse, use
                 <button
                   onClick={handleUnirse}
                   type="button"
-                  className="cursor-pointer transition-all bg-indigo-600 text-white px-6 py-2 rounded-lg border-indigo-700 border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px] active:border-b-[2px] active:brightness-90 active:translate-y-[2px]"
+                  className="cursor-pointer transition-all bg-indigo-600 text-white px-6 py-2 rounded-lg border-indigo-700 border-b-[4px] hover:brightness-110 active:border-b-[2px] active:brightness-90 active:translate-y-[2px]"
                 >
                   Unirse
                 </button>
               </div>
 
               <div className="flex mb-4">
-                <div className="flex flex-col">
+                <div className="flex flex-1 flex-col">
                   <div>
                     <p className="text-gray-600">Creado por @{nickname}</p>
                     <h3 className="text-lg font-bold">{page.horarios}</h3>
@@ -67,7 +67,7 @@ function ActivityInfo({ isOpen, onClose, page, foto, nickname, handleUnirse, use
                   )}
                 </div>
 
-                <div className="flex grow">
+                <div className="flex flex-1">
                   <div className="w-full bg-white rounded-lg shadow p-4 ml-4 mt-2">
                     <div className="flex justify-between items-center mb-4">
                       <h3 className="text-lg font-bold">Participantes</h3>
