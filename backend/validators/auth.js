@@ -14,9 +14,13 @@ const validatorRegister = [
     check("password").isString().exists().notEmpty().isLength( {min:6, max: 16} ).withMessage("La contraseña debe tener entre 6 y 16 caracteres."),
     check("nickname").isString().exists().notEmpty().withMessage("El nickname es obligatorio."),
     check("instrumento").isArray().exists().notEmpty().withMessage("El instrumento es obligatorio."),
+    check("favoritos").isArray().optional(),
+    check("favoritos.*").isMongoId().optional(),
     check("gusto_musical").isArray().exists().notEmpty().withMessage("El gusto musical es obligatorio."),
     check("bio").isString().exists().notEmpty().withMessage("La bio es obligatoria."),
     check("role").optional().isString().isIn(["user", "admin"]).withMessage("El rol no es válido.Roles: [\"user\", \"admin\"]"),
+    check("likes").isArray().optional(),
+    check("likes.*").isMongoId().optional(),
     (req, res, next) => {
         validateResults(req, res, next)
     }
@@ -89,7 +93,8 @@ const validatorUpdateUserActivity = [
     }
 ]
 const validatorIdFormat = [
-    check("id").exists().notEmpty().isMongoId(), 
+    check("userId").exists().notEmpty().isMongoId(),
+    check("pageId").exists().notEmpty().isMongoId(),
     (req, res, next) => {
         return validateResults(req, res, next);
     }

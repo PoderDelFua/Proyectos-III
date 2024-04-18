@@ -148,6 +148,7 @@ const addFavoritos = async (req, res) => {
 
 const removeFavoritos = async (req, res) => {
     try {
+
         const idUser = req.user._id
         const {id} = matchedData(req)
         const data = await usuarioModel.findByIdAndUpdate(idUser, {$pull: {favoritos: id}}, {new: true})

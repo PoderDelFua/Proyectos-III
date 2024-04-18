@@ -31,6 +31,10 @@ const usuarioSchema = new mongoose.Schema({
         enum: ["user", "admin"], // es como el enum de SQL
         default: "user"
     },
+    fotoPerfil: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Storage'
+    },
     horarios: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Horarios'
