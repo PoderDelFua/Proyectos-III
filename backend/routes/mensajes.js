@@ -116,6 +116,7 @@ router.get("/getMensajesUserTok", authMiddleware, getMensajesUserTok)
  */
 router.post("/crearPost", authMiddleware, validatorCreateItem, createItem)
 
+router.post("/crearPostTok", authMiddleware, validatorCreateItemTok, postMensajeUsuarioTok)
 
 /**
  * @openapi

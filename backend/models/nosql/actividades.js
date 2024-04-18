@@ -22,6 +22,9 @@ const actividadesSchema = new mongoose.Schema({
     prioridad: {
         type: Boolean
     },
+    horarios: {
+        type: String
+    },
     usuarios: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Usuario',
@@ -31,9 +34,12 @@ const actividadesSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Usuario'
     },
-    horarios: {
-        type: String
+    hiloActividad: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Hilo'
     },
+
+    
     grupo: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Grupo'
