@@ -36,11 +36,11 @@ export default function zzHilo() {
 
 
     return (
-        <div>
+        <div className='flex justify-center p-10'>
                     <button
                         onClick={handleOpenPopup} className={"bg-indigo-600 text-white px-4 py-2 rounded-lg border-indigo-700 border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px] active:border-b-[2px] active:brightness-90 active:translate-y-[2px]"}>
                         +
-                    </button>
+                    </button> Crear Hilo
                     {showPopup && (
                         <CrearThreadForm isOpen={showPopup} closePopup={handleClosePopup} />
                     )}

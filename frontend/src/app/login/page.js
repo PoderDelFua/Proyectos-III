@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { BACKEND_URI } from '@/config/env'
-import Image from 'next/image';
+import { ArrowLeftIcon } from '@heroicons/react/24/solid';
 
 export default function LoginUser() {
 
@@ -64,42 +64,66 @@ export default function LoginUser() {
     //La contraseña pasa por un desecriptado en el servidor y si es correcta, se devuelve el token y el usuario.
     return (
         <section>
-            <div className="h-screen flex justify-start">
-                <div className="absolute inset-0 z-0">
-                    <Image
-                        src="/fondo-login.png" 
-                        alt="Imagen de fondo"
-                        layout="fill"
-                        objectFit="cover" 
-                        quality={100}
-                    />
-                </div>
-                <div className="w-full md:w-1/2 lg:w-2/5 z-10 p-8">
-                    <div className="bg-white shadow-xl rounded-lg p-6 custom-container-login">
-                        <form onSubmit={handleSubmit}>
-                            <div>
-                                <img src="/LOGO_UTAD.png" alt="u-tad image" style={{ width:'400px', height:'auto' }} className="mb-4" />
-                            </div>   
-                            <div className="mb-6">
-                                <label htmlFor="correo" className="block custom-letras-correo">Introduce tu correo U-tad</label>
-                                <input onChange={(e) => setcorreo(e.target.value)} type="correo" name="correo" id="correo" className="w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600 :ring-indigo-600 custom-rectangulo" />
-                            </div>
-                            <div className="">
-                                <label htmlFor="password" className="block custom-letras-correo">Contraseña</label>
-                                <input onChange={(e) => setPassword(e.target.value)} type="password" name="password" id="password"  className="w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600 :ring-indigo-600 custom-rectangulo" /> 
-                                {error && <p className="text-red-500  mt-8 mb-8 text-center">{error}</p>}
-                            </div>
-                            <div className="flex justify-between mt-8 mb-8">
-                                <button type="button" onClick={handleCancelClick} className="cursor-pointer py-2 px-4 text-white font-bold w-1/2 rounded mr-8 custom-cancel-button">Cancelar</button>
-                                <button type="submit" className="cursor-pointer py-2 px-4 text-white font-bold w-1/2 rounded custom-enter-button">Entrar</button>
-                            </div>
+            <form onSubmit={handleSubmit}>  
+                <div className="flex flex-col justify-between h-screen">
 
-                            <Link href="/signup" className="text-sm font-thin hover:underline mt-8 mb-4 inline-block custom-letras-registrate">¿No estás registrado? <span className="custom-letras-registrate-color">Regístrate ahora</span></Link>
-                            <Link href="/recover" className="text-sm font-thin hover:underline mt-8 inline-block custom-letras-registrate">¿Has olvidado tu contraseña? <span className="custom-letras-registrate-color">Recuperar Contraseña</span></Link>
-                       </form>
+                    <div className="rounded-lg text-center">  
+                        <img src="/fondo-login.png" alt="Background" className="w-full h-48 object-cover" />
+                        
+                        <div className="m-8">
+                            <img src="/LOGO_UTAD.png" alt="Logo" className="mx-auto h-24" />
+                        </div>
+                
+                        <h1 className="text-5xl font-bold mb-4">Bienvenido</h1>
+                        
+                        <div className="w-28 mx-auto m-6">
+                        <Link href="/welcome">
+                            <div className="cursor-pointer flex items-center justify-center p-2 rounded-xl bg-blue text-white hover:bg-dark-blue transition duration-200 text-lg">
+                                <ArrowLeftIcon className="h-5 w-5 mr-2" />
+                                <p className="text-lg">Volver</p>
+                            </div>
+                        </Link>
                     </div>
-                </div>
-            </div>
+
+
+
+                        <div className="mb-6">
+                            <input onChange={(e) => setcorreo(e.target.value)} type="correo" name="correo" id="correo" placeholder="Correo de U-tad" style={{ textAlign: 'center' }} className="border border-gray-300 py-2 px-6 rounded outline-none focus:ring-indigo-600 :ring-indigo-600 custom-rectangulo" />
+                        </div>
+                        <div className="mb-6">
+                            <input onChange={(e) => setPassword(e.target.value)} type="password" name="password" id="password" placeholder="Contraseña" style={{ textAlign: 'center' }} className="border border-gray-300 py-2 px-6 rounded outline-none focus:ring-indigo-600 :ring-indigo-600 custom-rectangulo" /> 
+                            {error && <p className="text-red-500  mt-8 mb-8 text-center">{error}</p>}
+                        </div>
+                        <div className="mt-10">
+                            <button type="submit" className="cursor-pointer bg-light-blue text-blue px-10 py-2 rounded-lg font-semibold hover:bg-dark-blue hover:text-white transition duration-200 text-lg">Iniciar Sesión</button>
+                        </div>
+
+                        <p className="mt-10">
+                            <Link href="/home" className="text-blue text-base hover:text-dark-blue transition duration-200">
+                                He olvidado mi contraseña
+                            </Link>
+                        </p>
+
+                    </div>
+                    
+                    <div className="flex flex-col">
+                        <hr className="border-gray-200 my-10" />
+                
+                        <div className="flex justify-center space-x-8 text-gray-500 text-base pb-6 mb-2">
+                            <Link href="#" className="hover:text-gray-800">
+                            Contact Us
+                            </Link>
+                            <Link href="#" className="hover:text-gray-800">
+                            About Us
+                            </Link>
+                            <Link href="#" className="hover:text-gray-800">
+                            Terms & Conditions
+                            </Link>
+                            
+                        </div>
+                    </div>                   
+                </div> 
+            </form>
         </section>
     )
 }
