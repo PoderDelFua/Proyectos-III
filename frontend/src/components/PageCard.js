@@ -10,6 +10,7 @@ export default function PageCard({ page, foto }) {
     const token = localStorage.getItem('token')
     const [userData, setUserData] = useState(null)
     const [creatorData, setCreatorData] = useState(null)
+    const [participants, setParticipants] = useState([]);
     const [showNotification, setShowNotification] = useState(false);
     const [notificationMessage, setNotificationMessage] = useState('');
     const [isExpanded, setIsExpanded] = useState(false);
@@ -43,6 +44,25 @@ export default function PageCard({ page, foto }) {
                 const data2 = await response2.json()
                 console.log(data2)
                 setCreatorData(data2.data)
+
+                const participantsIds = page.usuarios
+                const participantsPromises = participantsIds.map(async (id) => {
+                    const response3 = await fetch(`${BACKEND_URI}/usuario/getUsersData/${id._id}`, {  
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                        },
+                    })
+                    if (!response3.ok) {
+                        throw new Error('No se pudo cargar la información del participante')
+                    }
+                    const data3 = await response3.json()
+                    console.log(`Datos del participante ${id}:`, data3.data)
+                    return data3.data
+                })
+                const participantsData = await Promise.all(participantsPromises)
+                setParticipants(participantsData)
+
             } catch (error) {
                 console.error("Error al cargar la información del usuario: ", error)
             }
@@ -166,7 +186,8 @@ export default function PageCard({ page, foto }) {
                                       page={page} 
                                       foto={foto} 
                                       nickname={creatorData ? creatorData.nickname : 'nickname'}
-                                      handleUnirse={handleButton} />
+                                      handleUnirse={handleButton}
+                                      users={participants} />
                     )}
                     {token !== null && (
                         <button onClick={handleButton} type="button"
