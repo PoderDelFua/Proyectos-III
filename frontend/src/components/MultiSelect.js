@@ -59,17 +59,17 @@ export default function MultiSelect({
     }
 
     return (
-        <label className="relative bg-white">
+        <label className="w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600 :ring-indigo-600 custom-rectangulo">
             <input type="checkbox" className="hidden peer" />
     
-            <div className="cursor-pointer after:content-['▼'] after:text-xs after:ml-1 after:inline-flex after:items-center peer-checked:after:-rotate-180 after:transition-transform inline-flex border rounded px-5 py-2">
+            <div className="cursor-pointer after:content-['▼'] after:text-xs after:ml-1 after:inline-flex after:items-center peer-checked:after:-rotate-180 after:transition-transform inline-flex rounded px-5 py-2">
                 {prompt}
                 {selectedOptions.length > 0 && (
                     <span className="ml-1 text-blue-500">{`(${selectedOptions.length} selected)`}</span>
                 )}
             </div>
     
-            <div className="absolute bg-white border transition-opacity opacity-0 pointer-events-none peer-checked:opacity-100 peer-checked:pointer-events-auto w-full max-h-60 overflow-y-scroll" style={{ zIndex: 100 }}>
+            <div className="absolute bg-white border transition-opacity opacity-0 pointer-events-none peer-checked:opacity-100 peer-checked:pointer-events-auto w-full max-h-60 max-w-60 overflow-y-scroll" style={{ zIndex: 100 }}>
                 {(
                     <ul>
                         <li>
