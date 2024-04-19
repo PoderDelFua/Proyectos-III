@@ -62,7 +62,6 @@ const createItem = async (req, res) => {
 }
 
 const createItemTok = async (req, res) => {
-
     const idUser = req.user._id
     try {
         const body = matchedData(req)

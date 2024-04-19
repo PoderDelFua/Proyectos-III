@@ -51,9 +51,9 @@ export default function PageForo() {
                 {hilos.map(hilo => (
                     <div key={hilo._id} className="relative mt-4">
                         <div className="bg-primary-gray p-8 rounded-lg flex items-center">
-                            <div className="flex items-center" style={{flexWrap: 'wrap'}}> {/* Agrega flex-wrap */}
+                            <div className="flex items-center" style={{flexWrap: 'wrap'}}> {/* Hace que los elementos se ajusten al ancho */}
                                 <div className="flex flex-col items-center"
-                                     style={{flexShrink: 0}}> {/* Evita que el avatar se encoja */}
+                                     style={{flexShrink: 0}}> {/* Hace que no se ajuste al ancho */}
                                     <div className="w-12 h-12 rounded-full overflow-hidden mb-2">
                                         <img src="/no-profile.png" alt="Profile"
                                              className="w-full h-full object-cover"/>

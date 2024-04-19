@@ -27,15 +27,15 @@ export default function CrearThreadForm({ isOpen, closePopup }) {
         const token = localStorage.getItem('token');
 
         try {
-
             const threadData = {
-                titulo: nombre,
+                titulo: titulo,
                 descripcion: descripcion,
-                creadorId: creadoPor,
+                creadoPor: creadoPor,
                 privado: privado,
             };
 
-            const response = await fetch(`${BACKEND_URI}/api/hilo`, {
+
+            const response = await fetch(`${BACKEND_URI}/hilo/tok`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -43,7 +43,6 @@ export default function CrearThreadForm({ isOpen, closePopup }) {
                 },
                 body: JSON.stringify(threadData),
             });
-
             if (!response.ok) {
                 throw new Error('Error al crear el hilo');
             }
