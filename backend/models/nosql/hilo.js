@@ -17,6 +17,10 @@ const mensajes = new mongoose.Schema({
     privado: {
         type: Boolean,
         default: true
+    },
+    postCount: {
+        type: Number,
+        default: 0
     }
 }, {
     timestamps: true,

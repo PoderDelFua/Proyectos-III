@@ -7,7 +7,10 @@ import { BACKEND_URI } from '@/config/env'
 import { ArrowLeftIcon } from '@heroicons/react/24/solid';
 
 export default function LoginUser() {
-
+    var token = localStorage.getItem('token')
+    if(token){
+        localStorage.removeItem('token')
+    }
     const router = useRouter()
     //Seteamos el estado de correo y password porque son los datos que vamos a necesitar para iniciar sesión.
     const [correo, setcorreo] = useState("")

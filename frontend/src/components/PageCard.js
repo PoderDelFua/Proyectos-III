@@ -34,6 +34,7 @@ export default function PageCard({ page, foto }) {
                 console.log("Buscando datos del usuario...")
                 const data = await response.json()
                 setUserData(data.data)
+                setFavorite(data.data.favoritos.includes(page._id));
 
                 const response2 = await fetch(`${BACKEND_URI}/usuario/getUsersData/${page.creadoPor}`, {
                     method: 'GET',
@@ -44,9 +45,7 @@ export default function PageCard({ page, foto }) {
                 if (!response2.ok) {
                     throw new Error('No se pudo cargar la información del creador de la actividad')
                 }
-                console.log("Buscando datos del creador...")
                 const data2 = await response2.json()
-                console.log(data2)
                 setCreatorData(data2.data)
 
                 const participantsIds = page.usuarios
@@ -61,7 +60,6 @@ export default function PageCard({ page, foto }) {
                         throw new Error('No se pudo cargar la información del participante')
                     }
                     const data3 = await response3.json()
-                    console.log(`Datos del participante ${id}:`, data3.data)
                     return data3.data
                 })
                 const participantsData = await Promise.all(participantsPromises)
@@ -256,9 +254,8 @@ export default function PageCard({ page, foto }) {
             <div className="relative">
                 {confetti && <Confetti width={width} height={height}/>}
                 <img src={foto} alt="Imagen de la actividad" className="h-56 w-full object-cover"/>
-                <button
-                    onClick={buttonFavorito}
-                    className="absolute top-0 right-0 mt-2 mr-2 cursor-pointer bg-white rounded-full p-2">
+                <button onClick={buttonFavorito}
+                        className="absolute top-0 right-0 mt-2 mr-2 cursor-pointer bg-white rounded-full p-2">
                     {favorite ? (
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                              className="bi bi-star-fill" viewBox="0 0 16 16">
@@ -273,6 +270,7 @@ export default function PageCard({ page, foto }) {
                         </svg>
                     )}
                 </button>
+
             </div>
             <div className="max-w-sm p-6 flex flex-col justify-between">
                 <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">{page.nombre}</h5> {/* Cambiado a 'nombre' */}

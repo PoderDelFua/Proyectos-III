@@ -17,7 +17,10 @@ import Image from 'next/image';
 //6. El usuario es redirigido a la página de inicio de sesión.
 
 export default function RegisterUser() {
-    const router = useRouter()
+    var token = localStorage.getItem('token')
+    if(token){
+        localStorage.removeItem('token')
+    }    const router = useRouter()
 
     const [nombre, setNombre] = useState('')
     const [instrumento, setInstrumento] = useState([])
