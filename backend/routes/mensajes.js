@@ -4,7 +4,7 @@ const router = express.Router()
 const { authMiddleware } = require('../middleware/session')
 const { handleStorage } = require('../utils/handleStorage')
 
-const { getItems, getItem, createItem, updateItem, deleteItem, getHilo, getMensajesUserTok, likeMsg, removeLikeMsg, getDistinctGrupos, postMensajeUsuarioTok, deleteHilo } = require("../controllers/mensajes")
+const { getItems, getItem, createItem, updateItem, deleteItem, getHilo, getMensajesUserTok, likeMsg, removeLikeMsg, postMensajeUsuarioTok, getRespuestasById } = require("../controllers/mensajes")
 const { validatorGetItem, validatorCreateItem, validatorUpdateItem, validatorCreateItemTok } = require("../validators/mensajes")
 
 /**
@@ -93,6 +93,7 @@ router.get("/getMsgHilo/:id", validatorGetItem, getHilo)
  */
 router.get("/getMensajesUserTok", authMiddleware, getMensajesUserTok)
 
+router.get("/getRespuestasById/:id", validatorGetItem, getRespuestasById)
 /**
  * @openapi
  * /api/mensajes/crearPost:

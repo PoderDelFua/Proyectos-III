@@ -257,6 +257,23 @@ const removeLikeMsg = async (req, res) => {
     }
 }
 
+
+const getRespuestasById = async (req, res) => {
+
+    try{
+        const {id} = matchedData(req)
+        const data = await mensajesModel.find({padreMensaje: id})
+        .populate('autorMensaje', 'nombre')
+        .populate( 'mediaId', 'url filename')
+        .sort({likes: -1})
+
+        res.send(data)  
+    }catch{
+        console.log(err)
+        handleHttpError(res, 'ERROR_GET_RESPUESTAS_MENSAJE')
+    }
+
+}
  
 
 module.exports = { 
@@ -273,5 +290,7 @@ module.exports = {
     getDistinctGrupos,
     getMensajesUserTok,
     postMensajeUsuarioTok,
-    deleteHilo
+    deleteHilo,
+
+    getRespuestasById
 }
