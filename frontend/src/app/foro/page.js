@@ -4,11 +4,14 @@ import SidebarForo from '@/components/SidebarForo';
 import CrearThreadForm from '@/components/CreateThreadForm0';
 import {useState, useEffect} from 'react'
 import {BACKEND_URI} from '@/config/env'
+import {useRouter} from "next/navigation";
 
 export default function PageForo() {
 
     const [showPopup, setShowPopup] = useState(false);
     const [hilos, setHilos] = useState([]);
+    const [like, setLike] = useState(false);
+    const router = useRouter();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -41,7 +44,11 @@ export default function PageForo() {
     const handleClosePopup = () => {
         setShowPopup(false);
     };
-    
+    const handleHiloClick = (hiloId) => {
+        localStorage.setItem('currentHiloId', hiloId);
+        router.push(`/foro/${hiloId}`);
+    };
+
     return (
         <section className="flex flex-wrap justify-center">
             <div className="w-full md:w-1/6">
@@ -50,10 +57,10 @@ export default function PageForo() {
             <div className="w-full md:w-2/3 mb-4">
                 {hilos.map(hilo => (
                     <div key={hilo._id} className="relative mt-4">
-                        <div className="bg-primary-gray p-8 rounded-lg flex items-center">
-                            <div className="flex items-center" style={{flexWrap: 'wrap'}}> {/* Hace que los elementos se ajusten al ancho */}
+                        <div className="bg-primary-gray p-8 rounded-lg flex items-center" onClick={() => handleHiloClick(hilo._id)}>
+                            <div className="flex items-center" style={{flexWrap: 'wrap'}}> {}
                                 <div className="flex flex-col items-center"
-                                     style={{flexShrink: 0}}> {/* Hace que no se ajuste al ancho */}
+                                     style={{flexShrink: 0}}> {}
                                     <div className="w-12 h-12 rounded-full overflow-hidden mb-2">
                                         <img src="/no-profile.png" alt="Profile"
                                              className="w-full h-full object-cover"/>
@@ -61,7 +68,7 @@ export default function PageForo() {
                                     <p className="text-gray-600 text-sm">@{hilo.creadorId.nickname}</p>
                                 </div>
                                 <div className="ml-4"
-                                     style={{maxWidth: 'calc(100% - 5rem)', flexBasis: 'auto'}}> {/* Limita el ancho */}
+                                     style={{maxWidth: 'calc(100% - 5rem)', flexBasis: 'auto'}}> {}
                                     <h1 className="font-bold text-xl truncate">{hilo.titulo}</h1>
                                     <h3 className="text-lg mt-4 truncate">{hilo.descripcion}</h3>
                                 </div>

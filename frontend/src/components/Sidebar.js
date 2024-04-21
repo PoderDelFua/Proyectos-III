@@ -13,9 +13,8 @@ function Sidebar({ selectedTab = 'home' }) {
   return (
     <div className="fixed inset-y-0 left-0 w-64 bg-primary-gray rounded-r-3xl z-50">
       <div className="flex flex-col h-full">
-        {/* Logo container */}
         <div className="flex justify-center items-center pt-10 pb-2">
-          <img src="/logoU.png" alt="Logo" className="h-20 w-20 rounded-full" /> {/* Replace with your image path */}
+          <img src="/logoU.png" alt="Logo" className="h-20 w-20 rounded-full" />
         </div>
         <nav className="flex-1 pl-4 py-10 space-y-4">
           <div className={`${activeItem !== 'home' ? 'pr-10' : '' }`}>
