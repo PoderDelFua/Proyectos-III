@@ -1,16 +1,17 @@
 "use client"
 
-import React from 'react';
-import { Dialog, Transition } from '@headlessui/react';
-import { UsersIcon } from '@heroicons/react/24/solid';
-import { Fragment, useState } from 'react';
+import React from 'react'
+import { Dialog, Transition } from '@headlessui/react'
+import { UsersIcon } from '@heroicons/react/24/solid'
+import { Fragment, useState } from 'react'
+import ActivityChat from './ActivityChat'
 
 function ActivityInfo({ isOpen, onClose, page, foto, nickname, handleUnirse, users }) {
-  const [activeTab, setActiveTab] = useState('participants');
+  const [activeTab, setActiveTab] = useState('participants')
 
   const handleTabClick = (tab) => {
-    setActiveTab(tab);
-  };
+    setActiveTab(tab)
+  }
 
   return (
     <Transition.Root show={isOpen} as={Fragment}>
@@ -28,7 +29,7 @@ function ActivityInfo({ isOpen, onClose, page, foto, nickname, handleUnirse, use
             <Dialog.Overlay className="fixed inset-0 bg-black bg-opacity-50 transition-opacity" />
           </Transition.Child>
 
-          <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+          <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203</span>
 
           <Transition.Child
             as={Fragment}
@@ -116,7 +117,7 @@ function ActivityInfo({ isOpen, onClose, page, foto, nickname, handleUnirse, use
                     )}
                     {activeTab === 'chat' && (
                       <div>
-                        <p>Chat</p> 
+                        <ActivityChat hiloId={page.hiloActividad} /> 
                       </div>
                     )}
                   </div>
@@ -127,7 +128,7 @@ function ActivityInfo({ isOpen, onClose, page, foto, nickname, handleUnirse, use
         </div>
       </Dialog>
     </Transition.Root>
-  );
+  )
 }
 
-export default ActivityInfo;
+export default ActivityInfo
