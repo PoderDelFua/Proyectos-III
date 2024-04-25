@@ -7,7 +7,7 @@ import { PaperAirplaneIcon } from '@heroicons/react/24/solid'
 
 function ActivityChat({ hiloId, userId }) {
   if (!hiloId) {
-    return <div>Esta actividad no tiene chat</div>
+    return <div>Este actividad no tiene el chat</div>
   }
 
   const token = localStorage.getItem('token')
