@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from 'react';
-import { CogIcon, EllipsisHorizontalIcon } from '@heroicons/react/24/solid';
 
 function Featured() {
   // Sample data for forums
@@ -16,7 +15,6 @@ function Featured() {
     <div className="fixed inset-y-0 right-0 w-64 bg-white shadow-2xl rounded-l-3xl p-4">
       <div className="flex justify-between items-center">
         <h2 className="text-lg font-semibold">Destacados</h2>
-        <CogIcon className="h-5 w-5" />
       </div>
       <div className="mt-4">
         {forums.map((forum, index) => (
@@ -26,7 +24,6 @@ function Featured() {
               <p className="text-sm text-gray-600">Creador: {forum.creator}</p>
               <p className="text-sm text-gray-600">{forum.postCount} posts</p>
             </div>
-            <EllipsisHorizontalIcon className="h-5 w-5" />
           </div>
         ))}
       </div>

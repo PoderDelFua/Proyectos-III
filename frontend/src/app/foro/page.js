@@ -49,12 +49,13 @@ export default function PageForo() {
         router.push(`/foro/${hiloId}`);
     };
 
+    
     return (
         <section className="flex flex-wrap justify-center">
             <div className="w-full md:w-1/6">
                 <SidebarForo/>
             </div>
-            <div className="w-full md:w-2/3 mb-4">
+            <div className="w-full md:w-2/3 mr-20 mb-20">
                 {hilos.map(hilo => (
                     <div key={hilo._id} className="relative mt-4">
                         <div className="bg-primary-gray p-8 rounded-lg flex items-center" onClick={() => handleHiloClick(hilo._id)}>
@@ -99,15 +100,20 @@ export default function PageForo() {
             </div>
 
             <div className="fixed top-0 right-0 m-4">
-                <button
-                    onClick={handleOpenPopup}
-                    className={"bg-indigo-600 text-white px-4 py-2 rounded-lg border-indigo-700 border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px] active:border-b-[2px] active:brightness-90 active:translate-y-[2px]"}>
-                    +
+                <a href="/home" className={"bg-primary-gray w-10 h-10 flex items-center justify-center rounded-full border-gray-400 border-b-[2px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[2px] active:border-b-[2px] active:brightness-90 active:translate-y-[2px] ml-auto"}>
+                    <strong>X</strong>
+                </a>
+            </div>
+            
+            <div className="flex justify-center items-center fixed bottom-4 inset-x-0 ml-40">
+                <button onClick={handleOpenPopup} className="bg-white text-gray-800 px-80 py-3 rounded-lg shadow-lg border border-gray-300 hover:bg-gray-100 hover:border-gray-400 hover:shadow-xl transition duration-300">
+                Crear nuevo hilo
                 </button>
                 {showPopup && (
-                    <CrearThreadForm isOpen={showPopup} closePopup={handleClosePopup}/>
+                <CrearThreadForm isOpen={showPopup} closePopup={handleClosePopup} />
                 )}
             </div>
+
         </section>
     )
 }
