@@ -6,7 +6,7 @@ import { UsersIcon } from '@heroicons/react/24/solid'
 import { Fragment, useState } from 'react'
 import ActivityChat from './ActivityChat'
 
-function ActivityInfo({ isOpen, onClose, page, foto, nickname, handleUnirse, users }) {
+function ActivityInfo({ isOpen, onClose, userId, page, foto, nickname, handleUnirse, users }) {
   const [activeTab, setActiveTab] = useState('participants')
 
   const handleTabClick = (tab) => {
@@ -117,7 +117,7 @@ function ActivityInfo({ isOpen, onClose, page, foto, nickname, handleUnirse, use
                     )}
                     {activeTab === 'chat' && (
                       <div>
-                        <ActivityChat hiloId={page.hiloActividad} /> 
+                        <ActivityChat hiloId={page.hiloActividad} userId={userId} /> 
                       </div>
                     )}
                   </div>

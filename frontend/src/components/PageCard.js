@@ -283,6 +283,7 @@ export default function PageCard({ page, foto }) {
                     {isExpanded && (
                         <ActivityInfo isOpen={isExpanded}
                                       onClose={closeInfo}
+                                      userId={userData._id}
                                       page={page}
                                       foto={foto}
                                       nickname={creatorData ? creatorData.nickname : 'nickname'}
