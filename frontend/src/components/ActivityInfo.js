@@ -3,9 +3,15 @@
 import React from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { UsersIcon } from '@heroicons/react/24/solid';
-import { Fragment } from 'react';
+import { Fragment, useState } from 'react';
 
 function ActivityInfo({ isOpen, onClose, page, foto, nickname, handleUnirse, users }) {
+  const [activeTab, setActiveTab] = useState('participants');
+
+  const handleTabClick = (tab) => {
+    setActiveTab(tab);
+  };
+
   return (
     <Transition.Root show={isOpen} as={Fragment}>
       <Dialog as="div" className="fixed inset-0 z-10 overflow-y-auto" onClose={onClose}>
@@ -70,19 +76,49 @@ function ActivityInfo({ isOpen, onClose, page, foto, nickname, handleUnirse, use
                 <div className="flex flex-1">
                   <div className="w-full bg-white rounded-lg shadow p-4 ml-4 mt-2">
                     <div className="flex justify-between items-center mb-4">
-                      <h3 className="text-lg font-bold">Participantes</h3>
+                      <div className="flex space-x-4">
+                        <button
+                          className={`text-lg font-bold cursor-pointer ${
+                            activeTab === 'participants' ? 'text-black' : 'text-gray-600'
+                          }`}
+                          onClick={() => handleTabClick('participants')}
+                        >
+                          Participantes
+                          {activeTab === 'participants' && (
+                            <div className="h-1 w-full bg-black rounded-sm transition-all duration-300" />
+                          )}
+                        </button>
+                        <button
+                          className={`text-lg font-bold cursor-pointer ${
+                            activeTab === 'chat' ? 'text-black' : 'text-gray-600'
+                          }`}
+                          onClick={() => handleTabClick('chat')}
+                        >
+                          Chat
+                          {activeTab === 'chat' && (
+                            <div className="h-1 w-full bg-black rounded-sm transition-all duration-300" />
+                          )}
+                        </button>
+                      </div>
                       <div className="flex items-center">
                         <span>{users.length}</span>
                         <UsersIcon className="h-6 w-6 mr-1" />
                       </div>
                     </div>
-                    <ul className="max-h-40 overflow-y-auto">
-                      {users.map((user) => (
-                        <li key={user._id} className="py-1">
-                          @{user.nickname}
-                        </li>
-                      ))}
-                    </ul>
+                    {activeTab === 'participants' && (
+                      <ul className="max-h-40 overflow-y-auto">
+                        {users.map((user) => (
+                          <li key={user._id} className="py-1">
+                            @{user.nickname}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                    {activeTab === 'chat' && (
+                      <div>
+                        <p>Chat</p> 
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
