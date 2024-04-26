@@ -102,7 +102,7 @@ export default function LoginUser() {
                         </div>
 
                         <p className="mt-10">
-                            <Link href="/home" className="text-blue text-base hover:text-dark-blue transition duration-200">
+                            <Link href="/recover" className="text-blue text-base hover:text-dark-blue transition duration-200">
                                 He olvidado mi contraseña
                             </Link>
                         </p>
