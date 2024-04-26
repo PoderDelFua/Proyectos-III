@@ -17,7 +17,7 @@ import Image from 'next/image';
 //6. El usuario es redirigido a la página de inicio de sesión.
 
 export default function RegisterUser() {
-    var token = localStorage.getItem('token')
+    const token = localStorage.getItem('token')
     if(token){
         localStorage.removeItem('token')
     }    const router = useRouter()
@@ -131,8 +131,11 @@ export default function RegisterUser() {
                                     formFieldName={"gustoMusical"}
                                     options={generosOptions}
                                     onChange={(selectedOptions) => setGustoMusical(selectedOptions)}
-                                    prompt="Seleccione los géneros musicales que te interesen"/>
+                                    prompt="Géneros musicales que te interesen"
+                                    className="w-full text-base overflow-hidden text-ellipsis"
+                                />
                             </div>
+
 
                             <div className="mb-6">
                                 <label htmlFor="bio" className="block text-gray-800 font-bold">Biografía:</label>
