@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import {BACKEND_URI} from "@/config/env";
+import Link from 'next/link'
 
 export default function RecoverPassword() {
     const [correo, setCorreo] = useState('')
@@ -28,18 +29,49 @@ export default function RecoverPassword() {
     }
 
     return (
-        <form onSubmit={handleSubmit} className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
-            <div className="w-full max-w-md p-8 space-y-4 bg-white rounded-lg shadow-md">
-                <h2 className="text-xl font-semibold text-center text-gray-800">Recuperar contraseña</h2>
-                <label className="block">
-                    <span className="text-gray-700">Correo electrónico:</span>
-                    <input type="email" value={correo} onChange={(e) => setCorreo(e.target.value)} required
-                           className="mt-1 block w-full px-3 py-2 bg-white border rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50" />
-                </label>
-                <button type="submit" className="w-full px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600">
-                    Enviar código de recuperación
-                </button>
-            </div>
-        </form>
-    )
+
+        <div className="flex flex-col justify-between h-screen">
+          
+        <div className="rounded-lg text-center">
+        <img src="/fondo-login.png" alt="Background" className="w-full h-48 object-cover" />
+        <form onSubmit={handleSubmit} className="flex flex-col items-center justify-center min-h-full bg-white-100 p-4">
+                    
+
+                    <div>
+                        <h2 htmlFor="titulo" className="text-center text-gray-3000 font-bold text-4xl">Recuperar contraseña</h2>
+                    </div>
+                    <div className="w-full max-w-md p-8 space-y-4 bg-white rounded-lg shadow-md">
+                        
+                        <label className="block">
+                            
+                            <input type="email" value={correo} onChange={(e) => setCorreo(e.target.value)} required
+                               placeholder="Correo Electronico"  className="w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600 :ring-indigo-600 custom-rectangulo" />
+                        </label>
+
+                        <div className="flex justify-center mb-8">
+                            <button type="submit" className="cursor-pointer py-2 px-4 text-white font-bold w-1/2 rounded custom-cancel-button">
+                                Enviar código de recuperación
+                            </button>
+                        </div>
+                    </div>
+                </form>
+        </div>
+  
+        <div className="flex flex-col">
+          <hr className="border-gray-200 my-10" />
+  
+          <div className="flex justify-center space-x-8 text-gray-500 text-base pb-6 mb-2">
+            <Link href="#" className="hover:text-gray-800">
+              Contact Us
+            </Link>
+            <Link href="#" className="hover:text-gray-800">
+              About Us
+            </Link>
+            <Link href="#" className="hover:text-gray-800">
+              Terms & Conditions
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
 }
