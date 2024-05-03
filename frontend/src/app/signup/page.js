@@ -125,25 +125,6 @@ export default function RegisterUser() {
                                     })))}
                                     prompt="Seleccione su/s Instrumento/os"/>
                             </div>
-
-                            <div className="mb-6">
-                                <MultiSelect
-                                    formFieldName={"gustoMusical"}
-                                    options={generosOptions}
-                                    onChange={(selectedOptions) => setGustoMusical(selectedOptions)}
-                                    prompt="Géneros musicales que te interesen"
-                                    className="w-full text-base overflow-hidden text-ellipsis"
-                                />
-                            </div>
-
-
-                            <div className="mb-6">
-                                <label htmlFor="bio" className="block text-gray-800 font-bold">Biografía:</label>
-                                <textarea onChange={(e) => setBio(e.target.value)} name="bio" id="bio" rows="3"
-                                          placeholder="Cuéntanos algo sobre ti..."
-                                          className="w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600 :ring-indigo-600 custom-rectangulo"></textarea>
-                            </div>
-
                             {instrumento.map((inst, index) => (
                                 <div key={inst.nombre} className="mb-6">
                                     <MultiSelect
@@ -164,6 +145,25 @@ export default function RegisterUser() {
                                 </div>
                             ))
                             }
+                            <div className="mb-6">
+                                <MultiSelect
+                                    formFieldName={"gustoMusical"}
+                                    options={generosOptions}
+                                    onChange={(selectedOptions) => setGustoMusical(selectedOptions)}
+                                    prompt="Géneros musicales que te interesen"
+                                    className="w-full text-base overflow-hidden text-ellipsis"
+                                />
+                            </div>
+
+
+                            <div className="mb-6">
+                                <label htmlFor="bio" className="block text-gray-800 font-bold">Biografía:</label>
+                                <textarea onChange={(e) => setBio(e.target.value)} name="bio" id="bio" rows="3"
+                                          placeholder="Cuéntanos algo sobre ti..."
+                                          className="w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600 :ring-indigo-600 custom-rectangulo"></textarea>
+                            </div>
+
+
 
 
                             <div className="mb-6">

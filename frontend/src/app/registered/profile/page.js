@@ -21,6 +21,7 @@ export default function UserProfile() {
     const [pagesData, setPagesData] = useState(null)
     const [pageCards, setPageCards] = useState([])
     const [selectedTab, setSelectedTab] = useState('Publicaciones')
+    const [favoritos, setFavoritos] = useState([])
 
     let setParametrosData = {
         nombre: '',
@@ -48,8 +49,7 @@ export default function UserProfile() {
                 })
                 if (!response.ok) {
                     localStorage.removeItem('token')
-                    throw new Error('No se pudo cargar la información del usuario')
-                    router.push('/login')
+                        router.push('/login')
                 }
                 console.log("Buscando datos del usuario...")
                 const data = await response.json()
@@ -59,6 +59,7 @@ export default function UserProfile() {
                     gustoMusical:  data.data.gusto_musical,
                     bio:  data.data.bio,
                     nickname: data.data.nickname,
+                    favoritos: data.data.favoritos,
                     id: data.data._id
                 }
                 console.log(`Data (profile page): ${data.data}`)
@@ -79,7 +80,7 @@ export default function UserProfile() {
                 }
                 console.log("Buscando datos del usuario...")
                 const data2 = await response2.json()
-                console.log(`Data (profile page): ${data2.data}`)
+                console.log(`Data (profile page): ${data2.data}`, data2.data)
                 setPagesData(data2.data)
                 setPageCards(data2.data)
             }catch (error) {
@@ -95,6 +96,7 @@ export default function UserProfile() {
             setGustoMusical(userData.gusto_musical)
             setBio(userData.bio)
             setNickname(userData.nickname)
+            setFavoritos(userData.favoritos)
         }
     }, [userData])
     if (!userData) {
@@ -103,6 +105,12 @@ export default function UserProfile() {
 
     const handleTabChange = (tab) => {
         setSelectedTab(tab);
+        if (tab === 'Favoritos' && pagesData) {
+            const filteredPages = pagesData.filter(page => favoritos.includes(page._id))
+            setPageCards(filteredPages)
+        } else if (pagesData) {
+            setPageCards(pagesData)
+        }
     };
 
     let tabContent;
@@ -143,7 +151,20 @@ export default function UserProfile() {
             );
             break;
         case 'Favoritos':
-            tabContent = <p>Contenido de Favoritos</p>;
+            tabContent = (
+                <div className="custom-grid-itemActividad">
+                    {pageCards.map(page => (
+                        <div key={page._id} className="custom-page-card">
+                            <PageCard
+                                page={page}
+                                userId=''
+                                userName=''
+                                foto='../bg.jpg'
+                            />
+                        </div>
+                    ))}
+                </div>
+            );
             break;
         default:
             tabContent = null;

@@ -133,12 +133,12 @@ const getActivities = async (req, res) => {
 const addFavoritos = async (req, res) => {
     try {
         const idUser = req.user._id
-        const {id} = matchedData(req)
-        const validacion = await usuarioModel.findOne({ _id: idUser, favoritos: id });
+        const {pageId} = matchedData(req)
+        const validacion = await usuarioModel.findOne({ _id: idUser, favoritos: pageId });
         if(validacion !== null){
             return res.send({ message: "El la actividad ya está en favoritos" });
         }
-        const data = await usuarioModel.findByIdAndUpdate(idUser, {$push: {favoritos: id}}, {new: true})
+        const data = await usuarioModel.findByIdAndUpdate(idUser, {$push: {favoritos: pageId}}, {new: true})
         res.send({data})
     } catch (err) {
         console.log(err)
@@ -150,8 +150,8 @@ const removeFavoritos = async (req, res) => {
     try {
 
         const idUser = req.user._id
-        const {id} = matchedData(req)
-        const data = await usuarioModel.findByIdAndUpdate(idUser, {$pull: {favoritos: id}}, {new: true})
+        const {pageId} = matchedData(req)
+        const data = await usuarioModel.findByIdAndUpdate(idUser, {$pull: {favoritos: pageId}}, {new: true})
         res.send({data})
     }catch (err) {
         handleHttpError(res, "ERROR_REMOVE_FAVORITOS")

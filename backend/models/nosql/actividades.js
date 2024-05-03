@@ -28,7 +28,6 @@ const actividadesSchema = new mongoose.Schema({
     usuarios: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Usuario',
-        unique: true // Ensure unique values
     }],
     creadoPor: {
         type: mongoose.Schema.Types.ObjectId,

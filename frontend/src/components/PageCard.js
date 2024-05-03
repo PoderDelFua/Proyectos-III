@@ -56,6 +56,7 @@ export default function PageCard({ page, foto }) {
                             'Authorization': `Bearer ${token}`,
                         },
                     })
+                    console.log(response3)
                     if (!response3.ok) {
                         throw new Error('No se pudo cargar la información del participante')
                     }

@@ -39,6 +39,7 @@ export default function PageList() {
                         'Content-Type': 'application/json',
                     },
                 });
+                console.log(response)
                 if (!response.ok) {
                     throw new Error('No se pudo cargar la información de las actividades')
                 }
