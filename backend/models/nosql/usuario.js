@@ -46,12 +46,10 @@ const usuarioSchema = new mongoose.Schema({
     actividades: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Actividades',
-        unique: true
     }],
     favoritos: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Actividades', 
-        unique: true
     }],
     likes:[{
         type: mongoose.Schema.Types.ObjectId,

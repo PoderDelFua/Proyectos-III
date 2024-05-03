@@ -127,7 +127,6 @@ export default function CreateActivity({ isOpen, closePopup }) {
             const response = await fetch(`${BACKEND_URI}/actividades/createActivity`, {
                 method: 'POST',
                 headers: {
-                    'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(activityData)
