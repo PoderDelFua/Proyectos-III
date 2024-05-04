@@ -16,7 +16,7 @@ export default function PageForo() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch(`${BACKEND_URI}/hilo`, {
+                const response = await fetch(`${BACKEND_URI}/hilo/hilosPublicos`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',

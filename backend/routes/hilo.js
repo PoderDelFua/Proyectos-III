@@ -1,7 +1,7 @@
 const express = require("express")
 const router = express.Router()
 const { authMiddleware } = require('../middleware/session')
-const { getItems, getItem, updateItem, deleteItem, createItem, createItemTok, getMsgHilo} = require("../controllers/hilo")
+const { getItems, getItem, updateItem, deleteItem, createItem, createItemTok, getMsgHilo, getItemsPublic} = require("../controllers/hilo")
 const { validatorCreateItem, validatorCreateItemTok, validatorGetItem, validatorUpdateItem, test } = require("../validators/hilo")
 
 /**
@@ -20,6 +20,21 @@ const { validatorCreateItem, validatorCreateItemTok, validatorGetItem, validator
  */
 router.get("/", getItems)
 
+/**
+ * @openapi
+ * /api/hilo:
+ *  get:
+ *      tags:
+ *      - Hilo
+ *      summary: Get All hilos
+ *      description: 'Devuelve todos los hilos de la base de datos'
+ *      responses:
+ *          '200':
+ *              description: Devuelve todos los hilos
+ *          '500':
+ *              description: Server error
+ */
+router.get("/hilosPublicos", getItemsPublic)
 /**
  * @openapi
  * /api/hilo/getHiloById/{id}:

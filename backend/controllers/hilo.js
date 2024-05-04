@@ -13,6 +13,26 @@ const getItems = async (req, res) => {
     }
 }
 
+const getItemsPublic = async (req, res) => {
+    try {
+        const data = await hiloModel.find({ privado: false })
+            .populate('creadorId', 'nickname');
+
+        console.log("Datos obtenidos:", data);  // Log para ver qué datos se obtienen
+
+        if (data.length === 0) {
+            console.log("No se encontraron datos");
+            res.status(404).send({ message: "No se encontraron hilos públicos" });
+        } else {
+            res.send(data);
+        }
+    } catch (err) {
+        console.error("Error al obtener los hilos:", err);
+        handleHttpError(res, 'ERROR_GET_ITEMS_HILO', 500);
+    }
+}
+
+
 const getItem = async (req, res) => {
     try{
         const {id} = matchedData(req)
@@ -125,5 +145,6 @@ module.exports = {
     createItemTok,
     updateItem,
     deleteItem,
-    getMsgHilo
+    getMsgHilo,
+    getItemsPublic
 }

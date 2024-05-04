@@ -20,6 +20,7 @@ export default function CreateActivity({ isOpen, closePopup }) {
     const [horarios, setHorarios] = useState(null)
     const [auxHorarios, setAuxHorarios] = useState('')
     const [foto, setFoto] = useState(null)
+    const [hiloId, setHiloId] = useState('')
     const [creadoPor, setCreadoPor] = useState('')
     const [activityData, setActivityData] = useState(null)
 
@@ -110,7 +111,29 @@ export default function CreateActivity({ isOpen, closePopup }) {
             if (!responseFoto.ok) {
                 throw new Error('Error al subir la imagen');
             }
+            console.log("Foto subida")
+            //Ahora creamos el hilo al que irá asociada la actividad
+            const responseHilo = await fetch(`${BACKEND_URI}/hilo`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    titulo: nombre,
+                    descripcion: descripcion,
+                    creadorId: creadoPor,
+                    privado: true
+                })
+            })
 
+            if (!responseHilo.ok) {
+                throw new Error('Error al crear el hilo')
+            }
+            const hiloData = await responseHilo.json();
+            const hiloId = hiloData._id;
+            setHiloId(hiloId);
+            console.log("Hilo creado: ", hiloId)
             const fotoData = await responseFoto.json();
             const fotoId = fotoData._id; // Asumiendo que la respuesta contiene un _id
 
@@ -120,6 +143,7 @@ export default function CreateActivity({ isOpen, closePopup }) {
                 instrumento: instrumento,
                 descripcion: descripcion,
                 horarios: auxHorarios,
+                hiloActividad: hiloId,
                 creadoPor: creadoPor
             }
             console.log("Creando actividad...")
