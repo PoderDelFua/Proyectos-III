@@ -7,7 +7,7 @@ import { BACKEND_URI } from '@/config/env'
 import { ArrowLeftIcon } from '@heroicons/react/24/solid';
 
 export default function LoginUser() {
-    var token = localStorage.getItem('token')
+    const token = localStorage.getItem('token');
     if(token){
         localStorage.removeItem('token')
     }
@@ -45,6 +45,7 @@ export default function LoginUser() {
         if (data.usuario) {      
             //Guardamos el token en el localstorage. Se utiliza para verificar si el usuario está autenticado.      
             localStorage.setItem('token', data.token)
+            localStorage.setItem('userId', data.usuario._id)
             router.push(`/home`)
         } else {
             setError('El usuario o la contraseña no son correctos.')

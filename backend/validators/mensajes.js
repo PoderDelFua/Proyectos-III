@@ -12,6 +12,7 @@ const validatorGetItem = [
 const validatorCreateItem = [
     check("autorMensaje").exists().notEmpty().isMongoId().withMessage("The value must be a valid MongoId"),
     check("mensaje").exists().notEmpty().isString().withMessage("The value must be a string"),
+    check("likes").optional().isNumeric().isInt().withMessage("The value must be an integer"),
     check("hiloId").exists().notEmpty().isMongoId().withMessage("The value ( hiloId ) must be a valid MongoId"),
     check("padreMensaje").optional().isMongoId().withMessage("The value must be a valid MongoId"),
     check("mediaId").optional().isMongoId().withMessage("The value ( madiaId ) must be a valid MongoId"),

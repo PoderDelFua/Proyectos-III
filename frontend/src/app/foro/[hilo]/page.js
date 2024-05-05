@@ -27,6 +27,8 @@ export default function HiloDetallePage() {
 
         const fetchHiloAndMensajes = async () => {
             try {
+
+
                 const hiloResponse = await fetch(`${BACKEND_URI}/hilo/getHiloById/${hiloId}`, {
                     method: 'GET',
                     headers: {
@@ -65,24 +67,32 @@ export default function HiloDetallePage() {
         const token = localStorage.getItem('token');
         const hiloId = localStorage.getItem('currentHiloId');
         if (newMessage.trim() !== '') {
+            setNewMessage(newMessage.trim())
           try {
+              const body = JSON.stringify({
+                  autorMensaje: creadoPor,
+                  mensaje: newMessage,
+                  hiloId: hiloId,
+                  likes: 0,
+                  padreMensaje: hilo._id,
+                  mediaId: "65f22f0800c7c18e6fa74aaa",
+              })
+
             const response = await fetch(`${BACKEND_URI}/mensajes/crearPost`, {
               method: 'POST',
               headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json',
               },
-              body: JSON.stringify({
-                autorMensaje: creadoPor,
-                mensaje: newMessage,
-                hiloId,
-              }),
+                body: body,
             })
+              console.log("Enviando mensaje...", body)
+
             if (!response.ok) {
               throw new Error(response.statusText)
             }
             setNewMessage('')
-            await fetchData()
+              window.location.reload();
           } catch (error) {
             console.error("Error al enviar el mensaje: ", error)
           }
