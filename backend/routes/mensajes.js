@@ -230,4 +230,6 @@ router.patch("/likeMsg/:id", authMiddleware, validatorGetItem, likeMsg)
  */
 router.patch("/removeLikeMsg/:id", authMiddleware, validatorGetItem, removeLikeMsg)
 
+
+
 module.exports = router

@@ -97,7 +97,7 @@ function Sidebar({ selectedTab = 'home' }) {
               </div>
             )}
             <a
-              href="#"
+              href="/registered/calendario"
               onClick={() => handleItemClick('calendar')}
               className={`group flex items-center py-2 px-4 text-black ${
                 activeItem === 'calendar' ? 'bg-white rounded-l-full' : 'hover:bg-light-gray rounded-full'

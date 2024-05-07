@@ -67,6 +67,22 @@ const getMsgHilo = async (req, res) => {
     }
 }
 
+
+const getLikesHilo = async (req, res) => {
+
+    try{
+        const {id} = matchedData(req)
+        const data = await mensajesModel.find().where('hiloId').equals(id)
+        const totalLikes = data.reduce((sum, msg) => sum + msg.likes, 0);
+        
+        console.log("TotalLikes", totalLikes)
+        res.send({totalLikes})
+    }catch(err){
+        console.log(err)
+        handleHttpError(res, 'ERROR_GET_ITEM_HILO')
+    }
+
+}
 const createItem = async (req, res) => {
     try {
         const body = matchedData(req)
@@ -146,5 +162,6 @@ module.exports = {
     updateItem,
     deleteItem,
     getMsgHilo,
-    getItemsPublic
+    getItemsPublic,
+    getLikesHilo
 }
