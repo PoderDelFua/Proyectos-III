@@ -11,7 +11,7 @@ export default function HiloDetallePage() {
     const [hilo, setHilo] = useState(null);
     const [mensajes, setMensajes] = useState([]);
     const [newMessage, setNewMessage] = useState('')
-    const [like, setLike] = useState(false);
+    const [likes, setLikes] = useState({});
     const [creadoPor, setCreadoPor] = useState('');
 
 
@@ -97,7 +97,37 @@ export default function HiloDetallePage() {
             console.error("Error al enviar el mensaje: ", error)
           }
         }
-      }
+    }
+
+    const handleLike = async (mensajeId) => {
+        const user = {
+            id: mensajeId
+        };
+
+        try {
+            const token = localStorage.getItem('token');
+            console.log(user);
+            const response = await fetch(`${BACKEND_URI}/mensajes/likeMsg/${mensajeId}`, {
+                method: 'PATCH',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(user),
+            });
+            
+            if (!response.ok) {
+                throw new Error(response.statusText);
+            }
+            
+            console.log(response);
+
+            const data = await response.json();
+            console.log(data);
+        } catch (error) {
+            console.error("Error al dar like al mensaje: ", error);
+        }
+    };
 
     return (
         <section className="flex flex-wrap justify-center">
@@ -105,7 +135,7 @@ export default function HiloDetallePage() {
                 <SidebarForo selectedTab={hilo ? hilo.titulo : ''} />
             </div>
 
-            <div className="w-full md:w-2/3 mr-20 mb-4">
+            <div className="w-full md:w-2/3 mr-20 mb-32">
                 {hilo && (
                     <div className="relative mt-4">
                         <div className="bg-primary-gray p-8 rounded-lg shadow mb-4">
@@ -128,11 +158,11 @@ export default function HiloDetallePage() {
                         </div>
                         <div className="space-y-4">
                             {mensajes.map((mensaje) => (
-                                <div key={mensaje._id}>
+                                <div key={mensaje._id} className="relative">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="gray" className="bi bi-arrow-return-right" viewBox="0 0 16 16">
                                         <path fillRule="evenodd" d="M1.5 1.5A.5.5 0 0 0 1 2v4.8a2.5 2.5 0 0 0 2.5 2.5h9.793l-3.347 3.346a.5.5 0 0 0 .708.708l4.2-4.2a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 8.3H3.5A1.5 1.5 0 0 1 2 6.8V2a.5.5 0 0 0-.5-.5"/>
                                     </svg>
-                                    <div className="bg-gray-50 p-4 rounded-lg shadow flex items-center ml-8">    
+                                    <div className="bg-gray-50 p-4 rounded-lg flex items-center ml-8">    
                                         <div className="flex flex-col items-center" style={{flexShrink: 0}}> {}
                                             <div className="w-12 h-12 rounded-full overflow-hidden mb-2">
                                                 <img src="/no-profile.png" alt="Profile" className="w-full h-full object-cover"/>
@@ -141,25 +171,28 @@ export default function HiloDetallePage() {
                                         </div>
                                         <div className="ml-4" style={{maxWidth: 'calc(100% - 5rem)', flexBasis: 'auto'}}> {}
                                             <p className="text-gray-800">{mensaje.mensaje}</p>
-                                        </div>    
-                                    </div>
+                                        </div>
+                                        <p className="absolute bottom-0 right-0 mb-2 mt-2 mr-10">{mensaje.likes}</p>
+                                        <button onClick={() => handleLike(mensaje._id)} className="absolute bottom-0 right-0 mb-2 mt-2 mr-2 cursor-pointer">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill={likes[mensaje._id] ? '#0065EF' : '#DDEBFF'} className="bi bi-heart-fill" viewBox="0 0 16 16">
+                                                <path fillRule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/>
+                                            </svg>
+                                        </button>
+                                    </div>    
                                 </div>
                             ))}
-                        </div>
-                        <div className="bg-white p-4 flex w-full mb-4 mt-4">
-                            <input
-                            type="text"
-                            className="w-full border border-gray-300 rounded px-4 py-2"
-                            placeholder="Escribe un mensaje..."
-                            value={newMessage}
-                            onChange={(e) => setNewMessage(e.target.value)}
-                            />
-                            <button
-                            className="ml-5 focus:outline-none"
-                            onClick={handleSendMessage}
-                            >
-                            <PaperAirplaneIcon className="h-10 w-10 fill-gray-600 hover:fill-gray-800 cursor-pointer transition-colors duration-200" />
-                            </button>
+                            <div className="bg-white p-4 flex fixed bottom-4 md:w-2/3 mb-4 justify-center">
+                                <input
+                                type="text"
+                                className="w-full border border-gray-300 rounded px-4 py-2"
+                                placeholder="Escribe un mensaje..."
+                                value={newMessage}
+                                onChange={(e) => setNewMessage(e.target.value)}
+                                />
+                                <button className="ml-5 focus:outline-none" onClick={handleSendMessage}>
+                                    <PaperAirplaneIcon className="h-10 w-10 fill-gray-600 hover:fill-gray-800 cursor-pointer transition-colors duration-200" />
+                                </button>
+                            </div>
                         </div>
                     </div>
 
