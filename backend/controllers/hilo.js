@@ -73,8 +73,7 @@ const getLikesHilo = async (req, res) => {
     try{
         const {id} = matchedData(req)
         const data = await mensajesModel.find().where('hiloId').equals(id)
-        const totalLikes = data.reduce((sum, msg) => sum + msg.likes, 0);
-        
+        const totalLikes = data.reduce((sum, msg) => sum + msg.likes, 0);        
         console.log("TotalLikes", totalLikes)
         res.send({totalLikes})
     }catch(err){

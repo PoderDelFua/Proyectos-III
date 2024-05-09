@@ -97,6 +97,15 @@ const getItemsByUser = async (req, res) => {
         handleHttpError(res, "ERROR_GET_ACTIVIDADES")
     }
 }
+const getActividadesApuntado = async (req, res) => {
+    const arrayIdActividades = req.user.actividades;
+    try {
+        const data = await actividadesModel.find({ _id: { $in: arrayIdActividades } });
+        res.send({ data });
+    } catch (error) {
+        handleHttpError(res, "ERROR_GET_ACTIVIDADES_APUNTADO");
+    }
+}
 module.exports = {
     getItems,
     getItem,
@@ -105,5 +114,6 @@ module.exports = {
     updateItem,
     createItem,
     deleteItem,
-    getItemsByUser
+    getItemsByUser,
+    getActividadesApuntado
 }

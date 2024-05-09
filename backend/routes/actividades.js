@@ -1,7 +1,7 @@
 const express = require("express")
 const router = express.Router()
 const { authMiddleware } = require('../middleware/session')
-const { getItems, getItem, addUser, removeUser, updateItem, deleteItem, createItem,getItemsByUser} = require("../controllers/actividades")
+const { getItems, getItem, addUser, removeUser, updateItem, deleteItem, createItem,getItemsByUser, getActividadesApuntado} = require("../controllers/actividades")
 const { validatorActivity, validatorUpdateActivity, validatorUpdateUserActivity, validatorIdFormat} = require("../validators/auth")
 
 /**
@@ -74,7 +74,24 @@ router.get("/getActivityData/:id", validatorIdFormat, getItem)
  */    
 router.get("/getActivityDataByUser/:id", authMiddleware, getItemsByUser)
 
-
+/**
+ * @openapi
+ * /api/actividades/getActividadesApuntado:
+ *  get:
+ *      tags:
+ *      - Actividades
+ *      summary: Devuelve las actividades a las que está apuntado el usuario
+ *      description: 'Devuelve las actividades a las que está apuntado el usuario'
+ *      responses:
+ *         '200':
+ *              description: Devuelve las actividades a las que está apuntado el usuario
+ *         '401':
+ *              description: Validation error
+ *      security:
+ *          - bearerAuth: []
+ * 
+ */
+router.get("/getActividadesApuntado/", authMiddleware, getActividadesApuntado)
 /**
  * @openapi
  * /api/actividades/addUserToActivity:
