@@ -30,33 +30,38 @@ function Sidebar({ selectedTab = 'home' }) {
 
   return (
     <>
-    <div className={`fixed inset-y-0 bg-primary-gray rounded-r-3xl z-50 md:block transition-all duration-500 ${SidebarOpen ? 'left-0 w-64' : '-left-64 w-0'}`}>
+    { SidebarOpen && window.innerWidth < 768 && (
+      <div className={`fixed inset-0 bg-black bg-opacity-50 z-40`} onClick={toggleSidebar}></div>
+    )}
+
+    <div className={`fixed inset-y-0 bg-primary-gray rounded-r-3xl z-50 md:block transition-all duration-500 ${SidebarOpen ? 'left-0 w-64' : '-left-64 w-0'}`} style={{backgroundImage: "url('/fondo-sidebar.png')"}}>
       <div className="flex flex-col h-full">
         <div className="flex justify-center items-center pt-10 pb-2">
-          <img src="/logoU.png" alt="Logo" className="h-20 w-20 rounded-full" />
+          <img src="/logoU.png" alt="Logo" className="h-28 w-28 rounded-full border-4 border-white  p-2" />
         </div>
-        <nav className="flex-1 pl-4 py-10 space-y-4">
+        <nav className="flex-1 pl-4 py-10 space-y-6">
           <div className={`${activeItem !== 'home' ? 'pr-10' : '' }`}>
             {activeItem === 'home' && (
               <div className="relative">
                 <div className="absolute bottom-0 right-0 h-5 w-5 bg-white"></div>
-                <div className="absolute bottom-0 right-0 h-5 w-5 bg-primary-gray rounded-br-full"></div>
+                <div className="absolute bottom-0 right-0 h-5 w-5 bg-sidebar-dark-blue rounded-br-full"></div>
               </div>
             )}
             <a
               href="/home"
               onClick={() => handleItemClick('home')}
-              className={`group flex items-center py-2 px-4 text-black ${
-                activeItem === 'home' ? 'bg-white rounded-l-full' : 'hover:bg-light-gray rounded-full'
+              className={`group flex items-center py-2 px-4 text-black transition-all duration-300 ${
+                activeItem === 'home' ? 'bg-white rounded-l-full' : 'text-white hover:bg-light-gray hover:text-blue rounded-full'
               }`}
             >
+
               <HomeIcon className="mr-5 h-7 w-7" />
               <span className="text-xl font-semibold">Home</span>
             </a>
             {activeItem === 'home' && (
               <div className="relative">
                 <div className="absolute top-0 right-0 h-5 w-5 bg-white"></div>
-                <div className="absolute top-0 right-0 h-5 w-5 bg-primary-gray rounded-tr-full"></div>
+                <div className="absolute top-0 right-0 h-5 w-5 bg-sidebar-dark-blue rounded-tr-full"></div>
               </div>
             )}
           </div>
@@ -64,14 +69,14 @@ function Sidebar({ selectedTab = 'home' }) {
             {activeItem === 'profile' && (
               <div className="relative">
                 <div className="absolute bottom-0 right-0 h-5 w-5 bg-white"></div>
-                <div className="absolute bottom-0 right-0 h-5 w-5 bg-primary-gray rounded-br-full"></div>
+                <div className="absolute bottom-0 right-0 h-5 w-5 bg-sidebar-dark-blue rounded-br-full"></div>
               </div>
             )}
             <a
               href="/registered/profile"
               onClick={() => handleItemClick('profile')}
-              className={`group flex items-center py-2 px-4 text-black ${
-                activeItem === 'profile' ? 'bg-white rounded-l-full' : 'hover:bg-light-gray rounded-full'
+              className={`group flex items-center py-2 px-4 text-black  transition-all duration-300 ${
+                activeItem === 'profile' ? 'bg-white rounded-l-full' : 'text-white hover:bg-light-gray hover:text-blue rounded-full'
               }`}
             >
               <UserIcon className="mr-5 h-7 w-7" />
@@ -80,7 +85,7 @@ function Sidebar({ selectedTab = 'home' }) {
             {activeItem === 'profile' && (
               <div className="relative">
                 <div className="absolute top-0 right-0 h-5 w-5 bg-white"></div>
-                <div className="absolute top-0 right-0 h-5 w-5 bg-primary-gray rounded-tr-full"></div>
+                <div className="absolute top-0 right-0 h-5 w-5 bg-sidebar-dark-blue rounded-tr-full"></div>
               </div>
             )}
           </div>
@@ -88,14 +93,14 @@ function Sidebar({ selectedTab = 'home' }) {
             {activeItem === 'settings' && (
               <div className="relative">
                 <div className="absolute bottom-0 right-0 h-5 w-5 bg-white"></div>
-                <div className="absolute bottom-0 right-0 h-5 w-5 bg-primary-gray rounded-br-full"></div>
+                <div className="absolute bottom-0 right-0 h-5 w-5 bg-sidebar-dark-blue rounded-br-full"></div>
               </div>
             )}
             <a
               href="#"
               onClick={() => handleItemClick('settings')}
-              className={`group flex items-center py-2 px-4 text-black ${
-                activeItem === 'settings' ? 'bg-white rounded-l-full' : 'hover:bg-light-gray rounded-full'
+              className={`group flex items-center py-2 px-4 text-black  transition-all duration-300 ${
+                activeItem === 'settings' ? 'bg-white rounded-l-full' : 'text-white hover:bg-light-gray hover:text-blue rounded-full'
               }`}
             >
               <Cog6ToothIcon className="mr-5 h-7 w-7" />
@@ -104,7 +109,7 @@ function Sidebar({ selectedTab = 'home' }) {
             {activeItem === 'settings' && (
               <div className="relative">
                 <div className="absolute top-0 right-0 h-5 w-5 bg-white"></div>
-                <div className="absolute top-0 right-0 h-5 w-5 bg-primary-gray rounded-tr-full"></div>
+                <div className="absolute top-0 right-0 h-5 w-5 bg-sidebar-light-blue rounded-tr-full"></div>
               </div>
             )}
           </div>
@@ -112,14 +117,14 @@ function Sidebar({ selectedTab = 'home' }) {
             {activeItem === 'calendar' && (
               <div className="relative">
                 <div className="absolute bottom-0 right-0 h-5 w-5 bg-white"></div>
-                <div className="absolute bottom-0 right-0 h-5 w-5 bg-primary-gray rounded-br-full"></div>
+                <div className="absolute bottom-0 right-0 h-5 w-5 bg-sidebar-light-blue rounded-br-full"></div>
               </div>
             )}
             <a
               href="/registered/calendario"
               onClick={() => handleItemClick('calendar')}
-              className={`group flex items-center py-2 px-4 text-black ${
-                activeItem === 'calendar' ? 'bg-white rounded-l-full' : 'hover:bg-light-gray rounded-full'
+              className={`group flex items-center py-2 px-4 text-black  transition-all duration-300 ${
+                activeItem === 'calendar' ? 'bg-white rounded-l-full' : 'text-white hover:bg-light-gray hover:text-blue rounded-full'
               }`}
             >
               <CalendarDaysIcon className="mr-5 h-7 w-7" />
@@ -128,7 +133,7 @@ function Sidebar({ selectedTab = 'home' }) {
             {activeItem === 'calendar' && (
               <div className="relative">
                 <div className="absolute top-0 right-0 h-5 w-5 bg-white"></div>
-                <div className="absolute top-0 right-0 h-5 w-5 bg-primary-gray rounded-tr-full"></div>
+                <div className="absolute top-0 right-0 h-5 w-5 bg-sidebar-light-blue rounded-tr-full"></div>
               </div>
             )}
           </div>

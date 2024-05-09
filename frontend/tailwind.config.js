@@ -18,7 +18,11 @@ module.exports = {
         "blue":"#0065ef",
         "light-blue":"#64ABFF",
         "dark-blue":"#013b8a",
-        "light-blue":"#DDEBFF"
+        "light-blue":"#DDEBFF",
+
+        "sidebar-white":"#616364",
+        "sidebar-dark-blue":"#002b65",
+        "sidebar-light-blue":"#2b486c"
       },
     },
   },

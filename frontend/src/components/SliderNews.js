@@ -91,6 +91,7 @@ const SliderNews = () => {
           justify-content: center;
           align-items: center;
           z-index: 2;
+          color: white;
         }
 
         .text-overlay::before {
@@ -103,6 +104,7 @@ const SliderNews = () => {
           background-color: rgba(0, 0, 0, 0.6);
           z-index: -1;
           border-radius: 20px;
+          color: white;
         }
       `}</style>
     </div>
