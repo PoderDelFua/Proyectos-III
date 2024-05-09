@@ -1,23 +1,28 @@
 "use client"
 
 import { useRouter } from 'next/navigation'
-import {useState, useEffect} from 'react'
-import {BACKEND_URI} from "@/config/env";
-import ActivityInfo from './ActivityInfo';
-import Confetti from 'react-confetti';
-import { useWindowSize } from 'react-use';
+import { useState, useEffect } from 'react'
+import { BACKEND_URI } from "@/config/env"
+import ActivityInfo from './ActivityInfo'
+import Confetti from 'react-confetti'
+import { useWindowSize } from 'react-use'
+import { BookmarkIcon as BookmarkIconSolid } from '@heroicons/react/24/solid'
+import { BookmarkIcon as BookmarkIconOutline } from '@heroicons/react/24/outline'
+import { CalendarDaysIcon } from '@heroicons/react/24/solid'
+
+
 export default function ActivityCard({ activity, foto }) {
-    const router = useRouter();
+    const router = useRouter()
     const token = localStorage.getItem('token')
     const [userData, setUserData] = useState(null)
     const [creatorData, setCreatorData] = useState(null)
-    const [participants, setParticipants] = useState([]);
-    const [showNotification, setShowNotification] = useState(false);
-    const [notificationMessage, setNotificationMessage] = useState('');
-    const [isExpanded, setIsExpanded] = useState(false);
-    const [favorite, setFavorite] = useState(false);
-    const [confetti, setConfetti] = useState(false);
-    const { width, height } = useWindowSize();
+    const [participants, setParticipants] = useState([])
+    const [showNotification, setShowNotification] = useState(false)
+    const [notificationMessage, setNotificationMessage] = useState('')
+    const [isExpanded, setIsExpanded] = useState(false)
+    const [favorite, setFavorite] = useState(false)
+    const [confetti, setConfetti] = useState(false)
+    const { width, height } = useWindowSize()
 
     useEffect(() => {
         const fetchData = async () => {
@@ -34,7 +39,7 @@ export default function ActivityCard({ activity, foto }) {
                 console.log("Buscando datos del usuario...")
                 const data = await response.json()
                 setUserData(data.data)
-                setFavorite(data.data.favoritos.includes(activity._id));
+                setFavorite(data.data.favoritos.includes(activity._id))
 
                 const response2 = await fetch(`${BACKEND_URI}/usuario/getUsersData/${activity.creadoPor}`, {
                     method: 'GET',
@@ -72,7 +77,7 @@ export default function ActivityCard({ activity, foto }) {
         }
 
         fetchData()
-    }, []);
+    }, [])
 
     const handleButton = (e) => {
         //Llamada al back para añadir el usuario a la actividad
@@ -84,11 +89,11 @@ export default function ActivityCard({ activity, foto }) {
                     const data = userData
                     //Comprobamos si el usuario ya está unido a la actividad
                     if (data.actividades.includes(activity._id)) {
-                        setNotificationMessage('Ya estás unido a esta actividad');
-                        setShowNotification(true);
+                        setNotificationMessage('Ya estás unido a esta actividad')
+                        setShowNotification(true)
                         setTimeout(() => {
-                            setShowNotification(false);
-                        }, 3000); // Oculta la notificación a los 3 segundos
+                            setShowNotification(false)
+                        }, 3000) // Oculta la notificación a los 3 segundos
                         return
                     }
                     //Ahora que tenemos los datos del usuario, podemos hacer la llamada para unirlo a la actividad
@@ -122,21 +127,21 @@ export default function ActivityCard({ activity, foto }) {
                         }
                         //Comprobamos si el usuario ya está unido a la actividad
                         if (userData.actividades.includes(activity._id)) {
-                            setNotificationMessage('Ya estás unido a esta actividad');
-                            setShowNotification(true);
+                            setNotificationMessage('Ya estás unido a esta actividad')
+                            setShowNotification(true)
                             setTimeout(() => {
-                                setShowNotification(false);
-                            }, 3000); // Oculta la notificación a los 3 segundos
+                                setShowNotification(false)
+                            }, 3000) // Oculta la notificación a los 3 segundos
                             return
                         }
 
 
                         // Actualiza el estado para mostrar la notificación
-                        setNotificationMessage('Usuario unido a la actividad ✔');
-                        setShowNotification(true);
+                        setNotificationMessage('Usuario unido a la actividad ✔')
+                        setShowNotification(true)
                         setTimeout(() => {
-                            setShowNotification(false);
-                        }, 3000); // Oculta la notificación a los 3 segundos
+                            setShowNotification(false)
+                        }, 3000) // Oculta la notificación a los 3 segundos
 
                     }
 
@@ -196,9 +201,9 @@ export default function ActivityCard({ activity, foto }) {
     }
     const handleFavorito = (e) => {
         if (!favorite) { // Solo actualiza si actualmente no es favorito
-            setFavorite(true); // Marca como favorito
-            setConfetti(true); // Activa confeti
-            setTimeout(() => setConfetti(false), 2000);
+            setFavorite(true) // Marca como favorito
+            setConfetti(true) // Activa confeti
+            setTimeout(() => setConfetti(false), 2000)
                 if (token === null) {
                     router.push('/login')
                 } else {
@@ -246,60 +251,70 @@ export default function ActivityCard({ activity, foto }) {
             }
 
     return (
-        <div className="flex flex-col bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden">
+        <div className="flex flex-col bg-white rounded-lg shadow-md overflow-hidden border-2 border-blue">
             {showNotification && (
                 <div className="fixed bottom-5 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-8 py-4 rounded-lg shadow-lg text-lg font-semibold transition-opacity duration-300 ease-in-out">
                     {notificationMessage}
                 </div>
             )}
-            <div className="relative">
-                {confetti && <Confetti width={width} height={height}/>}
-                <img src={foto} alt="Imagen de la actividad" className="h-56 w-full object-cover"/>
-                <button onClick={buttonFavorito}
-                        className="absolute top-0 right-0 mt-2 mr-2 cursor-pointer bg-white rounded-full p-2">
-                    {favorite ? (
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                             className="bi bi-star-fill" viewBox="0 0 16 16">
-                            <path
-                                d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
-                        </svg>
-                    ) : (
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                             className="bi bi-star" viewBox="0 0 16 16">
-                            <path
-                                d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.56.56 0 0 0-.163-.505L1.71 6.745l4.052-.576a.53.53 0 0 0 .393-.288L8 2.223l1.847 3.658a.53.53 0 0 0 .393.288l4.052.575-2.906 2.77a.56.56 0 0 0-.163.506l.694 3.957-3.686-1.894a.5.5 0 0 0-.461 0z"/>
-                        </svg>
-                    )}
-                </button>
-
-            </div>
-            <div className="max-w-sm p-6 flex flex-col justify-between">
-                <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">{activity.nombre}</h5> {/* Cambiado a 'nombre' */}
-                <p className="mb-4 font-normal text-gray-700">{activity.descripcion}</p> {/* Cambiado a 'descripcion' */}
-                <div className="flex items-center space-x-4">
-                    <button onClick={openInfo} type="button"
-                            className="cursor-pointer transition-all bg-indigo-600 text-white px-6 py-2 rounded-lg border-indigo-700 border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px] active:border-b-[2px] active:brightness-90 active:translate-y-[2px]">
-                        Ver más información
-                    </button>
-                    {isExpanded && (
-                        <ActivityInfo isOpen={isExpanded}
-                                      onClose={closeInfo}
-                                      userId={userData._id}
-                                      activity={activity}
-                                      foto={foto}
-                                      nickname={creatorData ? creatorData.nickname : 'nickname'}
-                                      handleUnirse={handleButton}
-                                      users={participants}/>
-                    )}
-                    {token !== null && (
-                        <button onClick={handleButton} type="button"
-                                className="cursor-pointer transition-all bg-indigo-600 text-white px-6 py-2 rounded-lg border-indigo-700 border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px] active:border-b-[2px] active:brightness-90 active:translate-y-[2px]">
-                            Unirse
-                        </button>
-                    )}
+            <div onClick={openInfo} className="cursor-pointer">
+                <div className="relative">
+                    {confetti && <Confetti width={width} height={height} />}
+                    <img src={foto} alt="Imagen de la actividad" className="w-full object-cover rounded-t-lg p-4" />
+                </div>
+                <div className="p-6">
+                    <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">{activity.nombre}</h5>
+                    <p className="text-sm text-gray-500">Creado por @{creatorData ? creatorData.nickname : 'nickname'}</p>
+                    <p className="mb-4 text-gray-700">{activity.descripcion}</p>
+                    <div className="flex justify-between items-center">
+                        {activity.horarios && (
+                            <div className="flex items-center space-x-2">
+                                <CalendarDaysIcon className="h-5 w-5 text-gray-500" />
+                                <p className="text-gray-500">{activity.horarios}</p>
+                            </div>
+                        )}
+                        <div className="flex space-x-4 items-center">
+                            <button
+                                onClick={(e) => {
+                                    e.stopPropagation()
+                                    buttonFavorito()
+                                }}
+                                className="cursor-pointer bg-light-blue rounded-lg p-2"
+                            >
+                                {favorite ? (
+                                    <BookmarkIconSolid className="h-7 w-7 text-blue" />
+                                ) : (
+                                    <BookmarkIconOutline className="h-7 w-7 text-blue" />
+                                )}
+                            </button>
+                            {token !== null && (
+                                <button
+                                    onClick={(e) => {
+                                        e.stopPropagation()
+                                        handleButton()
+                                    }}
+                                    type="button"
+                                    className="cursor-pointer transition-all bg-blue text-white px-6 py-2 rounded-lg border-dark-blue border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px] active:border-b-[2px] active:brightness-90 active:translate-y-[2px]"
+                                >
+                                    Unirse
+                                </button>
+                            )}
+                        </div>
+                    </div>
                 </div>
             </div>
+            {isExpanded && (
+                <ActivityInfo
+                    isOpen={isExpanded}
+                    onClose={closeInfo}
+                    userId={userData._id}
+                    activity={activity}
+                    foto={foto}
+                    nickname={creatorData ? creatorData.nickname : 'nickname'}
+                    handleUnirse={handleButton}
+                    users={participants}
+                />
+            )}
         </div>
     )
 }
-
