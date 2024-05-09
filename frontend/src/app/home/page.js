@@ -1,6 +1,6 @@
 "use client"
 
-import PageCard from '@/components/PageCard'
+import ActivityCard from '@/components/ActivityCard'
 import Sidebar from '@/components/Sidebar';
 import Featured from '@/components/Featured';
 import CreateActivity from '@/components/CreateActivityForm'; // Asegúrate de importar tu componente de formulario
@@ -18,8 +18,8 @@ import {BACKEND_URI} from '@/config/env'
 export default function PageList() {
     const [activity, setActivity] = useState('any');
     const [searchTerm, setSearchTerm] = useState('');
-    const [pageCards, setPageCards] = useState([]);
-    const [pagesData, setPagesData] = useState(null);
+    const [activityCards, setActivityCards] = useState([]);
+    const [activitiesData, setActivitiesData] = useState(null);
     const [showPopup, setShowPopup] = useState(false); // Estado para controlar la visibilidad del popup
     const handleOpenPopup = () => {
         setShowPopup(true);
@@ -44,8 +44,8 @@ export default function PageList() {
                     throw new Error('No se pudo cargar la información de las actividades')
                 }
                 const data = await response.json()
-                setPagesData(data.data)
-                setPageCards(data.data)
+                setActivitiesData(data.data)
+                setActivityCards(data.data)
                 //Imprimimos nombre
             } catch (error) {
                 console.error("Error: ", error)
@@ -56,30 +56,30 @@ export default function PageList() {
     }, []);
     useEffect(() => {
         filterCards();
-    }, [searchTerm, activity]); // Eliminado pagesData como dependencia innecesaria
+    }, [searchTerm, activity]); // Eliminado activitiesData como dependencia innecesaria
 
 
     const filterCards = () => {
         console.log('Filtrando tarjetas con términos:', searchTerm, 'y actividad:', activity);
-        if (pagesData && activity !== 'any') {
-            let filteredList = pagesData.filter((data) => {
+        if (activitiesData && activity !== 'any') {
+            let filteredList = activitiesData.filter((data) => {
                 const term = activity.toLowerCase();
                 return data.nombre.toLowerCase().includes(term) ||
                     data.descripcion.toLowerCase().includes(term) ||
                     data.instrumento.some(instr => typeof instr === 'string' && instr.toLowerCase().includes(term)) ||
                     data.gusto_musical.some(gusto => typeof gusto === 'string' && gusto.toLowerCase().includes(term));
             });
-            setPageCards(filteredList);
+            setActivityCards(filteredList);
             //Else mostramos todas las actividades
-        }else if (pagesData) {
-            setPageCards(pagesData);
+        }else if (activitiesData) {
+            setActivityCards(activitiesData);
         }
     };
 
 
         const handleSearch = (e) => {
             e.preventDefault()
-            let filteredList = pagesData;
+            let filteredList = activitiesData;
 
             if (searchTerm !== '') {
                 filteredList = filteredList.filter((data) => {
@@ -92,9 +92,9 @@ export default function PageList() {
             }
 
 
-            setPageCards(filteredList)
+            setActivityCards(filteredList)
         }
-        if (!pagesData) {
+        if (!activitiesData) {
             return <div>Loading...</div>
         }
 
@@ -108,7 +108,7 @@ export default function PageList() {
                         <div className="rounded-lg mb-8"><Slider/></div>
                         <form onSubmit={handleSearch} className="flex flex-col md:flex-row gap-3 mb-4">
                             <div className="flex flex-grow">
-                                <input type="text" placeholder="Search for webpages..."
+                                <input type="text" placeholder="Search for activities..."
                                        onChange={(e) => setSearchTerm(e.target.value)}
                                        className="w-full px-3 h-10 rounded-l border-2 border-indigo-600 focus:outline-none focus:border-indigo-500"/>
                                 <button type="submit"
@@ -154,9 +154,9 @@ export default function PageList() {
                             <CreateActivity isOpen={showPopup} closePopup={() => setShowPopup(false)} />
                         )}
                         <div className="custom-grid-itemActividad">
-                            {pageCards.map(page => (
-                                <div key={page._id} className="custom-page-card">
-                                    <PageCard page={page} foto='../bg.jpg' />
+                            {activityCards.map(activity => (
+                                <div key={activity._id} className="custom-activity-card">
+                                    <ActivityCard activity={activity} foto='../bg.jpg' />
                                 </div>
                             ))}
                         </div>

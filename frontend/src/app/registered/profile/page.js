@@ -7,7 +7,7 @@ import {useRouter} from 'next/navigation'
 import Link from 'next/link'
 import {BACKEND_URI} from '@/config/env'
 import { PencilIcon } from '@heroicons/react/24/solid';
-import PageCard from "@/components/PageCard";
+import ActivityCard from "@/components/ActivityCard";
 
 
 export default function UserProfile() {
@@ -19,7 +19,7 @@ export default function UserProfile() {
     const [bio, setBio] = useState('')
     const [nickname, setNickname] = useState('')
     const [pagesData, setPagesData] = useState(null)
-    const [pageCards, setPageCards] = useState([])
+    const [activityCards, setActivityCards] = useState([])
     const [selectedTab, setSelectedTab] = useState('Publicaciones')
     const [favoritos, setFavoritos] = useState([])
 
@@ -82,7 +82,7 @@ export default function UserProfile() {
                 const data2 = await response2.json()
                 console.log(`Data (profile page): ${data2.data}`, data2.data)
                 setPagesData(data2.data)
-                setPageCards(data2.data)
+                setActivityCards(data2.data)
             }catch (error) {
                 console.error("Error al cargar las actividades del usuario: ", error)
             }
@@ -107,9 +107,9 @@ export default function UserProfile() {
         setSelectedTab(tab);
         if (tab === 'Favoritos' && pagesData) {
             const filteredPages = pagesData.filter(page => favoritos.includes(page._id))
-            setPageCards(filteredPages)
+            setActivityCards(filteredPages)
         } else if (pagesData) {
-            setPageCards(pagesData)
+            setActivityCards(pagesData)
         }
     };
 
@@ -118,9 +118,9 @@ export default function UserProfile() {
         case 'Publicaciones':
             tabContent = (
                 <div className="custom-grid-itemActividad">
-                    {pageCards.map(page => (
+                    {activityCards.map(page => (
                         <div key={page._id} className="custom-page-card">
-                            <PageCard
+                            <ActivityCard
                                 page={page}
                                 userId=''
                                 userName=''
@@ -137,9 +137,9 @@ export default function UserProfile() {
         case 'Actividades':
             tabContent = (
                 <div className="custom-grid-itemActividad">
-                    {pageCards.map(page => (
+                    {activityCards.map(page => (
                         <div key={page._id} className="custom-page-card">
-                            <PageCard
+                            <ActivityCard
                                 page={page}
                                 userId=''
                                 userName=''
@@ -153,9 +153,9 @@ export default function UserProfile() {
         case 'Favoritos':
             tabContent = (
                 <div className="custom-grid-itemActividad">
-                    {pageCards.map(page => (
+                    {activityCards.map(page => (
                         <div key={page._id} className="custom-page-card">
-                            <PageCard
+                            <ActivityCard
                                 page={page}
                                 userId=''
                                 userName=''

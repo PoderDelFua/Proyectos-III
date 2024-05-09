@@ -6,7 +6,7 @@ import { UsersIcon } from '@heroicons/react/24/solid'
 import { Fragment, useState } from 'react'
 import ActivityChat from './ActivityChat'
 
-function ActivityInfo({ isOpen, onClose, userId, page, foto, nickname, handleUnirse, users }) {
+function ActivityInfo({ isOpen, onClose, userId, activity, foto, nickname, handleUnirse, users }) {
   const [activeTab, setActiveTab] = useState('participants')
 
   const handleTabClick = (tab) => {
@@ -44,7 +44,7 @@ function ActivityInfo({ isOpen, onClose, userId, page, foto, nickname, handleUni
               <img src={foto} alt="Imagen de la actividad" className="h-56 w-full object-cover mb-4 rounded-lg" />
               <div className="flex justify-between items-center">
                 <div className="flex justify-between items-center mb-4">
-                  <h2 className="text-xl font-bold">{page.nombre}</h2>
+                  <h2 className="text-xl font-bold">{activity.nombre}</h2>
                 </div>
                 <button
                   onClick={handleUnirse}
@@ -59,14 +59,14 @@ function ActivityInfo({ isOpen, onClose, userId, page, foto, nickname, handleUni
                 <div className="flex flex-1 flex-col">
                   <div>
                     <p className="text-gray-600">Creado por @{nickname}</p>
-                    <h3 className="text-lg font-bold">{page.horarios}</h3>
+                    <h3 className="text-lg font-bold">{activity.horarios}</h3>
                   </div>
-                  <p className="text-gray-700 my-4">{page.descripcion}</p>
-                  {page.instrumento && (
+                  <p className="text-gray-700 my-4">{activity.descripcion}</p>
+                  {activity.instrumento && (
                     <div className="mb-4">
                       <h4 className="text-lg font-bold mb-2">Instrumentos</h4>
                       <ul className="list-disc list-inside">
-                        {page.instrumento.map((item, index) => (
+                        {activity.instrumento.map((item, index) => (
                           <li key={index}>{item}</li>
                         ))}
                       </ul>
@@ -117,7 +117,7 @@ function ActivityInfo({ isOpen, onClose, userId, page, foto, nickname, handleUni
                     )}
                     {activeTab === 'chat' && (
                       <div>
-                        <ActivityChat hiloId={page.hiloActividad} userId={userId} /> 
+                        <ActivityChat hiloId={activity.hiloActividad} userId={userId} /> 
                       </div>
                     )}
                   </div>

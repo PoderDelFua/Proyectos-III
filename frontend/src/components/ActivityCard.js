@@ -6,7 +6,7 @@ import {BACKEND_URI} from "@/config/env";
 import ActivityInfo from './ActivityInfo';
 import Confetti from 'react-confetti';
 import { useWindowSize } from 'react-use';
-export default function PageCard({ page, foto }) {
+export default function ActivityCard({ activity, foto }) {
     const router = useRouter();
     const token = localStorage.getItem('token')
     const [userData, setUserData] = useState(null)
@@ -34,9 +34,9 @@ export default function PageCard({ page, foto }) {
                 console.log("Buscando datos del usuario...")
                 const data = await response.json()
                 setUserData(data.data)
-                setFavorite(data.data.favoritos.includes(page._id));
+                setFavorite(data.data.favoritos.includes(activity._id));
 
-                const response2 = await fetch(`${BACKEND_URI}/usuario/getUsersData/${page.creadoPor}`, {
+                const response2 = await fetch(`${BACKEND_URI}/usuario/getUsersData/${activity.creadoPor}`, {
                     method: 'GET',
                     headers: {
                         'Authorization': `Bearer ${token}`,
@@ -48,7 +48,7 @@ export default function PageCard({ page, foto }) {
                 const data2 = await response2.json()
                 setCreatorData(data2.data)
 
-                const participantsIds = page.usuarios
+                const participantsIds = activity.usuarios
                 const participantsPromises = participantsIds.map(async (id) => {
                     const response3 = await fetch(`${BACKEND_URI}/usuario/getUsersData/${id._id}`, {
                         method: 'GET',
@@ -83,7 +83,7 @@ export default function PageCard({ page, foto }) {
                 try {
                     const data = userData
                     //Comprobamos si el usuario ya está unido a la actividad
-                    if (data.actividades.includes(page._id)) {
+                    if (data.actividades.includes(activity._id)) {
                         setNotificationMessage('Ya estás unido a esta actividad');
                         setShowNotification(true);
                         setTimeout(() => {
@@ -100,7 +100,7 @@ export default function PageCard({ page, foto }) {
                         },
                         body: JSON.stringify({
                             userId: data._id,
-                            pageId: page._id
+                            pageId: activity._id
                         })
                     })
                     if(!response2.ok){
@@ -114,14 +114,14 @@ export default function PageCard({ page, foto }) {
                         },
                             body: JSON.stringify({
                                 userId: data._id,
-                                pageId: page._id
+                                pageId: activity._id
                             })
                         })
                         if(!response3.ok){
                             throw new Error('No se pudo actualizar la información del usuario')
                         }
                         //Comprobamos si el usuario ya está unido a la actividad
-                        if (userData.actividades.includes(page._id)) {
+                        if (userData.actividades.includes(activity._id)) {
                             setNotificationMessage('Ya estás unido a esta actividad');
                             setShowNotification(true);
                             setTimeout(() => {
@@ -166,13 +166,13 @@ export default function PageCard({ page, foto }) {
                 try {
                     const data = userData
                     //Comprobamos si el usuario ya está unido a la actividad
-                    if (!data.favoritos.includes(page._id)) {
+                    if (!data.favoritos.includes(activity._id)) {
                         setFavorite(false)
                         return
                     }
                     console.log("Buscando datos del usuario...")
                     //Ahora que tenemos los datos del usuario, podemos hacer la llamada para unirlo a la actividad
-                    const response2 = await fetch(`${BACKEND_URI}/usuario/removeFavoritos/${page._id}`, {
+                    const response2 = await fetch(`${BACKEND_URI}/usuario/removeFavoritos/${activity._id}`, {
                         method: 'PATCH',
                         headers: {
                             'Content-Type': 'application/json',
@@ -180,7 +180,7 @@ export default function PageCard({ page, foto }) {
                         },
                         body: JSON.stringify({
                             userId: data._id,
-                            pageId: page._id
+                            pageId: activity._id
                         })
                     })
                     console.log(response2)
@@ -206,13 +206,13 @@ export default function PageCard({ page, foto }) {
                         try {
                             const data = userData
                             //Comprobamos si el usuario ya está unido a la actividad
-                            if (data.favoritos.includes(page._id)) {
+                            if (data.favoritos.includes(activity._id)) {
                                 //Le cambiamos el color al botón a blanco
                                 setFavorite(false)
                                 return
                             }
                             //Ahora que tenemos los datos del usuario, podemos hacer la llamada para unirlo a la actividad
-                            const response3 = await fetch(`${BACKEND_URI}/usuario/addFavoritos/${page._id}`, {
+                            const response3 = await fetch(`${BACKEND_URI}/usuario/addFavoritos/${activity._id}`, {
                                 method: 'PATCH',
                                 headers: {
                                     'Content-Type': 'application/json',
@@ -220,7 +220,7 @@ export default function PageCard({ page, foto }) {
                                 },
                                 body: JSON.stringify({
                                     userId: data._id,
-                                    pageId: page._id
+                                    pageId: activity._id
                                 })
                             })
                             if (!response3.ok) {
@@ -274,8 +274,8 @@ export default function PageCard({ page, foto }) {
 
             </div>
             <div className="max-w-sm p-6 flex flex-col justify-between">
-                <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">{page.nombre}</h5> {/* Cambiado a 'nombre' */}
-                <p className="mb-4 font-normal text-gray-700">{page.descripcion}</p> {/* Cambiado a 'descripcion' */}
+                <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">{activity.nombre}</h5> {/* Cambiado a 'nombre' */}
+                <p className="mb-4 font-normal text-gray-700">{activity.descripcion}</p> {/* Cambiado a 'descripcion' */}
                 <div className="flex items-center space-x-4">
                     <button onClick={openInfo} type="button"
                             className="cursor-pointer transition-all bg-indigo-600 text-white px-6 py-2 rounded-lg border-indigo-700 border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px] active:border-b-[2px] active:brightness-90 active:translate-y-[2px]">
@@ -285,7 +285,7 @@ export default function PageCard({ page, foto }) {
                         <ActivityInfo isOpen={isExpanded}
                                       onClose={closeInfo}
                                       userId={userData._id}
-                                      page={page}
+                                      activity={activity}
                                       foto={foto}
                                       nickname={creatorData ? creatorData.nickname : 'nickname'}
                                       handleUnirse={handleButton}

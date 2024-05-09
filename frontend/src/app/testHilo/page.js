@@ -1,6 +1,6 @@
 "use client"
 
-import PageCard from '@/components/PageCard'
+import ActivityCard from '@/components/ActivityCard'
 import Sidebar from '@/components/Sidebar';
 import Featured from '@/components/Featured';
 import CreateActivity from '@/components/CreateActivityForm';
@@ -14,7 +14,7 @@ export default function zzHilo() {
 
     const [activity, setActivity] = useState('any');
     const [searchTerm, setSearchTerm] = useState('');
-    const [pageCards, setPageCards] = useState([]);
+    const [activityCards, setActivityCards] = useState([]);
     const [pagesData, setPagesData] = useState(null);
     const [showPopup, setShowPopup] = useState(false); // Estado para controlar la visibilidad del popup
     const [showActInfo, setShowActInfo] = useState(false);
