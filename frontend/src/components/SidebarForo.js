@@ -6,9 +6,17 @@ function SidebarForo({ selectedTab = '' }) {
     const [activeItem, setActiveItem] = useState(selectedTab.toLowerCase());
     const [hilos, setHilos] = useState([]);
     const router = useRouter();
+    useEffect(() => {
+        const selectedTabLocal = localStorage.getItem('selectedTab'); // Obtener el título del hilo seleccionado desde el almacenamiento local
+        if (selectedTabLocal) {
+            setActiveItem(selectedTabLocal.toLowerCase()); // Establecer el hilo activo basado en el título almacenado
+        }
+    }, [selectedTab]);
+
 
     useEffect(() => {
         const fetchData = async () => {
+
             try {
                 const response = await fetch(`${BACKEND_URI}/hilo/hilosPublicos`, {
                     method: 'GET',
@@ -32,13 +40,16 @@ function SidebarForo({ selectedTab = '' }) {
         }
 
         fetchData();
-    }, []);
+    }, [selectedTab]);
 
     const handleItemClick = (hilo) => {
         setActiveItem(hilo.titulo.toLowerCase());
-        localStorage.setItem('currentHiloId', hilo._id); // Guardar el ID del hilo en localStorage
+        localStorage.setItem('currentHiloId', hilo._id);
+        localStorage.setItem('selectedTab', hilo.titulo); // Guardar el título del nuevo hilo seleccionado
         router.push(`/foro/${hilo._id}`); // Navegar a la página del hilo seleccionado
+        window.location.reload(); // Opcional: Recargar la página para refrescar el estado completamente
     };
+
 
     return (
         <div className="fixed inset-y-0 left-0 w-64 bg-primary-gray rounded-r-3xl z-50 overflow-hidden">

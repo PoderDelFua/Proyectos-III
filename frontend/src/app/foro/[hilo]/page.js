@@ -13,6 +13,7 @@ export default function HiloDetallePage() {
     const [newMessage, setNewMessage] = useState('')
     const [like, setLike] = useState(false);
     const [creadoPor, setCreadoPor] = useState('');
+    const [selectedTab, setSelectedTab] = useState('')
 
 
     useEffect(() => {
@@ -21,6 +22,12 @@ export default function HiloDetallePage() {
           setCreadoPor(userId);
       }
   }, []);
+    useEffect(() => {
+        if (hilo) {
+            localStorage.setItem('selectedTab', hilo.titulo); // Guardar el título del hilo actual en el almacenamiento local
+        }
+    }, [hilo]);
+
 
     useEffect(() => {
         const hiloId = localStorage.getItem('currentHiloId');
@@ -40,6 +47,7 @@ export default function HiloDetallePage() {
                 }
                 const hiloData = await hiloResponse.json();
                 console.log("Hilodata", hiloData);
+                setSelectedTab(hiloData.titulo)
                 setHilo(hiloData);
 
                 const mensajesResponse = await fetch(`${BACKEND_URI}/hilo/getMsgHilo/${hiloId}`, {
@@ -102,7 +110,7 @@ export default function HiloDetallePage() {
     return (
         <section className="flex flex-wrap justify-center">
             <div className="w-full md:w-1/6">
-                <SidebarForo selectedTab={hilo ? hilo.titulo : ''} />
+                <SidebarForo selectedTab={selectedTab} />
             </div>
 
             <div className="w-full md:w-2/3 mr-20 mb-4">
