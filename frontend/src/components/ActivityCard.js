@@ -40,7 +40,6 @@ export default function ActivityCard({ activity, foto }) {
                 const data = await response.json()
                 setUserData(data.data)
                 setFavorite(data.data.favoritos.includes(activity._id))
-
                 const response2 = await fetch(`${BACKEND_URI}/usuario/getUsersData/${activity.creadoPor}`, {
                     method: 'GET',
                     headers: {
@@ -55,7 +54,7 @@ export default function ActivityCard({ activity, foto }) {
 
                 const participantsIds = activity.usuarios
                 const participantsPromises = participantsIds.map(async (id) => {
-                    const response3 = await fetch(`${BACKEND_URI}/usuario/getUsersData/${id._id}`, {
+                    const response3 = await fetch(`${BACKEND_URI}/usuario/getUsersData/${id}`, {
                         method: 'GET',
                         headers: {
                             'Authorization': `Bearer ${token}`,
