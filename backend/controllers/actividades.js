@@ -106,6 +106,15 @@ const getActividadesApuntado = async (req, res) => {
         handleHttpError(res, "ERROR_GET_ACTIVIDADES_APUNTADO");
     }
 }
+const getActividadesFav = async (req, res) => {
+    const arrayIdActividades = req.user.favoritos;
+    try {
+        const data = await actividadesModel.find({ _id: { $in: arrayIdActividades } });
+        res.send({ data });
+    } catch (error) {
+        handleHttpError(res, "ERROR_GET_ACTIVIDADES_FAV");
+    }
+}
 module.exports = {
     getItems,
     getItem,
@@ -115,5 +124,6 @@ module.exports = {
     createItem,
     deleteItem,
     getItemsByUser,
-    getActividadesApuntado
+    getActividadesApuntado,
+    getActividadesFav
 }

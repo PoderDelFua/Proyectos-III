@@ -1,7 +1,7 @@
 const express = require("express")
 const router = express.Router()
 const { authMiddleware } = require('../middleware/session')
-const { getItems, getItem, addUser, removeUser, updateItem, deleteItem, createItem,getItemsByUser, getActividadesApuntado} = require("../controllers/actividades")
+const { getItems, getItem, addUser, removeUser, updateItem, deleteItem, createItem,getItemsByUser, getActividadesApuntado, getActividadesFav} = require("../controllers/actividades")
 const { validatorActivity, validatorUpdateActivity, validatorUpdateUserActivity, validatorIdFormat} = require("../validators/auth")
 
 /**
@@ -92,6 +92,10 @@ router.get("/getActivityDataByUser/:id", authMiddleware, getItemsByUser)
  * 
  */
 router.get("/getActividadesApuntado/", authMiddleware, getActividadesApuntado)
+
+
+router.get("/getActividadesFav/", authMiddleware, getActividadesFav)
+
 /**
  * @openapi
  * /api/actividades/addUserToActivity:

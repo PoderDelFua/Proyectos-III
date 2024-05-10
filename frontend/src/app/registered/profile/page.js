@@ -8,6 +8,7 @@ import Link from 'next/link'
 import {BACKEND_URI} from '@/config/env'
 import { PencilIcon } from '@heroicons/react/24/solid';
 import ActivityCard from "@/components/ActivityCard";
+import { set } from 'js-cookie'
 
 
 export default function UserProfile() {
@@ -22,6 +23,9 @@ export default function UserProfile() {
     const [activityCards, setActivityCards] = useState([])
     const [selectedTab, setSelectedTab] = useState('Publicaciones')
     const [favoritos, setFavoritos] = useState([])
+
+    const [actividadesFav, setActividadesFav] = useState([]);
+    const [actividadesApuntado, setActividadesApuntado] = useState([]);
 
     let setParametrosData = {
         nombre: '',
@@ -97,20 +101,92 @@ export default function UserProfile() {
             setBio(userData.bio)
             setNickname(userData.nickname)
             setFavoritos(userData.favoritos)
+            fetchActividadesUserApuntado()
+            fetchActividadesUserFav()
         }
     }, [userData])
+    
     if (!userData) {
         return <div>Cargando...</div>
     }
 
+
+    const fetchActividadesUserApuntado = async () => {
+        const token = localStorage.getItem('token')
+
+        if (!token) {
+            router.push('/login')
+            return
+        }
+        try{
+            const response = await fetch(`${BACKEND_URI}/actividades/getActividadesApuntado`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                },
+            });
+            //Si la respuesta no es correcta, se lanza un error.
+            if (!response.ok) {
+                localStorage.removeItem('token')
+                router.push('/login')
+            }
+            //console.log("RESPUESTA",    response)
+            const data = await response.json();
+
+            setActividadesApuntado(data.data)
+
+            return data.data;
+        }catch(error){
+
+            console.error("Error al cargar las actividades apuntado: ", error)
+        }
+    };
+
+    const fetchActividadesUserFav = async () => {
+        const token = localStorage.getItem('token')
+
+        if (!token) {
+            router.push('/login')
+            return
+        }
+        try{
+            const response = await fetch(`${BACKEND_URI}/actividades/getActividadesFav`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                },
+            });
+            //Si la respuesta no es correcta, se lanza un error.
+            if (!response.ok) {
+                localStorage.removeItem('token')
+                router.push('/login')
+            }
+            //console.log("RESPUESTA",    response)
+            const data = await response.json();
+
+            setActividadesFav(data.data)
+
+            return data.data;
+        }catch(error){
+
+            console.error("Error al cargar las actividades fav: ", error)
+        }
+    };
+
     const handleTabChange = (tab) => {
         setSelectedTab(tab);
         if (tab === 'Favoritos' && pagesData) {
-            const filteredPages = pagesData.filter(page => favoritos.includes(page._id))
+            const filteredPages = actividadesFav
+            //const filteredPages = pagesData.filter(page => favoritos.includes(page._id))
             setActivityCards(filteredPages)
-        } else if (pagesData) {
+        } else if (tab === 'Actividades' && pagesData) {
+            const activApuntado = actividadesApuntado
+            setActivityCards(activApuntado)
+        } else if( tab === 'Publicaciones' && pagesData){
+            
+        } else if(pagesData){
             setActivityCards(pagesData)
-        }
+        }        
     };
 
     let tabContent;
