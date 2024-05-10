@@ -52,11 +52,11 @@ function SidebarForo({ selectedTab = '' }) {
 
 
     return (
-        <div className="fixed inset-y-0 left-0 w-64 bg-primary-gray rounded-r-3xl z-50 overflow-hidden">
+        <div className="fixed inset-y-0 left-0 w-64 rounded-r-3xl z-50 overflow-hidden" style={{ backgroundImage: "url('/fondo-sidebar.png')" }}>
             <div className="flex flex-col h-full">
                 <nav className="flex-1 pl-4 py-4 space-y-4 overflow-y-auto">
-                    <h2 className="text-2xl font-bold">Foro</h2>
-                    <h2 className="text-xl font-bold">Temas</h2>
+                    <h2 className="text-2xl font-bold text-white">Foro</h2>
+                    <h2 className="text-xl font-bold text-white">Temas</h2>
                     {hilos.map((hilo) => (
                         <div
                             key={hilo.titulo}

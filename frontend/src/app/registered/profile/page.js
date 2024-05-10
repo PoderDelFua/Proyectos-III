@@ -121,7 +121,7 @@ export default function UserProfile() {
                     {activityCards.map(page => (
                         <div key={page._id} className="custom-page-card">
                             <ActivityCard
-                                page={page}
+                                activity={page}
                                 userId=''
                                 userName=''
                                 foto='../bg.jpg'
@@ -140,7 +140,7 @@ export default function UserProfile() {
                     {activityCards.map(page => (
                         <div key={page._id} className="custom-page-card">
                             <ActivityCard
-                                page={page}
+                                activity={page}
                                 userId=''
                                 userName=''
                                 foto='../bg.jpg'
@@ -156,7 +156,7 @@ export default function UserProfile() {
                     {activityCards.map(page => (
                         <div key={page._id} className="custom-page-card">
                             <ActivityCard
-                                page={page}
+                                activity={page}
                                 userId=''
                                 userName=''
                                 foto='../bg.jpg'
