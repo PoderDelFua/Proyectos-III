@@ -74,7 +74,7 @@ export default function PageForo() {
                                     <h3 className="text-lg mt-4 truncate">{hilo.descripcion}</h3>
                                 </div>
                             </div>
-                            <p className="absolute bottom-0 right-0 mb-2 mt-2 mr-10 cursor-pointer">3</p>
+                            <p className="absolute bottom-0 right-0 mb-2 mt-2 mr-10 cursor-pointer">-1</p>
                             <button
                                 onClick={() => setLike(!like)}
                                 className="absolute bottom-0 right-0 mb-2 mt-2 mr-2 cursor-pointer">
@@ -84,7 +84,7 @@ export default function PageForo() {
                                         d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/>
                                 </svg>
                             </button>
-                            <p className="absolute bottom-0 right-0 mb-2 mt-2 mr-24 cursor-pointer">1</p>
+                            <p className="absolute bottom-0 right-0 mb-2 mt-2 mr-24 cursor-pointer">{hilo.postCount}</p>
                             <button
                                 onClick={() => setLike(!like)}
                                 className="absolute bottom-0 right-0 mb-2 mt-2 mr-16 cursor-pointer">

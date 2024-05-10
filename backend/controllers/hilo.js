@@ -17,9 +17,6 @@ const getItemsPublic = async (req, res) => {
     try {
         const data = await hiloModel.find({ privado: false })
             .populate('creadorId', 'nickname');
-
-        console.log("Datos obtenidos:", data);  // Log para ver qué datos se obtienen
-
         if (data.length === 0) {
             console.log("No se encontraron datos");
             res.status(404).send({ message: "No se encontraron hilos públicos" });
@@ -51,7 +48,7 @@ const getItem = async (req, res) => {
 const getMsgHilo = async (req, res) => {
     try{
         const {id} = matchedData(req)
-        console.log("ID", id)
+        //console.log("ID", id)
         const data = await mensajesModel.find().where('hiloId').equals(id).sort({updatedAt: -1})
         .populate('autorMensaje', 'nombre  ')
         .populate('autorMensaje', ' nickname')

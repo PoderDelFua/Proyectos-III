@@ -1,5 +1,6 @@
 
-const { mensajesModel, usuarioModel } = require('../models');
+const { mensajesModel, usuarioModel, hiloModel } = require('../models');
+const hilo = require('../models/nosql/hilo');
 const { handleHttpError } = require('../utils/handleError');
 const { matchedData } = require('express-validator');
 
@@ -110,32 +111,6 @@ const getDistinctGrupos = async (req, res) => {
     }
 }
 
-const createItem = async (req, res) => {
-    try {
-        body = matchedData(req)
-        //console.log(body)
-        const data = await (await mensajesModel.create(body))
-        
-        const populatedData = await mensajesModel.populate(data, [
-            { path: 'autorMensaje', select: 'nombre  ' },
-            {
-            path: 'padreMensaje',
-            select: 'mensaje ',
-            populate: {
-                path: 'autorMensaje',
-                select: 'nombre  '
-            }
-            },
-            { path: 'mediaId', select: 'url filename  ' },
-        ])
-
-
-        res.send(populatedData)
-    }catch(err){
-        console.log(err)
-        handleHttpError(res, 'ERROR_CREATE_ITEMS')
-    }
-}
 
 const updateItem = async (req, res) => {
     try{
@@ -161,6 +136,38 @@ const deleteItem = async (req, res) => {
     }
 }
 
+const createItem = async (req, res) => {
+    console.log("Create Item")
+    try {
+        body = matchedData(req)
+        //console.log(body)
+        const data = await mensajesModel.create(body)
+        const hiloId = data.hiloId
+        // console.log("DATA: ", data)
+        // console.log("HiloId: ", hiloId)
+        const populatedData = await mensajesModel.populate(data, [
+            { path: 'autorMensaje', select: 'nombre  ' },
+            {
+            path: 'padreMensaje',
+            select: 'mensaje ',
+            populate: {
+                path: 'autorMensaje',
+                select: 'nombre  '
+            }
+            },
+            { path: 'mediaId', select: 'url filename  ' },
+        ])
+        
+        await hiloModel.updateOne({ _id:hiloId }, { $inc: { postCount: 1 } })
+        // const dataHilo = await hiloModel.findById(hiloId)
+        // console.log("DATA HILO: ", dataHilo)
+
+        res.send(populatedData)
+    }catch(err){
+        console.log(err)
+        handleHttpError(res, 'ERROR_CREATE_ITEMS')
+    }
+}
 
 
 const postMensajeUsuarioTok = async (req, res) => {
