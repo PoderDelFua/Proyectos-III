@@ -129,7 +129,7 @@ const Calendario = () => {
     const espaciosVacios = new Array(primerDiaDelMes).fill(null);
 
     return (
-        <div className='bg-red-300 flex flex-grow flex-col'>
+        <div className=' flex flex-grow flex-col'>
             <div className='mb-3 flex justify-between items-center p-3'>
                 <button onClick={mesAnterior} className='mr-2'>
                     ANTERIOR
