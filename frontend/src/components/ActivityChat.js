@@ -76,7 +76,7 @@ function ActivityChat({ hiloId, userId }) {
   }
 
   return (
-    <div className="flex flex-col h-60">
+    <div className="flex flex-grow flex-col h-60">
       <div ref={chatContainerRef} className="flex-grow overflow-y-auto p-4">
         {chatData.map((message, index) => {
           const prevMessage = index > 0 ? chatData[index - 1] : null
@@ -97,7 +97,7 @@ function ActivityChat({ hiloId, userId }) {
               {!showNickname && isCurrentUser && (
                 <div className="w-8 h-8 bg-transparent rounded-full ml-2 order-2"></div>
               )}
-              <div className={`rounded-lg p-2 max-w-xs ${showNickname && isCurrentUser && 'rounded-tr-none'} ${showNickname && !isCurrentUser && 'rounded-tl-none'} ${isCurrentUser ? 'bg-gray-300 order-1' : 'bg-gray-200'}`}>
+              <div className={`rounded-lg p-2 max-w-xs ${showNickname && isCurrentUser && 'rounded-tr-none'} ${showNickname && !isCurrentUser && 'rounded-tl-none'} ${isCurrentUser ? 'bg-dim-blue order-1' : 'bg-white'}`}>
                 {showNickname && (
                   <div className="font-semibold">{isCurrentUser ? 'Tú' : `@${message.autorMensaje.nickname}` || 'Unknown User'}</div>
                 )}
@@ -107,20 +107,22 @@ function ActivityChat({ hiloId, userId }) {
           )
         })}
       </div>
-      <div className="bg-white p-4 flex items-center">
+      <div className="bg-transparent p-4 flex items-center justify-between">
         <input
           type="text"
-          className="w-full border border-gray-300 rounded px-4 py-2"
+          className="w-3/4 border border-gray-300 rounded-full px-4 py-2"
           placeholder="Escribe un mensaje..."
           value={newMessage}
           onChange={(e) => setNewMessage(e.target.value)}
         />
-        <button
-          className="ml-5 focus:outline-none"
-          onClick={handleSendMessage}
-        >
-          <PaperAirplaneIcon className="h-10 w-10 fill-gray-600 hover:fill-gray-800 cursor-pointer transition-colors duration-200" />
-        </button>
+        <div className="w-12 h-12 bg-white rounded-full ml-5 order-2">
+          <button
+            className="h-full w-full focus:outline-none"
+            onClick={handleSendMessage}
+          >
+            <PaperAirplaneIcon className="pl-1.5 py-1.5 h-full w-full fill-blue hover:fill-dark-blue cursor-pointer transition-colors duration-200" />
+          </button>
+        </div>
       </div>
     </div>
   )

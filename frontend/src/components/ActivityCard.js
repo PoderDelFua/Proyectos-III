@@ -21,6 +21,7 @@ export default function ActivityCard({ activity, foto }) {
     const [notificationMessage, setNotificationMessage] = useState('')
     const [isExpanded, setIsExpanded] = useState(false)
     const [favorite, setFavorite] = useState(false)
+    const [unido, setUnido] = useState(false)
     const [confetti, setConfetti] = useState(false)
     const { width, height } = useWindowSize()
 
@@ -40,6 +41,7 @@ export default function ActivityCard({ activity, foto }) {
                 const data = await response.json()
                 setUserData(data.data)
                 setFavorite(data.data.favoritos.includes(activity._id))
+                setUnido(data.data.actividades.includes(activity._id))
                 const response2 = await fetch(`${BACKEND_URI}/usuario/getUsersData/${activity.creadoPor}`, {
                     method: 'GET',
                     headers: {
@@ -136,6 +138,7 @@ export default function ActivityCard({ activity, foto }) {
 
 
                         // Actualiza el estado para mostrar la notificación
+                        setUnido(true)
                         setNotificationMessage('Usuario unido a la actividad ✔')
                         setShowNotification(true)
                         setTimeout(() => {
@@ -290,12 +293,13 @@ export default function ActivityCard({ activity, foto }) {
                                 <button
                                     onClick={(e) => {
                                         e.stopPropagation()
+                                        if (unido) return
                                         handleButton()
                                     }}
                                     type="button"
-                                    className="cursor-pointer transition-all bg-blue text-white px-6 py-2 rounded-lg border-dark-blue border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px] active:border-b-[2px] active:brightness-90 active:translate-y-[2px]"
+                                    className={`cursor-pointer transition-all ${!unido && 'bg-blue border-dark-blue'} ${unido && 'bg-dark-blue border-black'} text-white px-6 py-2 rounded-lg border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px] active:border-b-[2px] active:brightness-90 active:translate-y-[2px]`}
                                 >
-                                    Unirse
+                                    {unido ? 'Unido✔' : 'Unirse'}
                                 </button>
                             )}
                         </div>
@@ -311,6 +315,9 @@ export default function ActivityCard({ activity, foto }) {
                     foto={foto}
                     nickname={creatorData ? creatorData.nickname : 'nickname'}
                     handleUnirse={handleButton}
+                    unido={unido}
+                    handleFavorite={buttonFavorito}
+                    favorite={favorite}
                     users={participants}
                 />
             )}

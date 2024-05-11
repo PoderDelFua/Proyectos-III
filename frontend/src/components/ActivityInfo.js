@@ -2,11 +2,13 @@
 
 import React from 'react'
 import { Dialog, Transition } from '@headlessui/react'
-import { UsersIcon } from '@heroicons/react/24/solid'
+import { UsersIcon, BookmarkIcon as BookmarkIconSolid } from '@heroicons/react/24/solid'
+import { BookmarkIcon as BookmarkIconOutline } from '@heroicons/react/24/outline'
 import { Fragment, useState } from 'react'
 import ActivityChat from './ActivityChat'
 
-function ActivityInfo({ isOpen, onClose, userId, activity, foto, nickname, handleUnirse, users }) {
+function ActivityInfo({ isOpen, onClose, userId, activity, foto, 
+                        nickname, handleUnirse, unido, handleFavorite, favorite, users }) {
   const [activeTab, setActiveTab] = useState('participants')
 
   const handleTabClick = (tab) => {
@@ -40,19 +42,38 @@ function ActivityInfo({ isOpen, onClose, userId, activity, foto, nickname, handl
             leaveFrom="opacity-100 translate-y-0 sm:scale-100"
             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
-            <div className="inline-block align-bottom bg-primary-gray rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-3xl sm:w-full sm:p-6">
+            <div className="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-3xl sm:w-full sm:p-6">
               <img src={foto} alt="Imagen de la actividad" className="h-56 w-full object-cover mb-4 rounded-lg" />
               <div className="flex justify-between items-center">
                 <div className="flex justify-between items-center mb-4">
                   <h2 className="text-xl font-bold">{activity.nombre}</h2>
                 </div>
-                <button
-                  onClick={handleUnirse}
-                  type="button"
-                  className="cursor-pointer transition-all bg-indigo-600 text-white px-6 py-2 rounded-lg border-indigo-700 border-b-[4px] hover:brightness-110 active:border-b-[2px] active:brightness-90 active:translate-y-[2px]"
-                >
-                  Unirse
-                </button>
+                <div className="flex items-center">
+                  <button
+                      onClick={(e) => {
+                          e.stopPropagation()
+                          handleFavorite()
+                      }}
+                      className="cursor-pointer bg-light-blue rounded-lg p-2 mr-4"
+                  >
+                      {favorite ? (
+                          <BookmarkIconSolid className="h-7 w-7 text-blue" />
+                      ) : (
+                          <BookmarkIconOutline className="h-7 w-7 text-blue" />
+                      )}
+                  </button>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      if (unido) return
+                      handleUnirse()
+                    }}
+                    type="button"
+                    className={`cursor-pointer transition-all ${!unido && 'bg-blue border-dark-blue'} ${unido && 'bg-dark-blue border-black'} text-white px-6 py-2 rounded-lg border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px] active:border-b-[2px] active:brightness-90 active:translate-y-[2px]`}
+                  >
+                    {unido ? 'Unido✔' : 'Unirse'}
+                  </button>
+                </div>
               </div>
 
               <div className="flex mb-4">
@@ -75,7 +96,7 @@ function ActivityInfo({ isOpen, onClose, userId, activity, foto, nickname, handl
                 </div>
 
                 <div className="flex flex-1">
-                  <div className="w-full bg-white rounded-lg shadow p-4 ml-4 mt-2">
+                  <div className="w-full bg-light-blue rounded-lg shadow p-4 ml-4 mt-2 flex flex-col">
                     <div className="flex justify-between items-center mb-4">
                       <div className="flex space-x-4">
                         <button
@@ -86,7 +107,7 @@ function ActivityInfo({ isOpen, onClose, userId, activity, foto, nickname, handl
                         >
                           Participantes
                           {activeTab === 'participants' && (
-                            <div className="h-1 w-full bg-black rounded-sm transition-all duration-300" />
+                            <div className="h-0.5 w-full bg-black rounded-sm transition-all duration-300" />
                           )}
                         </button>
                         <button
@@ -97,13 +118,13 @@ function ActivityInfo({ isOpen, onClose, userId, activity, foto, nickname, handl
                         >
                           Chat
                           {activeTab === 'chat' && (
-                            <div className="h-1 w-full bg-black rounded-sm transition-all duration-300" />
+                            <div className="h-0.5 w-full bg-black rounded-sm transition-all duration-300" />
                           )}
                         </button>
                       </div>
                       <div className="flex items-center">
                         <span>{users.length}</span>
-                        <UsersIcon className="h-6 w-6 mr-1" />
+                        <UsersIcon className="h-6 w-6 mr-1 fill-blue" />
                       </div>
                     </div>
                     {activeTab === 'participants' && (
@@ -116,9 +137,7 @@ function ActivityInfo({ isOpen, onClose, userId, activity, foto, nickname, handl
                       </ul>
                     )}
                     {activeTab === 'chat' && (
-                      <div>
-                        <ActivityChat hiloId={activity.hiloActividad} userId={userId} /> 
-                      </div>
+                      <ActivityChat hiloId={activity.hiloActividad} userId={userId} />
                     )}
                   </div>
                 </div>
