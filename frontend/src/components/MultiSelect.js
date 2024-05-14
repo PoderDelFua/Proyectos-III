@@ -59,17 +59,17 @@ export default function MultiSelect({
     }
 
     return (
-        <label className="w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600 :ring-indigo-600 custom-rectangulo">
+        <label className="w-full border border-gray-300 py-2 rounded mt-2 outline-none focus:ring-indigo-600 :ring-indigo-600 custom-rectangulo">
             <input type="checkbox" className="hidden peer" />
     
-            <div className="cursor-pointer after:content-['▼'] after:text-xs after:ml-1 after:inline-flex after:items-center peer-checked:after:-rotate-180 after:transition-transform inline-flex rounded px-5 py-2">
+            <div className="cursor-pointer after:content-['▼'] after:text-xs after:inline-flex after:items-center peer-checked:after:-rotate-180 after:transition-transform inline-flex rounded px-3 py-2">
                 {prompt}
-                {selectedOptions.length > 0 && (
+                {/* {selectedOptions.length > 0 && (
                     <span className="ml-1 text-blue-500">{`(${selectedOptions.length} selected)`}</span>
-                )}
+                )} */}
             </div>
     
-            <div className="absolute bg-white border transition-opacity opacity-0 pointer-events-none peer-checked:opacity-100 peer-checked:pointer-events-auto w-full max-h-60 max-w-60 overflow-y-scroll" style={{ zIndex: 100 }}>
+            <div className="absolute bg-white border transition-opacity opacity-0 pointer-events-none peer-checked:opacity-100 peer-checked:pointer-events-auto w-full max-h-60 max-w-60 overflow-y-scroll my-2 py-2" style={{ zIndex: 100 }}>
                 {(
                     <ul>
                         <li>
@@ -78,7 +78,7 @@ export default function MultiSelect({
                                 disabled={!isSelectAllEnabled}
                                 className="w-full text-left px-2 py-1 text-blue-600 disabled:opacity-50"
                             >
-                                {"Select All"}
+                                {"Seleccionar todos"}
                             </button>
                         </li>
                         <li>
@@ -87,7 +87,7 @@ export default function MultiSelect({
                                 disabled={!isClearSelectionEnabled}
                                 className="w-full text-left px-2 py-1 text-blue-600 disabled:opacity-50"
                             >
-                                {"Clear selection"}
+                                {"Eliminar todos"}
                             </button>
                         </li>
                     </ul>
@@ -113,6 +113,23 @@ export default function MultiSelect({
                     })}
                 </ul>
             </div>
+
+            {/* <div className="flex flex-wrap">
+                {selectedOptions.map((option) => (
+                    <div key={option} className="flex items-center ml-2">
+                        <span className="mr-1">{option}</span>
+                        <button
+                            type="button"
+                            className="text-red-500 hover:text-red-700 focus:outline-none"
+                            onClick={() => handleRemoveOption(option)}
+                        >
+                            X
+                        </button>
+                    </div>
+                ))}
+            </div> */}
         </label>
     )
 }
+
+

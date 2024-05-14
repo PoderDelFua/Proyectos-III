@@ -12,6 +12,9 @@ import {DesktopTimePicker} from "@mui/x-date-pickers/DesktopTimePicker";
 import {DateTimePicker} from "@mui/x-date-pickers/DateTimePicker";
 import {DesktopDatePicker} from "@mui/x-date-pickers/DesktopDatePicker";
 
+import { XMarkIcon } from '@heroicons/react/24/outline';
+import MultiSelect2 from '@/components/MultiSelect2'
+
 
 export default function UpdateUser() {
     const router = useRouter()
@@ -21,7 +24,6 @@ export default function UpdateUser() {
     const [gustoMusical, setGustoMusical] = useState([])
     const [bio, setBio] = useState('')
     const [nickname, setNickname] = useState('')
-
 
     useEffect(() => {
         const token = localStorage.getItem('token')
@@ -58,6 +60,7 @@ export default function UpdateUser() {
 
         fetchData()
     }, [])
+    
     useEffect(() => {
         if (userData) {
             setNombre(userData.nombre)
@@ -67,6 +70,7 @@ export default function UpdateUser() {
             setNickname(userData.nickname)
         }
     }, [userData])
+
     if (!userData) {
         return <div>Cargando...</div>
     }
@@ -114,44 +118,79 @@ export default function UpdateUser() {
 
     return (
         <section>
+            <title>hola</title>
             <Sidebar selectedTab="profile"/>
-            <div className="min-h-screen bg-white flex justify-center">
-                <div className="py-6 px-8 my-20 bg-light-gray rounded-3xl">
+            <div className="relative">
+                <img src="/fondo-login.png" alt="Background" className="w-full h-48 object-cover" />
+                <div className="absolute pl-20 top-32 left-8"></div>
+            </div>
+            {/* <div className="flex flex-col">
+                <hr className="border-[1.7px] border-black my-10" /> pr-[500px]
+            </div> */}
+            <div className="min-h-screen bg-blue flex justify-end">
+                <div className="w-full xl:w-5/6 lg:w-9/12 md:w-9/12 sm:w-screen py-6 px-8 my-0 bg-white rounded-3xl">
                     <form onSubmit={handleSubmit}>
-                        <div className="mb-6">
-                            <label htmlFor="nombre" className="block text-gray-800 font-bold">Nombre completo:</label>
-                            <input value={nombre} onChange={(e) => setNombre(e.target.value)} type="text" name="nombre"
-                                   id="nombre" placeholder="John Doe"
-                                   className="w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600"/>
-                        </div>
-                        <div className="mb-6">
-                            <MultiSelect
-                                formFieldName={"instrumento"}
-                                options={instrumentoOptions}
-                                onChange={(selectedOptions) => setInstrumento(selectedOptions.map(option => ({
-                                    nombre: option,
-                                    nivel: []
-                                })))}
-                                prompt="Seleccione uno o mas instrumentos"/>
+                        <hr className="border-[1.7px] border-black my-2" />
+                        <div className="flex items-center">
+                            <label for="nombre" class="block text-gray-800 font-bold mr-[169px]">Nombre</label>
+                            <input value={nombre} onChange={(e) => setNombre(e.target.value)} type="text" name="nombre" id="nombre" placeholder="John Doe" className="w-full border border-white py-2 pl-3 rounded outline-none focus:border-indigo-600 focus:ring-indigo-600"/>
                         </div>
 
-                        <div className="mb-6">
-                            <MultiSelect
-                                formFieldName={"gustoMusical"}
-                                options={generosOptions}
-                                onChange={(selectedOptions) => setGustoMusical(selectedOptions)}
-                                prompt="Seleccione los géneros musicales que te interesen"/>
+                        <hr className="border-[1.7px] border-black my-2" />
+                        <div className="flex items-center">
+                            <label htmlFor="nickname" className="block text-gray-800 font-bold mr-[153px]">Nickname</label>
+                            <input value={nickname} onChange={(e) => setNickname(e.target.value)} type="text"
+                                   name="nickname" id="nickname" placeholder="Tu apodo"
+                                   className="w-full border border-white py-2 pl-3 rounded outline-none focus:border-indigo-600 focus:ring-indigo-600"/>
                         </div>
 
-                        <div className="mb-6">
-                            <label htmlFor="bio" className="block text-gray-800 font-bold">Biografía:</label>
-                            <textarea value={bio} onChange={(e) => setBio(e.target.value)} name="bio" id="bio" rows="3"
-                                      placeholder="Cuéntanos algo sobre ti..."
-                                      className="w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600"></textarea>
+                        <hr className="border-[1.7px] border-black my-2" />             
+                        <div class="flex items-center">
+                            <label for="bio" class="block text-gray-800 font-bold mr-[137px] self-start mt-2">Biografía</label>
+                            <textarea value={bio} onChange={(e) => setBio(e.target.value)} name="bio" id="bio" rows="3" placeholder="Cuéntanos algo sobre ti..." class="w-full ml-6 border border-white py-2 pl-3 rounded outline-none focus:border-indigo-600 focus:ring-indigo-600"></textarea>
+                        </div>
+                        <hr className="border-[1.7px] border-black my-2" />
+                        <div class="flex items-center">
+                            <label for="password" class="block text-gray-800 font-bold mr-[140px]">Contraseña</label>
+                            <input value={nombre} onChange={(e) => setNombre(e.target.value)} type="text" name="nombre" id="nombre" placeholder="John Doe" class="w-full border border-white py-2 pl-3 rounded outline-none focus:border-indigo-600 focus:ring-indigo-600"/>
+                        </div>
+                        <hr className="border-[1.7px] border-black my-2" />
+                        <div className="flex items-center">
+                            <label htmlFor="instrumentos" className="block text-gray-800 font-bold mr-[110px] my-6">Instrumentos</label>
+                            <div className="text-gray-800 grid grid-cols-2 gap-x-4 gap-y-4 pl-4">
+                                {instrumento.map((inst, index) => (
+                                <div key={inst.nombre} className="flex items-center justify-between bg-blue p-1 rounded-lg text-white">
+                                    <span>{inst.nombre}</span>
+                                    <button
+                                        type="button"
+                                        className="text-white hover:text-red-700 ml-2 focus:outline-none flex-shrink-0"
+                                        onClick={() => setInstrumento(prev => prev.filter((_, i) => i !== index))}
+                                    >
+                                        <XMarkIcon className="h-4 w-4" />
+                                    </button>
+                                </div>
+                            ))}
+
+                            </div>
+                            <div className="ml-auto">
+                                <MultiSelect2 
+                                    formFieldName={"instrumento"}
+                                    options={instrumentoOptions}
+                                    onChange={(selectedOptions) => setInstrumento(selectedOptions.map(option => ({
+                                        nombre: option,
+                                        nivel: []
+                                    })))}
+                                    prompt=""
+                                    className=""/>
+                            </div>
                         </div>
 
+                        <hr className="border-[1.7px] border-black my-2" />
+                        <div className="flex items-center">
+                        <label htmlFor="nivel" className="block text-gray-800 font-bold mr-[188px] my-6">Nivel</label>
+                        <div className="text-gray-800 grid grid-cols-2 gap-x-4 gap-y-2 pl-1">
                         {instrumento.map((inst, index) => (
-                            <div key={inst.nombre} className="mb-6">
+                            <div key={inst.nombre} className="">
                                 <MultiSelect
                                     formFieldName={`nivel_${inst.nombre}`}
                                     options={nivelOptions}
@@ -165,23 +204,33 @@ export default function UpdateUser() {
                                         });
                                         setInstrumento(newInstrumento);
                                     }}
-                                    prompt={`Seleccione el nivel para ${inst.nombre}`}
+                                    prompt={`${inst.nombre}`}
                                 />
                             </div>
-                        ))
-                        }
-                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        ))}
+                        </div>
+                        </div>
+
+                        <hr className="border-[1.7px] border-black my-2" />
+                        <div className="flex items-center">
+                        <label htmlFor="genero" className="block text-gray-800 font-bold mr-[80px] my-4">Géneros musicales</label>
+                        <div>
+                            <MultiSelect
+                                formFieldName={"gustoMusical"}
+                                options={generosOptions}
+                                onChange={(selectedOptions) => setGustoMusical(selectedOptions)}
+                                prompt="Seleccionar"/>
+                        </div>
+                        </div>
+                        <hr className="border-[1.7px] border-black my-2" />
+                        {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DesktopDatePicker inputFormat="MM/DD/YYYY"/>
                             <DesktopTimePicker inputFormat="hh:mm A"/>
-                        </LocalizationProvider>
-                        <div className="mb-6">
-                            <label htmlFor="nickname" className="block text-gray-800 font-bold">Nickname:</label>
-                            <input value={nickname} onChange={(e) => setNickname(e.target.value)} type="text"
-                                   name="nickname" id="nickname" placeholder="Tu apodo"
-                                   className="w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600"/>
-                        </div>
+                        </LocalizationProvider> */}
+                        
+
                         <button type="submit"
-                                className="cursor-pointer py-2 px-4 block mt-6 bg-indigo-500 text-white font-bold w-full text-center rounded">Actualizar
+                                className="cursor-pointer py-2 px-4 block mt-6 bg-indigo-500 text-white font-bold w-1/3 text-center rounded ">Actualizar
                             datos
                         </button>
                     </form>
@@ -190,4 +239,3 @@ export default function UpdateUser() {
         </section>
     )
 }
-

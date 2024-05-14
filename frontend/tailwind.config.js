@@ -16,10 +16,11 @@ module.exports = {
         "primary-gray": "#D9D9D9", 
         "light-gray": "#E2E2E2",
         "blue":"#0065ef",
-        "light-blue":"#64ABFF",
+        // "light-blue":"#64ABFF",
         "dark-blue":"#013b8a",
         "light-blue":"#DDEBFF",
         "dim-blue": "#64ABFF",
+        "soft-blue": "#ddebff",
 
         "sidebar-white":"#616364",
         "sidebar-dark-blue":"#002b65",
