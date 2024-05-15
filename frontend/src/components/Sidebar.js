@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from 'react';
-import { HomeIcon, UserIcon, Cog6ToothIcon, CalendarDaysIcon, Bars3Icon } from '@heroicons/react/24/solid';
+import { HomeIcon, UserIcon, Cog6ToothIcon, CalendarDaysIcon, Bars3Icon, ChatBubbleLeftRightIcon } from '@heroicons/react/24/solid';
 
 function Sidebar({ selectedTab = 'home' }) {
   const [activeItem, setActiveItem] = useState(selectedTab);
@@ -34,7 +34,7 @@ function Sidebar({ selectedTab = 'home' }) {
       <div className={`fixed inset-0 bg-black bg-opacity-50 z-40`} onClick={toggleSidebar}></div>
     )}
 
-    <div className={`fixed inset-y-0 bg-primary-gray rounded-r-3xl z-50 md:block transition-all duration-500 ${SidebarOpen ? 'left-0 w-64' : '-left-64 w-0'}`} style={{backgroundImage: "url('/fondo-sidebar.png')"}}>
+    <div className={`fixed inset-y-0 bg-primary-gray z-50 md:block transition-all duration-500 ${SidebarOpen ? 'left-0 w-64' : '-left-64 w-0'}`} style={{backgroundImage: "url('/fondo-sidebar.png')"}}>
       <div className="flex flex-col h-full">
         <div className="flex justify-center items-center pt-10 pb-2">
           <img src="/logoU.png" alt="Logo" className="h-28 w-28 rounded-full border-4 border-white  p-2" />
@@ -114,30 +114,30 @@ function Sidebar({ selectedTab = 'home' }) {
               </div>
             )}
           </div>
-          {/* <div className={`${activeItem !== 'settings' ? 'pr-10' : '' }`}>
-            {activeItem === 'settings' && (
+          <div className={`${activeItem !== 'foros' ? 'pr-10' : '' }`}>
+            {activeItem === 'foros' && (
               <div className="relative">
                 <div className="absolute bottom-0 right-0 h-5 w-5 bg-white"></div>
-                <div className="absolute bottom-0 right-0 h-5 w-5 bg-sidebar-dark-blue rounded-br-full"></div>
+                <div className="absolute bottom-0 right-0 h-5 w-5 bg-sidebar-light-blue rounded-br-full"></div>
               </div>
             )}
             <a
-              href="#"
-              onClick={() => handleItemClick('settings')}
+              href="/foro"
+              onClick={() => handleItemClick('foros')}
               className={`group flex items-center py-2 px-4 text-black  transition-all duration-300 ${
-                activeItem === 'settings' ? 'bg-white rounded-l-full' : 'text-white hover:bg-light-gray hover:text-blue rounded-full'
+                activeItem === 'foros' ? 'bg-white rounded-l-full' : 'text-white hover:bg-light-gray hover:text-blue rounded-full'
               }`}
             >
-              <Cog6ToothIcon className="mr-5 h-7 w-7" />
-              <span className="text-xl font-semibold">Ajustes</span>
+              <ChatBubbleLeftRightIcon className="mr-5 h-7 w-7" />
+              <span className="text-xl font-semibold">Foros</span>
             </a>
-            {activeItem === 'settings' && (
+            {activeItem === 'foros' && (
               <div className="relative">
                 <div className="absolute top-0 right-0 h-5 w-5 bg-white"></div>
                 <div className="absolute top-0 right-0 h-5 w-5 bg-sidebar-light-blue rounded-tr-full"></div>
               </div>
             )}
-          </div> */}
+          </div>
         </nav>
       </div>
     </div>
