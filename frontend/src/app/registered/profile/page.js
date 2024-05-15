@@ -26,6 +26,17 @@ export default function UserProfile() {
 
     const [actividadesFav, setActividadesFav] = useState([]);
     const [actividadesApuntado, setActividadesApuntado] = useState([]);
+    
+    const [hoveredTab, setHoveredTab] = useState(null);
+
+    const handleMouseEnter = (tab) => {
+        setHoveredTab(tab);
+    };
+
+    const handleMouseLeave = () => {
+        setHoveredTab(null);
+    };
+
 
     let setParametrosData = {
         nombre: '',
@@ -266,7 +277,8 @@ export default function UserProfile() {
 
                 <div className="px-8 py-6 pl-32 mt-16">
                     <Link href="/registered/modify"
-                          className="absolute top-48 right-4 mt-8 mr-8 px-4 py-2 bg-white text-gray-800 border border-gray-400 rounded-xl flex items-center space-x-2">
+                          className="absolute top-48 right-4 mt-8 mr-8 px-4 py-2 bg-white text-gray-800 border border-gray-400 rounded-xl flex items-center space-x-2 
+                          transition transform hover:border-indigo-600 hover:text-white hover:bg-blue active:bg-indigo-600">
                         <PencilIcon className="h-4 w-4"/>
                         <span>Editar perfil</span>
                     </Link>
@@ -278,17 +290,58 @@ export default function UserProfile() {
                         <span className="font-bold">Instrumentos:</span>
                         {instrumento.map((item, index) => (
                             <span key={index} className="ml-2">
-                                {item.nombre} ({item.nivel})
+                                {item.nombre} | Nivel{item.nivel}
                             </span>
                         ))}
                     </div>
                     
                     <div className="flex flex-wrap justify-between mt-8 mb-4">
-                        <button className={`text-2xl font-bold w-full sm:w-auto ${selectedTab == 'Publicaciones' ? 'border-b-2 border-black' : ''}`} onClick={() => handleTabChange('Publicaciones')}>Publicaciones</button>
-                        <button className={`text-2xl font-bold w-full sm:w-auto ${selectedTab == 'Respuestas' ? 'border-b-2 border-black' : ''}`} onClick={() => handleTabChange('Respuestas')}>Respuestas</button>
-                        <button className={`text-2xl font-bold w-full sm:w-auto ${selectedTab == 'Actividades' ? 'border-b-2 border-black' : ''}`} onClick={() => handleTabChange('Actividades')}>Actividades</button>
-                        <button className={`text-2xl font-bold w-full sm:w-auto mr-8 ${selectedTab == 'Favoritos' ? 'border-b-2 border-black' : ''}`} onClick={() => handleTabChange('Favoritos')}>Favoritos</button>
-                    </div>
+            <div className="relative">
+                <button 
+                    className={`text-2xl font-bold w-full sm:w-auto relative transition transform hover:text-black ${selectedTab === 'Publicaciones' ? 'border-b-2 border-black text-black' : 'text-zinc-500'}`} 
+                    onClick={() => handleTabChange('Publicaciones')}
+                    onMouseEnter={() => handleMouseEnter('Publicaciones')}
+                    onMouseLeave={handleMouseLeave}
+                >
+                    Publicaciones
+                    <div className={`absolute inset-x-0 h-1 bg-black origin-center transform transition-transform duration-300 ${hoveredTab === 'Publicaciones' ? 'scale-x-100' : 'scale-x-0'}`}></div>
+                </button>
+            </div>
+            <div className="relative">
+                <button 
+                    className={`text-2xl font-bold w-full sm:w-auto relative transition transform hover:text-black ${selectedTab === 'Respuestas' ? 'border-b-2 border-black text-black' : 'text-zinc-500'}`} 
+                    onClick={() => handleTabChange('Respuestas')}
+                    onMouseEnter={() => handleMouseEnter('Respuestas')}
+                    onMouseLeave={handleMouseLeave}
+                >
+                    Respuestas
+                    <div className={`absolute inset-x-0 h-1 bg-black origin-center transform transition-transform duration-300 ${hoveredTab === 'Respuestas' ? 'scale-x-100' : 'scale-x-0'}`}></div>
+                </button>
+            </div>
+            <div className="relative">
+                <button 
+                    className={`text-2xl font-bold w-full sm:w-auto relative transition transform hover:text-black ${selectedTab === 'Actividades' ? 'border-b-2 border-black text-black' : 'text-zinc-500'}`} 
+                    onClick={() => handleTabChange('Actividades')}
+                    onMouseEnter={() => handleMouseEnter('Actividades')}
+                    onMouseLeave={handleMouseLeave}
+                >
+                    Actividades
+                    <div className={`absolute inset-x-0 h-1 bg-black origin-center transform transition-transform duration-300 ${hoveredTab === 'Actividades' ? 'scale-x-100' : 'scale-x-0'}`}></div>
+                </button>
+            </div>
+            <div className="relative">
+                <button 
+                    className={`text-2xl font-bold w-full sm:w-auto relative transition transform hover:text-black ${selectedTab === 'Favoritos' ? 'border-b-2 border-black text-black' : 'text-zinc-500'}`} 
+                    onClick={() => handleTabChange('Favoritos')}
+                    onMouseEnter={() => handleMouseEnter('Favoritos')}
+                    onMouseLeave={handleMouseLeave}
+                >
+                    Favoritos
+                    <div className={`absolute inset-x-0 h-1 bg-black origin-center transform transition-transform duration-300 ${hoveredTab === 'Favoritos' ? 'scale-x-100' : 'scale-x-0'}`}></div>
+                </button>
+            </div>
+        </div>
+
                     {tabContent}
                 </div>
             </div>

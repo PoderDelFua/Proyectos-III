@@ -187,7 +187,7 @@ export default function UpdateUser() {
 
                         <hr className="border-[1.7px] border-black my-2" />
                         <div className="flex items-center">
-                        <label htmlFor="nivel" className="block text-gray-800 font-bold mr-[188px] my-6">Nivel</label>
+                        <label htmlFor="nivel" className="block text-gray-800 font-bold mr-[68px] md:mr-[188px] sm:mr-[188px] my-6">Nivel</label>
                         <div className="text-gray-800 grid grid-cols-2 gap-x-4 gap-y-2 pl-1">
                         {instrumento.map((inst, index) => (
                             <div key={inst.nombre} className="">

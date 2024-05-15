@@ -11,6 +11,7 @@ export default function MultiSelect2({
     prompt = "Select one or more options",
 }) {
     const [selectedOptions, setSelectedOptions] = useState([]);
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const optionsListRef = useRef(null);
 
     const handleChange = (e) => {
@@ -58,58 +59,69 @@ export default function MultiSelect2({
         onChange([]);
     };
 
+    const handleDropdownToggle = () => {
+        setIsDropdownOpen((prev) => !prev);
+    };
+
     return (
         <label className="relative">
             <input type="checkbox" className="hidden peer" />
 
-            <div className="text-gray-500 cursor-pointer after:content-['▼'] after:text-xs after:inline-flex after:items-center peer-checked:text-blue peer-checked:after:-rotate-180 after:transition-transform inline-flex rounded px-3 py-2">
-            {/* <div className="text-gray-500 cursor-pointer after:content-['▼'] after:text-xs after:inline-flex after:items-center peer-checked:text-blue-500 peer-checked:after:-rotate-180 after:transition-transform" onClick={(e) => e.target.classList.toggle('text-gray-500')}> */}
+            <div
+                className="text-gray-500 cursor-pointer after:content-['▼'] after:text-xs after:inline-flex after:items-center peer-checked:text-blue peer-checked:after:-rotate-180 after:transition-transform inline-flex rounded px-3 py-2"
+                onClick={handleDropdownToggle}
+            >
                 {prompt}
             </div>
 
-            <div className="absolute bg-white border transition-opacity opacity-0 pointer-events-none peer-checked:opacity-100 peer-checked:pointer-events-auto w-96 max-h-96 overflow-y-scroll mt-2 py-2" style={{ right: "0%", transform: "translateX(0%)" }}>
-                {(
-                    <ul>
-                        <li>
-                            <button
-                                onClick={handleSelectAllClick}
-                                disabled={!isSelectAllEnabled}
-                                className="w-full text-left px-2 py-1 text-blue-600 disabled:opacity-50"
-                            >
-                                {"Seleccionar todos"}
-                            </button>
-                        </li>
-                        <li>
-                            <button
-                                onClick={handleClearSelectionClick}
-                                disabled={!isClearSelectionEnabled}
-                                className="w-full text-left px-2 py-1 text-blue-600 disabled:opacity-50"
-                            >
-                                {"Eliminar todos"}
-                            </button>
-                        </li>
-                    </ul>
-                )}
-                <ul ref={optionsListRef}>
-                    {options.map((option, i) => {
-                        return (
-                            <li key={option}>
-                                <label
-                                    className={`flex whitespace-nowrap cursor-pointer px-2 py-1 transition-colors hover:bg-dark-blue hover:text-white ${selectedOptions.includes(option) ? 'bg-blue text-white' : 'bg-soft-blue text-blue'}`}
+            <div
+                className={`absolute bg-white border transition-opacity opacity-0 pointer-events-none peer-checked:opacity-100 peer-checked:pointer-events-auto w-96 max-h-96 overflow-y-scroll mt-2 py-2 ${isDropdownOpen ? 'relative' : 'hidden'}`}
+                style={{ right: "0%", transform: "translateX(0%)" }}
+            >
+                {isDropdownOpen && (
+                    <>
+                        <ul>
+                            <li>
+                                <button
+                                    onClick={handleSelectAllClick}
+                                    disabled={!isSelectAllEnabled}
+                                    className="w-full text-left px-2 py-1 text-blue-600 disabled:opacity-50"
                                 >
-                                    <input
-                                        type="checkbox"
-                                        name={formFieldName}
-                                        value={option}
-                                        className="cursor-pointer"
-                                        onChange={handleChange}
-                                    />
-                                    <span className="ml-1">{option}</span>
-                                </label>
+                                    {"Seleccionar todos"}
+                                </button>
                             </li>
-                        );
-                    })}
-                </ul>
+                            <li>
+                                <button
+                                    onClick={handleClearSelectionClick}
+                                    disabled={!isClearSelectionEnabled}
+                                    className="w-full text-left px-2 py-1 text-blue-600 disabled:opacity-50"
+                                >
+                                    {"Eliminar todos"}
+                                </button>
+                            </li>
+                        </ul>
+                        <ul ref={optionsListRef}>
+                            {options.map((option, i) => {
+                                return (
+                                    <li key={option}>
+                                        <label
+                                            className={`flex whitespace-nowrap cursor-pointer px-2 py-1 transition-colors hover:bg-dark-blue hover:text-white ${selectedOptions.includes(option) ? 'bg-blue text-white' : 'bg-soft-blue text-blue'}`}
+                                        >
+                                            <input
+                                                type="checkbox"
+                                                name={formFieldName}
+                                                value={option}
+                                                className="opacity-0 absolute"
+                                                onChange={handleChange}
+                                            />
+                                            <span className="ml-1">{option}</span>
+                                        </label>
+                                    </li>
+                                );
+                            })}
+                        </ul>
+                    </>
+                )}
             </div>
         </label>
     );

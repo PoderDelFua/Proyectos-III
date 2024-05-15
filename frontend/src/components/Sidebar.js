@@ -89,7 +89,32 @@ function Sidebar({ selectedTab = 'home' }) {
               </div>
             )}
           </div>
-          <div className={`${activeItem !== 'settings' ? 'pr-10' : '' }`}>
+          
+          <div className={`${activeItem !== 'calendar' ? 'pr-10' : '' }`}>
+            {activeItem === 'calendar' && (
+              <div className="relative">
+                <div className="absolute bottom-0 right-0 h-5 w-5 bg-white"></div>
+                <div className="absolute bottom-0 right-0 h-5 w-5 bg-sidebar-dark-blue rounded-br-full"></div>
+              </div>
+            )}
+            <a
+              href="/registered/calendario"
+              onClick={() => handleItemClick('calendar')}
+              className={`group flex items-center py-2 px-4 text-black  transition-all duration-300 ${
+                activeItem === 'calendar' ? 'bg-white rounded-l-full' : 'text-white hover:bg-light-gray hover:text-blue rounded-full'
+              }`}
+            >
+              <CalendarDaysIcon className="mr-5 h-7 w-7" />
+              <span className="text-xl font-semibold">Calendario</span>
+            </a>
+            {activeItem === 'calendar' && (
+              <div className="relative">
+                <div className="absolute top-0 right-0 h-5 w-5 bg-white"></div>
+                <div className="absolute top-0 right-0 h-5 w-5 bg-sidebar-light-blue rounded-tr-full"></div>
+              </div>
+            )}
+          </div>
+          {/* <div className={`${activeItem !== 'settings' ? 'pr-10' : '' }`}>
             {activeItem === 'settings' && (
               <div className="relative">
                 <div className="absolute bottom-0 right-0 h-5 w-5 bg-white"></div>
@@ -112,31 +137,7 @@ function Sidebar({ selectedTab = 'home' }) {
                 <div className="absolute top-0 right-0 h-5 w-5 bg-sidebar-light-blue rounded-tr-full"></div>
               </div>
             )}
-          </div>
-          <div className={`${activeItem !== 'calendar' ? 'pr-10' : '' }`}>
-            {activeItem === 'calendar' && (
-              <div className="relative">
-                <div className="absolute bottom-0 right-0 h-5 w-5 bg-white"></div>
-                <div className="absolute bottom-0 right-0 h-5 w-5 bg-sidebar-light-blue rounded-br-full"></div>
-              </div>
-            )}
-            <a
-              href="/registered/calendario"
-              onClick={() => handleItemClick('calendar')}
-              className={`group flex items-center py-2 px-4 text-black  transition-all duration-300 ${
-                activeItem === 'calendar' ? 'bg-white rounded-l-full' : 'text-white hover:bg-light-gray hover:text-blue rounded-full'
-              }`}
-            >
-              <CalendarDaysIcon className="mr-5 h-7 w-7" />
-              <span className="text-xl font-semibold">Calendario</span>
-            </a>
-            {activeItem === 'calendar' && (
-              <div className="relative">
-                <div className="absolute top-0 right-0 h-5 w-5 bg-white"></div>
-                <div className="absolute top-0 right-0 h-5 w-5 bg-sidebar-light-blue rounded-tr-full"></div>
-              </div>
-            )}
-          </div>
+          </div> */}
         </nav>
       </div>
     </div>
