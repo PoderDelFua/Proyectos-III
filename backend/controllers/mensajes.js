@@ -81,7 +81,7 @@ const getHilo = async (req, res) => {
 const getMensajesUserTok = async (req, res) => {
     try {
         const userId = req.user._id
-        const data = await mensajesModel.find({}).sort({updatedAt: -1})
+        const data = await mensajesModel.find({autorMensaje: userId}).sort({updatedAt: -1})
         .populate('autorMensaje', 'nombre  ')
         .populate({
             path: 'padreMensaje',
@@ -95,7 +95,7 @@ const getMensajesUserTok = async (req, res) => {
         .populate('hiloId' , 'titulo')
 
         res.send(data)
-    }catch(err){
+    } catch(err) {
         console.log(err)
         handleHttpError(res, 'ERROR_GET_ITEMS_MENSAJES', 403)
     }
