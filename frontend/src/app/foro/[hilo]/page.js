@@ -14,6 +14,7 @@ export default function HiloDetallePage() {
     const [likes, setLikes] = useState({});
     const [creadoPor, setCreadoPor] = useState('');
     const [selectedTab, setSelectedTab] = useState('')
+    const [like, setLike] = useState(false);
 
 
     useEffect(() => {
@@ -67,7 +68,7 @@ export default function HiloDetallePage() {
         }
     }, []);
 
-    // No fuciona el crear una respuesta
+    
     const handleSendMessage = async () => {
         const token = localStorage.getItem('token');
         const hiloId = localStorage.getItem('currentHiloId');
@@ -137,7 +138,7 @@ export default function HiloDetallePage() {
             <div className="w-full md:w-2/3 mr-20 mb-32">
                 {hilo && (
                     <div className="relative mt-4">
-                        <div className="bg-primary-gray p-8 rounded-lg shadow mb-4">
+                        <div className="relative p-8 bg-white rounded-lg shadow shadow-md overflow-hidden border-2 border-blue mb-4">
                             <div className="flex items-center" style={{flexWrap: 'wrap'}}> {}
                                 <div className="flex flex-col items-center"
                                      style={{flexShrink: 0}}> {}
@@ -153,17 +154,37 @@ export default function HiloDetallePage() {
                                     <h3 className="text-lg mt-4 truncate">{hilo.descripcion}</h3>
                                 </div>
                             </div>
-
+                            <p className="absolute bottom-0 right-0 mb-2 mt-2 mr-8 cursor-pointer">-1</p>
+                            <button
+                                onClick={() => setLike(!like)}
+                                className="absolute bottom-0 right-0 mb-2 mt-2 mr-2 cursor-pointer">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                    fill="#0065EF"
+                                    className="bi bi-heart-fill" viewBox="0 0 16 16">
+                                    <path fillRule="evenodd"
+                                        d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/>
+                                </svg>
+                            </button>
+                            <p className="absolute bottom-0 right-0 mb-2 mt-4 mr-28 cursor-pointer">{hilo.postCount}</p>
+                            <button
+                                onClick={() => setLike(!like)}
+                                className="absolute bottom-0 right-0 mb-2 mt-2 mr-20 cursor-pointer">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#0065EF"
+                                     className="bi bi-chat-fill" viewBox="0 0 16 16">
+                                    <path
+                                        d="M8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6-.097 1.016-.417 2.13-.771 2.966-.079.186.074.394.273.362 2.256-.37 3.597-.938 4.18-1.234A9 9 0 0 0 8 15"/>
+                                </svg>
+                            </button>
                         </div>
                         <div className="space-y-4">
                             {mensajes.map((mensaje) => (
                                 <div key={mensaje._id} className="relative">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="gray"
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#64ABFF"
                                          className="bi bi-arrow-return-right" viewBox="0 0 16 16">
                                         <path fillRule="evenodd"
                                               d="M1.5 1.5A.5.5 0 0 0 1 2v4.8a2.5 2.5 0 0 0 2.5 2.5h9.793l-3.347 3.346a.5.5 0 0 0 .708.708l4.2-4.2a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 8.3H3.5A1.5 1.5 0 0 1 2 6.8V2a.5.5 0 0 0-.5-.5"/>
                                     </svg>
-                                    <div className="bg-gray-50 p-4 rounded-lg flex items-center ml-8">
+                                    <div className="p-4 rounded-lg flex items-center ml-8 custom-bg-color2">
                                         <div className="flex flex-col items-center" style={{flexShrink: 0}}> {}
                                             <div className="w-12 h-12 rounded-full overflow-hidden mb-2">
                                                 <img src="/no-profile.png" alt="Profile"
@@ -176,41 +197,37 @@ export default function HiloDetallePage() {
                                         </div>
                                         {/* Mostrar el número de likes desde el estado actualizado */}
                                         <p className="absolute bottom-0 right-0 mb-2 mt-2 mr-10">{likes[mensaje._id] || mensaje.likes}</p>
-                                        <button onClick={() => handleLike(mensaje._id)}
-                                                className="absolute bottom-0 right-0 mb-2 mt-2 mr-2 cursor-pointer">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                                 fill={likes[mensaje._id] ? '#0065EF' : '#DDEBFF'}
-                                                 className="bi bi-heart-fill" viewBox="0 0 16 16">
-                                                <path fillRule="evenodd"
-                                                      d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/>
-                                            </svg>
+                                        <button onClick={() => handleLike(mensaje._id)} className="absolute bottom-0 right-0 mb-2 mt-2 mr-2 cursor-pointer">  
+                                            {likes[mensaje._id] ? (
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#0065EF" className="bi bi-heart-fill" viewBox="0 0 16 16">
+                                                    <path fillRule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/>
+                                                </svg>
+                                            ) : (
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#0065EF" className="bi bi-heart" viewBox="0 0 16 16">
+                                                    <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/>
+                                                </svg>
+                                            )}
                                         </button>
                                     </div>
                                 </div>
                             ))}
-                            <div className="bg-white p-4 flex fixed bottom-4 md:w-2/3 mb-4 justify-center">
+                            <div className="bg-white p-4 flex fixed bottom-0 md:w-2/3 mb-4 justify-center">
                                 <input
                                     type="text"
-                                    className="w-full border border-gray-300 rounded px-4 py-2"
-                                    placeholder="Escribe un mensaje..."
+                                    className="input-custom"
                                     value={newMessage}
                                     onChange={(e) => setNewMessage(e.target.value)}
                                 />
                                 <button className="ml-5 focus:outline-none" onClick={handleSendMessage}>
                                     <PaperAirplaneIcon
-                                        className="h-10 w-10 fill-gray-600 hover:fill-gray-800 cursor-pointer transition-colors duration-200"/>
+                                        className="h-12 w-12 custom-bg-color rounded-full p-2 cursor-pointer transition-colors duration-200 color-icon"/>
                                 </button>
+                                
                             </div>
                         </div>
                     </div>
 
                 )}
-            </div>
-            <div className="fixed top-0 right-0 m-4">
-                <a href="/foro"
-                   className={"bg-primary-gray w-10 h-10 flex items-center justify-center rounded-full border-gray-400 border-b-[2px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[2px] active:border-b-[2px] active:brightness-90 active:translate-y-[2px] ml-auto"}>
-                    <strong>X</strong>
-                </a>
             </div>
         </section>
     );

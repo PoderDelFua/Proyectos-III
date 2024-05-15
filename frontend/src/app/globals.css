@@ -95,3 +95,31 @@ body {
   stroke-width: 0.5;
     
 }
+
+.custom-bg-color {
+  background-color: #DDEBFF;
+}
+
+.custom-bg-color:hover {
+  background-color: #0065EF;
+}
+
+.custom-bg-color2 {
+  background-color: #DDEBFF;
+}
+
+.input-custom {
+  width: 100%;
+  background-color: #DDEBFF;
+  border: none;
+  border-radius: 1.5rem;
+  padding: 0.5rem 1rem;
+}
+
+.color-icon {
+  fill: #0065EF; 
+}
+
+.color-icon:hover {
+  fill: #DDEBFF; 
+}
