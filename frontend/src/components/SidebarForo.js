@@ -75,38 +75,43 @@ function SidebarForo({ selectedTab = '' }) {
 
             <div className={`fixed inset-y-0 bg-primary-gray rounded-r-3xl z-50 md:block transition-all duration-500 ${SidebarOpen ? 'left-0 w-64' : '-left-64 w-0'}`} style={{ backgroundImage: "url('/fondo-sidebar.png')" }}>
                 <div className="flex flex-col h-full">
-                    <nav className="flex-1 pl-4 py-4 space-y-4 overflow-y-auto">
-                        <button className="flex items-center text-white  hover:font-bold  icon-custom" onClick={() => router.push("/home")}>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" className="bi bi-arrow-left-short" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5"/>
-                            </svg>
-                            <h2 className="text-2xl ml-2">Foro</h2>
-                        </button>
-                        <button className="flex items-center text-white" onClick={() => router.push("/foro")}>    
-                            <h2 className="text-xl hover:font-bold text-white ml-10">Temas</h2>
-                        </button>
-                        
+                    <button className="flex items-center pt-4 text-white  hover:font-bold  icon-custom" onClick={() => router.push("/home")}>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" className="bi bi-arrow-left-short" viewBox="0 0 16 16">
+                            <path fillRule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5"/>
+                        </svg>
+                        <h2 className="text-2xl ml-2">Foro</h2>
+                    </button>
+                    <button className="flex items-center text-white" onClick={() => router.push("/foro")}>    
+                        <h2 className="text-xl hover:font-bold text-white ml-10">Temas</h2>
+                    </button>
+                    <nav className="flex-1 pl-4 py-10 space-y-6">
                         {hilos.map((hilo) => (
-                            <div
-                                key={hilo.titulo}
-                                className={`group flex items-center py-2 px-4 text-black transition-all duration-300 ${activeItem === hilo.titulo.toLowerCase() ? 'bg-white rounded-l-full' : 'text-white hover:bg-light-gray hover:text-blue rounded-full'}`}
-                                onClick={() => handleItemClick(hilo)}
-                            >
-                                <div className="flex justify-between items-center p-2 w-full">
-                                    <div>
+                            <div className={`${activeItem !== hilo.titulo.toLowerCase() ? 'pr-10' : '' }`}>
+                                {activeItem === hilo.titulo.toLowerCase() && (
+                                    <div className="relative">
+                                        <div className="absolute bottom-0 right-0 h-5 w-5 bg-white"></div>
+                                        <div className="absolute bottom-0 right-0 h-5 w-5 bg-dark-gray rounded-br-full"></div>
+                                    </div>
+                                )}
+                                <div
+                                    key={hilo.titulo}
+                                    className={`group flex text-black transition-all duration-300 ${activeItem === hilo.titulo.toLowerCase() ? 'bg-white rounded-l-xl' : 'text-white hover:bg-light-gray hover:text-blue rounded-xl'}`}
+                                    onClick={() => handleItemClick(hilo)}
+                                >
+                                    <div className="flex flex-col pl-5 py-4 justify-between w-full">
                                         <p className={`text-sm ${activeItem == hilo.titulo.toLowerCase() ? 'text-custom-active' : 'text-custom-secundario'}`}>Creador: {hilo.creador}</p>
                                         <p className="font-medium overflow-hidden whitespace-nowrap text-ellipsis" style={{ maxWidth: "calc(100% - 0.8rem)" }}>
                                             {hilo.titulo.length > 26 ? `${hilo.titulo.substring(0, 26)}...` : hilo.titulo}
                                         </p>
                                         <p className={`text-sm ${activeItem == hilo.titulo.toLowerCase() ? 'text-custom-active' : 'text-custom-secundario'}`}>{hilo.postCount} posts</p>
                                     </div>
-                                    {activeItem === hilo.titulo.toLowerCase() && (
-                                        <div className="relative">
-                                            <div className="absolute top-0 right-0 h-5 w-5 bg-white"></div>
-                                            <div className="absolute top-0 right-0 h-5 w-5 bg-sidebar-light-blue rounded-tr-full"></div>
-                                        </div>
-                                    )}
                                 </div>
+                                {activeItem === hilo.titulo.toLowerCase() && (
+                                    <div className="relative">
+                                        <div className="absolute top-0 right-0 h-5 w-5 bg-white"></div>
+                                        <div className="absolute top-0 right-0 h-5 w-5 bg-sidebar-dark-blue-2 rounded-tr-full"></div>
+                                    </div>
+                                )}
                             </div>
                         ))}
                     </nav>

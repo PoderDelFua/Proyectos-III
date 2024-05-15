@@ -15,6 +15,7 @@ module.exports = {
       colors: {
         "primary-gray": "#D9D9D9", 
         "light-gray": "#E2E2E2",
+        "dark-gray": "#616364",
         "blue":"#0065ef",
         // "light-blue":"#64ABFF",
         "dark-blue":"#013b8a",
@@ -24,7 +25,8 @@ module.exports = {
 
         "sidebar-white":"#616364",
         "sidebar-dark-blue":"#002b65",
-        "sidebar-light-blue":"#2b486c"
+        "sidebar-light-blue":"#2b486c",
+        "sidebar-dark-blue-2":"#002B65",
       },
     },
   },
