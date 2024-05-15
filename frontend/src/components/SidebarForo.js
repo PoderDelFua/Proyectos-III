@@ -75,7 +75,7 @@ function SidebarForo({ selectedTab = '' }) {
 
             <div className={`fixed inset-y-0 bg-primary-gray rounded-r-3xl z-50 md:block transition-all duration-500 ${SidebarOpen ? 'left-0 w-64' : '-left-64 w-0'}`} style={{ backgroundImage: "url('/fondo-sidebar.png')" }}>
                 <div className="flex flex-col h-full">
-                    <button className="flex items-center pt-4 text-white  hover:font-bold  icon-custom" onClick={() => router.push("/home")}>
+                    <button className="flex items-center pt-4 text-white  hover:font-bold  icon-custom mb-4" onClick={() => router.push("/home")}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" className="bi bi-arrow-left-short" viewBox="0 0 16 16">
                             <path fillRule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5"/>
                         </svg>
@@ -84,7 +84,7 @@ function SidebarForo({ selectedTab = '' }) {
                     <button className="flex items-center text-white" onClick={() => router.push("/foro")}>    
                         <h2 className="text-xl hover:font-bold text-white ml-10">Temas</h2>
                     </button>
-                    <nav className="flex-1 pl-4 py-10 space-y-6">
+                    <nav className="flex-1 pl-4 py-6 space-y-6">
                         {hilos.map((hilo) => (
                             <div className={`${activeItem !== hilo.titulo.toLowerCase() ? 'pr-10' : '' }`}>
                                 {activeItem === hilo.titulo.toLowerCase() && (

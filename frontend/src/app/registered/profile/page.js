@@ -23,9 +23,11 @@ export default function UserProfile() {
     const [activityCards, setActivityCards] = useState([])
     const [selectedTab, setSelectedTab] = useState('Publicaciones')
     const [favoritos, setFavoritos] = useState([])
+    const [like, setLike] = useState(false);
 
     const [actividadesFav, setActividadesFav] = useState([]);
     const [actividadesApuntado, setActividadesApuntado] = useState([]);
+    const [mensajesUsuario, setMensajesUsuario] = useState([]);
     
     const [hoveredTab, setHoveredTab] = useState(null);
 
@@ -101,6 +103,7 @@ export default function UserProfile() {
             }catch (error) {
                 console.error("Error al cargar las actividades del usuario: ", error)
             }
+            
         }
         fetchData()
     }, [])
@@ -114,6 +117,7 @@ export default function UserProfile() {
             setFavoritos(userData.favoritos)
             fetchActividadesUserApuntado()
             fetchActividadesUserFav()
+            fetchRespuestasUser()
         }
     }, [userData])
     
@@ -150,6 +154,40 @@ export default function UserProfile() {
         }catch(error){
 
             console.error("Error al cargar las actividades apuntado: ", error)
+        }
+    };
+
+    const fetchRespuestasUser = async () => {
+        const token = localStorage.getItem('token')
+
+        if (!token) {
+            router.push('/login')
+            return
+        }
+        try{
+            console.log("Buscando mensajes usuario...", setParametrosData.id)
+            const response = await fetch(`${BACKEND_URI}/mensajes/getMensajesUserTok`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                },
+            });
+            //Si la respuesta no es correcta, se lanza un error.
+            if (!response.ok) {
+                localStorage.removeItem('token')
+                router.push('/login')
+            }
+            console.log("RESPUESTA",    response)
+            const data = await response.json();
+
+            setMensajesUsuario(data)
+            console.log(data)
+
+            return data;
+        }catch(error){
+
+            console.error("Error al cargar las respuestas del usuario: ", error)
         }
     };
 
@@ -219,7 +257,40 @@ export default function UserProfile() {
             );
             break;
         case 'Respuestas':
-            tabContent = <p>Contenido de Respuestas</p>;
+            tabContent = (
+                <div>
+                    {mensajesUsuario.map((mensaje) => (
+                        <div key={mensaje._id}>
+                            <a href={`/foro/${mensaje.hiloId._id}`} className="block">
+                                <h1 className="font-bold text-xl truncate mb-2">{mensaje.hiloId.titulo}</h1>
+                                <hr className="border-black mb-4" />
+                                <div className="relative p-4 rounded-lg flex items-center ml-8 custom-bg-color2 mb-8 mt-8">
+                                    <div className="flex flex-col items-center" style={{ flexShrink: 0 }}>
+                                        <div className="w-12 h-12 rounded-full overflow-hidden mb-2">
+                                            <img src="/no-profile.png" alt="Profile" className="w-full h-full object-cover" />
+                                        </div>
+                                        <p className="text-gray-600 text-sm">@{mensaje.autorMensaje.nombre}</p>
+                                    </div>
+                                    <div className="ml-4" style={{ maxWidth: 'calc(100% - 5rem)', flexBasis: 'auto' }}>
+                                        <p className="text-gray-800">{mensaje.mensaje}</p>
+                                    </div>
+                                    <p className="absolute bottom-0 right-0 mb-2 mt-2 mr-10">{mensaje.likes}</p>
+                                    <button
+                                        onClick={() => setLike(!like)}
+                                        className="absolute bottom-0 right-0 mb-2 mt-2 mr-2 cursor-pointer">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                            fill="#0065EF"
+                                            className="bi bi-heart-fill" viewBox="0 0 16 16">
+                                            <path fillRule="evenodd"
+                                                d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </a>
+                        </div>
+                    ))}
+                </div>
+            );
             break;
         case 'Actividades':
             tabContent = (
