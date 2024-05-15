@@ -118,29 +118,29 @@ export default function PageList() {
                             <select id="activity" name="activity" onChange={(e) => setActivity(e.target.value)}
                                     className="w-full md:w-1/3 h-10 border-2 border-indigo-600 focus:outline-none focus:border-indigo-500 text-gray-700 rounded px-4 py-2 tracking-wider">
                                 <option value="any">Cualquier instrumento</option>
-                                <option value="violin">Violín</option>
+                                <option value="violín">Violín</option>
                                 <option value="guitarra">Guitarra</option>
                                 <option value="flauta travesera">Flauta travesera</option>
                                 <option value="flauta">Flauta</option>
                                 <option value="clarinete">Clarinete</option>
-                                <option value="saxofon">Saxofón</option>
+                                <option value="saxofón">Saxofón</option>
                                 <option value="trompeta">Trompeta</option>
                                 <option value="trombón">Trombón</option>
                                 <option value="trompa">Trompa</option>
                                 <option value="tuba">Tuba</option>
                                 <option value="oboe">Oboe</option>
                                 <option value="fagot">Fagot</option>
-                                <option value="guitarra acustica">Guitarra acústica</option>
-                                <option value="guitarra electrica">Guitarra eléctrica</option>
-                                <option value="guitarra clasica">Guitarra clásica</option>
-                                <option value="bajo electrico">Bajo eléctrico</option>
+                                <option value="guitarra acústica">Guitarra acústica</option>
+                                <option value="guitarra eléctrica">Guitarra eléctrica</option>
+                                <option value="guitarra clásica">Guitarra clásica</option>
+                                <option value="bajo eléctrico">Bajo eléctrico</option>
                                 <option value="viola">Viola</option>
                                 <option value="violonchelo">Violonchelo</option>
                                 <option value="contrabajo">Contrabajo</option>
                                 <option value="ukelele">Ukelele</option>
                                 <option value="banjo">Banjo</option>
                                 <option value="piano">Piano</option>
-                                <option value="bateria">Batería</option>
+                                <option value="batería">Batería</option>
                             </select>
                         </form>
                         <div className="flex justify-end mb-4">
@@ -162,7 +162,7 @@ export default function PageList() {
                         </div>
                     </div>
                 </div>
-                <div className="w-full md:w-1/4">
+                <div className=" md:w-1/4">
                     <Featured/>
                 </div>
             </section>
