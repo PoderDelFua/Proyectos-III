@@ -81,3 +81,17 @@ body {
     column-count: 1;
   }
 }
+
+.text-custom-secundario {
+  color: #DDEBFF;
+}
+
+.text-custom-active {
+  color: #393B41;
+}
+
+.icon-custom:hover {
+  stroke: currentColor;
+  stroke-width: 0.5;
+    
+}
