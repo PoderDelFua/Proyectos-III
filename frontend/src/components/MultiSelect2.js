@@ -68,14 +68,15 @@ export default function MultiSelect2({
             <input type="checkbox" className="hidden peer" />
 
             <div
-                className="text-gray-500 cursor-pointer after:content-['▼'] after:text-xs after:inline-flex after:items-center peer-checked:text-blue peer-checked:after:-rotate-180 after:transition-transform inline-flex rounded px-3 py-2"
+                className={`text-gray-500 cursor-pointer after:content-['▼'] mr-[369px] transition-all duration-1000 hover:text-gray-950 after:text-xs after:inline-flex after:items-center peer-checked:text-blue peer-checked:after:-rotate-180 after:transition-transform inline-flex rounded px-3 py-2 
+                ${isDropdownOpen ? 'mt-[19px]' : 'mt-[9px]'}`}
                 onClick={handleDropdownToggle}
             >
                 {prompt}
             </div>
 
             <div
-                className={`absolute bg-white border transition-opacity opacity-0 pointer-events-none peer-checked:opacity-100 peer-checked:pointer-events-auto w-96 max-h-96 overflow-y-scroll mt-2 py-2 ${isDropdownOpen ? 'relative' : 'hidden'}`}
+                className={`absolute bg-white border transition-opacity transition-all duration-1000 opacity-0 pointer-events-none peer-checked:opacity-100 peer-checked:pointer-events-auto w-96 max-h-96 overflow-y-scroll mt-2 py-2 ${isDropdownOpen ? 'relative' : 'hidden'}`}
                 style={{ right: "0%", transform: "translateX(0%)" }}
             >
                 {isDropdownOpen && (

@@ -127,13 +127,14 @@ export default function UpdateUser() {
             {/* <div className="flex flex-col">
                 <hr className="border-[1.7px] border-black my-10" /> pr-[500px]
             </div> */}
-            <div className="min-h-screen bg-blue flex justify-end">
+            <div className="min-h-screen bg-white flex justify-end">
                 <div className="w-full xl:w-5/6 lg:w-9/12 md:w-9/12 sm:w-screen py-6 px-8 my-0 bg-white rounded-3xl">
                     <form onSubmit={handleSubmit}>
                         <hr className="border-[1.7px] border-black my-2" />
                         <div className="flex items-center">
                             <label for="nombre" class="block text-gray-800 font-bold mr-[169px]">Nombre</label>
-                            <input value={nombre} onChange={(e) => setNombre(e.target.value)} type="text" name="nombre" id="nombre" placeholder="John Doe" className="w-full border border-white py-2 pl-3 rounded outline-none focus:border-indigo-600 focus:ring-indigo-600"/>
+                            <input value={nombre} onChange={(e) => setNombre(e.target.value)} type="text" name="nombre" id="nombre" placeholder="John Doe" className="w-full border border-white py-2 pl-3 
+                            rounded-lg outline-none border-2 transition-all hover:border-indigo-300 hover:bg-indigo-100 transition-all focus:border-4 focus:border-indigo-600"/>
                         </div>
 
                         <hr className="border-[1.7px] border-black my-2" />
@@ -141,18 +142,21 @@ export default function UpdateUser() {
                             <label htmlFor="nickname" className="block text-gray-800 font-bold mr-[153px]">Nickname</label>
                             <input value={nickname} onChange={(e) => setNickname(e.target.value)} type="text"
                                    name="nickname" id="nickname" placeholder="Tu apodo"
-                                   className="w-full border border-white py-2 pl-3 rounded outline-none focus:border-indigo-600 focus:ring-indigo-600"/>
+                                   className="w-full border border-white py-2 pl-3 
+                                   rounded-lg outline-none border-2 transition-all hover:border-indigo-300 hover:bg-indigo-100 transition-all focus:border-4 focus:border-indigo-600"/>
                         </div>
 
                         <hr className="border-[1.7px] border-black my-2" />             
                         <div class="flex items-center">
                             <label for="bio" class="block text-gray-800 font-bold mr-[137px] self-start mt-2">Biografía</label>
-                            <textarea value={bio} onChange={(e) => setBio(e.target.value)} name="bio" id="bio" rows="3" placeholder="Cuéntanos algo sobre ti..." class="w-full ml-6 border border-white py-2 pl-3 rounded outline-none focus:border-indigo-600 focus:ring-indigo-600"></textarea>
+                            <textarea value={bio} onChange={(e) => setBio(e.target.value)} name="bio" id="bio" rows="3" placeholder="Cuéntanos algo sobre ti..." class="w-full ml-6 border border-white py-2 pl-3 
+                            rounded-lg outline-none border-2 transition-all hover:border-indigo-300 hover:bg-indigo-100 transition-all focus:border-4 focus:border-indigo-600"></textarea>
                         </div>
                         <hr className="border-[1.7px] border-black my-2" />
                         <div class="flex items-center">
                             <label for="password" class="block text-gray-800 font-bold mr-[140px]">Contraseña</label>
-                            <input value={nombre} onChange={(e) => setNombre(e.target.value)} type="text" name="nombre" id="nombre" placeholder="John Doe" class="w-full border border-white py-2 pl-3 rounded outline-none focus:border-indigo-600 focus:ring-indigo-600"/>
+                            <input value={nombre} onChange={(e) => setNombre(e.target.value)} type="text" name="nombre" id="nombre" placeholder="John Doe" class="w-full border border-white py-2 pl-3 
+                            rounded-lg outline-none border-2 transition-all hover:border-indigo-300 hover:bg-indigo-100 transition-all focus:border-4 focus:border-indigo-600"/>
                         </div>
                         <hr className="border-[1.7px] border-black my-2" />
                         <div className="flex items-center">
@@ -163,7 +167,7 @@ export default function UpdateUser() {
                                     <span>{inst.nombre}</span>
                                     <button
                                         type="button"
-                                        className="text-white hover:text-red-700 ml-2 focus:outline-none flex-shrink-0"
+                                        className="text-white transition-all rounded hover:bg-white hover:text-blue ml-2 focus:outline-none flex-shrink-0"
                                         onClick={() => setInstrumento(prev => prev.filter((_, i) => i !== index))}
                                     >
                                         <XMarkIcon className="h-4 w-4" />
@@ -230,7 +234,7 @@ export default function UpdateUser() {
                         
 
                         <button type="submit"
-                                className="cursor-pointer py-2 px-4 block mt-6 bg-indigo-500 text-white font-bold w-1/3 text-center rounded ">Actualizar
+                                className="cursor-pointer py-2 px-4 block mt-6 bg-blue text-white font-bold w-1/3 text-center rounded-lg transition-all hover:bg-dark-blue active:bg-sidebar-dark-blue-2">Actualizar
                             datos
                         </button>
                     </form>

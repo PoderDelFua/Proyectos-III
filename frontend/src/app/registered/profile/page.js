@@ -340,7 +340,7 @@ export default function UserProfile() {
                 <div className="relative">
                     <img src="/fondo-login.png" alt="Background" className="w-full h-48 object-cover" />
                     <div className="absolute pl-20 top-32 left-8">
-                        <div className="w-32 h-32 rounded-full overflow-hidden">
+                        <div className="w-32 h-32 rounded-full border-8 border-white overflow-hidden">
                             <img src="/no-profile.png" alt="Profile" />
                         </div>
                     </div>
@@ -361,7 +361,7 @@ export default function UserProfile() {
                         <span className="font-bold">Instrumentos:</span>
                         {instrumento.map((item, index) => (
                             <span key={index} className="ml-2">
-                                {item.nombre} | Nivel{item.nivel}
+                                | {item.nombre} - Nivel {item.nivel}
                             </span>
                         ))}
                     </div>

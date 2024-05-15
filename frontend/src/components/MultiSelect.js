@@ -59,7 +59,7 @@ export default function MultiSelect({
     }
 
     return (
-        <label className="w-full border border-gray-300 py-2 rounded mt-2 outline-none focus:ring-indigo-600 :ring-indigo-600 custom-rectangulo">
+        <label className="w-full border border-gray-300 py-2 rounded mt-2 outline-none border focus:border-indigo-600 custom-rectangulo transition-all hover:bg-blue hover:text-white">
             <input type="checkbox" className="hidden peer" />
     
             <div className="cursor-pointer after:content-['▼'] after:text-xs after:inline-flex after:items-center peer-checked:after:-rotate-180 after:transition-transform inline-flex rounded px-3 py-2">
@@ -69,7 +69,7 @@ export default function MultiSelect({
                 )} */}
             </div>
     
-            <div className="absolute bg-white border transition-opacity opacity-0 pointer-events-none peer-checked:opacity-100 peer-checked:pointer-events-auto w-full max-h-60 max-w-60 overflow-y-scroll my-2 py-2" style={{ zIndex: 100 }}>
+            <div className="absolute bg-white text-black border transition-opacity opacity-0 pointer-events-none peer-checked:opacity-100 peer-checked:pointer-events-auto w-full max-h-60 max-w-60 overflow-y-scroll my-2 py-2" style={{ zIndex: 100 }}>
                 {(
                     <ul>
                         <li>
