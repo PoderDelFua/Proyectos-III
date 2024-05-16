@@ -74,7 +74,7 @@ export default function PageForo() {
                                     <h3 className="text-lg mt-4 truncate">{hilo.descripcion}</h3>
                                 </div>
                             </div>
-                            <p className="absolute bottom-0 right-0 mb-2 mt-2 mr-8 cursor-pointer">-1</p>
+                            <p className="absolute bottom-0 right-0 mb-2 mt-2 mr-8 cursor-pointer">{hilo.postCount}</p>
                             <button
                                 onClick={() => setLike(!like)}
                                 className="absolute bottom-0 right-0 mb-2 mt-2 mr-2 cursor-pointer">
