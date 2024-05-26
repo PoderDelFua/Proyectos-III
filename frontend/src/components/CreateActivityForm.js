@@ -1,10 +1,10 @@
-"use client"
+"use client";
 
-import MultiSelect from '@/components/MultiSelect'
+import MultiSelect from '@/components/MultiSelect';
 
-import { useState, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
-import { BACKEND_URI } from '@/config/env'
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { BACKEND_URI } from '@/config/env';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
@@ -12,57 +12,53 @@ import { Dialog, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
 
 export default function CreateActivity({ isOpen, closePopup }) {
-    const router = useRouter()
-    const [userData, setUserData] = useState(null)
-    const [nombre, setNombre] = useState('')
-    const [instrumento, setInstrumento] = useState([])
-    const [descripcion, setDescripcion] = useState('')
-    const [horarios, setHorarios] = useState(null)
-    const [auxHorarios, setAuxHorarios] = useState('')
-    const [foto, setFoto] = useState(null)
-    const [hiloId, setHiloId] = useState('')
-    const [creadoPor, setCreadoPor] = useState('')
-    const [activityData, setActivityData] = useState(null)
+    const router = useRouter();
+    const [userData, setUserData] = useState(null);
+    const [nombre, setNombre] = useState('');
+    const [instrumento, setInstrumento] = useState([]);
+    const [descripcion, setDescripcion] = useState('');
+    const [horarios, setHorarios] = useState(null);
+    const [auxHorarios, setAuxHorarios] = useState('');
+    const [foto, setFoto] = useState(null);
+    const [hiloId, setHiloId] = useState('');
+    const [creadoPor, setCreadoPor] = useState('');
+    const [activityData, setActivityData] = useState(null);
 
     useEffect(() => {
-        const token = localStorage.getItem('token')
+        const token = localStorage.getItem('token');
 
         if (!token) {
-            router.push('/login')
-            return
+            router.push('/login');
+            return;
         }
         const fetchData = async () => {
             try {
-                //El GET tiene una cabecera distinta, ya que necesitamos enviar el token
-                //para verificar si el usuario está autenticado.
                 const response = await fetch(`${BACKEND_URI}/usuario/getUserData`, {
                     method: 'GET',
                     headers: {
                         'Authorization': `Bearer ${token}`,
                     },
-                })
-                //Si la respuesta no es correcta, se lanza un error.
+                });
                 if (!response.ok) {
-                    localStorage.removeItem('token')
-                    console.log("No se pudo cargar la información del usuario")
-                    router.push('/login')
+                    localStorage.removeItem('token');
+                    console.log("No se pudo cargar la información del usuario");
+                    router.push('/login');
                 }
-                console.log("Buscando datos del usuario...")
-                const data = await response.json()
-                console.log(data)
-                //Aqui guardamos la información del usuario en el estado userData.
-                setUserData(data.data)
-                setCreadoPor(data.data._id)
+                const data = await response.json();
+                setUserData(data.data);
+                setCreadoPor(data.data._id);
             } catch (error) {
-                console.error("Error al cargar la información del usuario: ", error)
+                console.error("Error al cargar la información del usuario: ", error);
             }
-        }
+        };
 
-        fetchData()
-    }, [])
+        fetchData();
+    }, []);
+
     useEffect(() => {
-        console.log('auxHorarios ha cambiado:', auxHorarios)
+        console.log('auxHorarios ha cambiado:', auxHorarios);
     }, [auxHorarios]);
+
     const handleDateChange = (newValue) => {
         const dateTime = new Date(newValue);
         const formattedDate = dateTime.toLocaleDateString();
@@ -76,28 +72,19 @@ export default function CreateActivity({ isOpen, closePopup }) {
     };
 
     const handleTimeChange = (newTime) => {
-
         const time = new Date(newTime);
         let time2 = time.toLocaleTimeString();
         let timeMix = auxHorarios + ' ' + time2;
-        setAuxHorarios(timeMix)
-//Modificar a hora y dia separado
+        setAuxHorarios(timeMix);
     };
-    const handleSubmit = async (e) => {
-        e.preventDefault()
-        const token = localStorage.getItem('token')
-/* Otra forma
-        const formData = new FormData()
 
-        formData.append('foto', foto)
-        formData.append('nombre', nombre)
-        formData.append('instrumento', instrumento)
-        formData.append('descripcion', descripcion)
-        formData.append('horarios', JSON.stringify(horarios))
-        formData.append('creadoPor', creadoPor)
-*/
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const token = localStorage.getItem('token');
+
         const formData = new FormData();
         formData.append('image', foto);
+
         try {
             // Primero subimos la foto
             const responseFoto = await fetch(`${BACKEND_URI}/storage/postImg`, {
@@ -111,8 +98,12 @@ export default function CreateActivity({ isOpen, closePopup }) {
             if (!responseFoto.ok) {
                 throw new Error('Error al subir la imagen');
             }
-            console.log("Foto subida")
-            //Ahora creamos el hilo al que irá asociada la actividad
+            console.log("Foto subida");
+
+            const fotoData = await responseFoto.json();
+            const fotoId = fotoData._id; // Asumiendo que la respuesta contiene un _id
+
+            // Ahora creamos el hilo al que irá asociada la actividad
             const responseHilo = await fetch(`${BACKEND_URI}/hilo`, {
                 method: 'POST',
                 headers: {
@@ -125,54 +116,55 @@ export default function CreateActivity({ isOpen, closePopup }) {
                     creadorId: creadoPor,
                     privado: true
                 })
-            })
+            });
 
             if (!responseHilo.ok) {
-                throw new Error('Error al crear el hilo')
+                throw new Error('Error al crear el hilo');
             }
             const hiloData = await responseHilo.json();
             const hiloId = hiloData._id;
             setHiloId(hiloId);
-            console.log("Hilo creado: ", hiloId)
-            const fotoData = await responseFoto.json();
-            const fotoId = fotoData._id; // Asumiendo que la respuesta contiene un _id
+            console.log("Hilo creado: ", hiloId);
 
             const activityData = {
-                foto: fotoId,
+                image: fotoId,
                 nombre: nombre,
                 instrumento: instrumento,
                 descripcion: descripcion,
                 horarios: auxHorarios,
                 hiloActividad: hiloId,
                 creadoPor: creadoPor
-            }
-            console.log("Creando actividad...")
-            console.log(activityData)
+            };
+            console.log("Creando actividad...");
+            console.log(activityData);
+
             const response = await fetch(`${BACKEND_URI}/actividades/createActivity`, {
                 method: 'POST',
                 headers: {
+                    'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(activityData)
-            })
+            });
 
             if (!response.ok) {
-                throw new Error('Error al crear la actividad')
+                throw new Error('Error al crear la actividad');
             }
-            const data = await response.json()
-            console.log(data)
-            //Reload page
-            closePopup()
+            const data = await response.json();
+            console.log(data);
+            // Reload page
+            closePopup();
 
         } catch (error) {
-            console.error("Error al crear la actividad: ", error)
+            console.error("Error al crear la actividad: ", error);
         }
-    }
-    const handleFotoChange = (e) => {
-        setFoto(e.target.files[0])
-    }
+    };
 
-    var instrumentoOptions = ['Flauta travesera', 'Flauta', 'Clarinete', 'Saxofón', 'Trompeta', 'Trombón', 'Trompa', 'Tuba', 'Oboe', 'Fagot', 'Guitarra acústica', 'Guitarra eléctrica', 'Guitarra clásica', 'Bajo eléctrico', 'Violín', 'Viola', 'Violonchelo', 'Contrabajo', 'Ukelele', 'Banjo', 'Piano/Teclado eléctrico', 'Batería', 'Xilófono', 'Cajón']
+    const handleFotoChange = (e) => {
+        setFoto(e.target.files[0]);
+    };
+
+    var instrumentoOptions = ['Flauta travesera', 'Flauta', 'Clarinete', 'Saxofón', 'Trompeta', 'Trombón', 'Trompa', 'Tuba', 'Oboe', 'Fagot', 'Guitarra acústica', 'Guitarra eléctrica', 'Guitarra clásica', 'Bajo eléctrico', 'Violín', 'Viola', 'Violonchelo', 'Contrabajo', 'Ukelele', 'Banjo', 'Piano/Teclado eléctrico', 'Batería', 'Xilófono', 'Cajón'];
 
     return (
         <Transition.Root show={isOpen} as={Fragment}>
@@ -217,8 +209,7 @@ export default function CreateActivity({ isOpen, closePopup }) {
                                                 <input value={nombre} onChange={(e) => setNombre(e.target.value)}
                                                        type="text" name="nombre"
                                                        className="mt-1 w-full border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                                                       placeholder="Nombre"/>
-
+                                                       placeholder="Nombre" />
                                             </div>
                                             <div>
                                                 <label htmlFor="descripcion"
@@ -228,7 +219,7 @@ export default function CreateActivity({ isOpen, closePopup }) {
                                                           onChange={(e) => setDescripcion(e.target.value)}
                                                           name="descripcion"
                                                           className="mt-1 w-full border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 min-h-[150px]"
-                                                          placeholder="Descripción de la actividad"/>
+                                                          placeholder="Descripción de la actividad" />
                                             </div>
                                             <div>
                                                 <label htmlFor="instrumento"
@@ -236,7 +227,7 @@ export default function CreateActivity({ isOpen, closePopup }) {
                                                     instrumento:</label>
                                                 <MultiSelect formFieldName={"instrumento"} options={instrumentoOptions}
                                                              onChange={(option) => setInstrumento(option)}
-                                                             prompt="Seleccione un instrumento"/>
+                                                             prompt="Seleccione un instrumento" />
                                             </div>
 
                                             <div>
@@ -249,7 +240,7 @@ export default function CreateActivity({ isOpen, closePopup }) {
                                                         value={horarios}
                                                         onChange={handleDateChange}
                                                         renderInput={(params) => <input {...params}
-                                                                                        className="mt-1 w-full border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"/>}
+                                                                                        className="mt-1 w-full border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500" />}
                                                     />
                                                 </LocalizationProvider>
                                             </div>
@@ -258,7 +249,7 @@ export default function CreateActivity({ isOpen, closePopup }) {
                                                        className="block text-sm font-medium text-gray-700">Añadir una
                                                     foto:</label>
                                                 <input type="file" name="foto" onChange={handleFotoChange}
-                                                       className="mt-1 w-full border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"/>
+                                                       className="mt-1 w-full border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500" />
                                             </div>
                                             <div>
                                                 <button type="submit"
@@ -267,14 +258,12 @@ export default function CreateActivity({ isOpen, closePopup }) {
                                                 </button>
                                             </div>
                                         </form>
-
                                     </div>
                                 </div>
                             </div>
                             <div className="mt-5 sm:mt-6">
                                 <button type="button" className="absolute top-0 right-0 mr-4 mt-4" onClick={closePopup}>
                                     <span className="sr-only">Cerrar</span>
-                                    {/* Icono de cierre X */}
                                 </button>
                             </div>
                         </div>
@@ -282,5 +271,5 @@ export default function CreateActivity({ isOpen, closePopup }) {
                 </div>
             </Dialog>
         </Transition.Root>
-    )
+    );
 }

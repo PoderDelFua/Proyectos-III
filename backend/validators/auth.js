@@ -65,6 +65,7 @@ const validatorActivity = [
     check("lugar").isString().optional(),
     check("usuarios").isArray().optional(),
     check("creadoPor").isMongoId().optional(),
+    check("image").isMongoId().optional(),
     (req, res, next) => {
         validateResults(req, res, next)
     }
@@ -81,6 +82,7 @@ const validatorUpdateActivity = [
     check("lugar").isString().optional(),
     check("usuarios").isArray().optional(),
     check("creadoPor").isMongoId().optional(),
+    check("image").isMongoId().optional(),
     (req, res, next) => {
         validateResults(req, res, next)
     }

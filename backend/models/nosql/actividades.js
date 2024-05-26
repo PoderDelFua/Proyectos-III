@@ -37,8 +37,10 @@ const actividadesSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Hilo'
     },
-
-    
+    image: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Storage'
+    },
     grupo: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Grupo'

@@ -5,26 +5,31 @@ const {matchedData} = require("express-validator")
 
 const getItems = async (req, res) => {
     try {
-        const data = await actividadesModel.find({}).populate("usuarios", "nombre").populate("grupo", "nombre")
-        res.send({data})
+        const data = await actividadesModel.find({})
+            .populate("usuarios", "nombre")
+            .populate("grupo", "nombre")
+            .populate("image", "url filename");
+        res.send({ data });
     } catch (err) {
-        handleHttpError(res, "ERROR_GET_ACTIVIDADES")
+        handleHttpError(res, "ERROR_GET_ACTIVIDADES");
     }
-}
+};
 
 const getItem = async (req, res) => {
-    
     try {
-        const {id} = matchedData(req)
-        const data = await actividadesModel.findById(id).populate("usuarios", "nombre").populate("grupo", "nombre")
+        const { id } = matchedData(req);
+        const data = await actividadesModel.findById(id)
+            .populate("usuarios", "nombre")
+            .populate("grupo", "nombre")
+            .populate("image", "url filename");
         if (!data) {
-            handleHttpError(res, "ACTIVIDAD_NOT_EXISTS", 404)
+            handleHttpError(res, "ACTIVIDAD_NOT_EXISTS", 404);
         }
-        res.send({data})
+        res.send({ data });
     } catch (err) {
-        handleHttpError(res, "ERROR_GET_ACTIVIDAD")
+        handleHttpError(res, "ERROR_GET_ACTIVIDAD");
     }
-}
+};
 
 const addUser = async (req, res) => {
     try {
