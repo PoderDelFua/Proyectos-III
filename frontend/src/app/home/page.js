@@ -9,6 +9,8 @@ import Slider from '@/components/SliderNews';
 import { useState, useEffect } from 'react';
 import { BACKEND_URI } from '@/config/env';
 
+import Loading from '@/components/Loading';
+
 export default function PageList() {
     const [activity, setActivity] = useState('any');
     const [searchTerm, setSearchTerm] = useState('');
@@ -86,7 +88,8 @@ export default function PageList() {
     };
 
     if (!activitiesData) {
-        return <div>Loading...</div>;
+        // return <div>Loading...</div>;
+        return <Loading/>;
     }
 
     return (

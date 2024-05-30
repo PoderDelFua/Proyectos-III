@@ -10,6 +10,8 @@ import { PencilIcon } from '@heroicons/react/24/solid';
 import ActivityCard from "@/components/ActivityCard";
 import { set } from 'js-cookie'
 
+import Loading from '@/components/Loading';
+
 
 export default function UserProfile() {
     const router = useRouter()
@@ -122,7 +124,8 @@ export default function UserProfile() {
     }, [userData])
     
     if (!userData) {
-        return <div>Cargando...</div>
+        // return <div>Cargando...</div>
+        return <Loading/>;
     }
 
 
