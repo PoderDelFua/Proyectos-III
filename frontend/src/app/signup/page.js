@@ -76,13 +76,13 @@ export default function RegisterUser() {
         router.push('/login')
     }
     //opciones instrumentos
-    var instrumentoOptions = ['Flauta travesera', 'Flauta', 'Clarinete', 'Saxofón', 'Trompeta', 'Trombón', 'Trompa', 'Tuba', 'Oboe', 'Fagot', 'Guitarra acústica', 'Guitarra eléctrica', 'Guitarra clásica', 'Bajo eléctrico', 'Violín', 'Viola', 'Violonchelo', 'Contrabajo', 'Ukelele', 'Banjo', 'Piano/Teclado eléctrico', 'Batería', 'Xilófono', 'Cajón']
+    var instrumentoOptions = ['Flauta travesera', 'Flauta', 'Clarinete', 'Saxofón', 'Trompeta', 'Trombón', 'Trompa', 'Tuba', 'Oboe', 'Fagot', 'Guitarra acústica', 'Guitarra eléctrica', 'Guitarra clásica', 'Bajo eléctrico', 'Violín', 'Viola', 'Violonchelo', 'Contrabajo', 'Ukelele', 'Banjo', 'Piano/Teclado eléctrico', 'Batería', 'Xilófono', 'Cajón','Otro']
 
     //opciones niveles
     var nivelOptions = ['Principiante', 'Medio', 'Avanzado']
 
     //opciones generos musicales
-    var generosOptions = ['Rock', 'Jazz', 'Música clásica', 'Pop', 'Metal']
+    var generosOptions = ['Rock', 'Jazz', 'Música clásica', 'Pop', 'Metal', 'Otro']
 
     //Todos los campos funcionan igual, por ejemplo, el campo "nombre" se actualiza con el valor del 
     //campo de entrada correspondiente. Se utiliza el método "setNombre" para actualizar el estado del campo "nombre".

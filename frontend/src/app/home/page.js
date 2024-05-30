@@ -135,6 +135,7 @@ export default function PageList() {
                             <option value="banjo">Banjo</option>
                             <option value="piano">Piano</option>
                             <option value="batería">Batería</option>
+                            <option value="Otro">Otro</option>
                         </select>
                     </form>
                     <div className="flex justify-end mb-4">
